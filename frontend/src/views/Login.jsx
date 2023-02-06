@@ -1,30 +1,54 @@
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 const Login = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(user);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
   return (
     <div>
-      <h2>Login</h2>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+      <h2>Inicia sesión</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Control
+          type="email"
+          placeholder="Email"
+          value={user.email}
+          name="email"
+          onChange={handleChange}
+        />
+        <Form.Control
+          type="password"
+          placeholder="Contraseña"
+          value={user.password}
+          name="password"
+          onChange={handleChange}
+        />
+        <Form.Group>
+          <Form.Check type="checkbox" label="Recordarme" />
           <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            <a href="/login">¿Olvido su contraseña?</a>
           </Form.Text>
         </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Submit
+        <br />
+        <Button variant="secondary" type="submit">
+          Iniciar sesión
         </Button>
       </Form>
       <br />
       <span>
-        No tienes cuenta? <a href="/registro">Registrate!</a>
+        ¿Aún no tenes usuario? <a href="/registro">Regístrate!</a>
       </span>
     </div>
   );
