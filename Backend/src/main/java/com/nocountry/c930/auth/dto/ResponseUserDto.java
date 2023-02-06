@@ -28,7 +28,6 @@ public class ResponseUserDto {
   @NotEmpty
   private String password;
   private RoleName role;
-  private Integer category;
   private Date creationDate;
   private Date updateDate;
 

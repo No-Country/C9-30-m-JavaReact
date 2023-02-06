@@ -30,50 +30,50 @@ public class UserCampaign implements Serializable {
             })
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
-
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade
-                    = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    @JoinColumn(name = "CAMPAIGN_ID")
-    private CampaignEntity campaign;
-
-    @OneToMany(mappedBy = "userCampaign",
-            fetch = FetchType.LAZY,
-            cascade
-                    = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    Set<CommentEntity> comments;
-
-    @OneToMany(mappedBy = "userCampaign",
-            fetch = FetchType.LAZY,
-            cascade
-                    = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    Set<ComplaintEntity> complaints;
-
-    @OneToMany(mappedBy = "userCampaign",
-            fetch = FetchType.LAZY,
-            cascade
-                    = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    Set<DonationEntity> donations;
+//
+//    @ManyToOne(fetch = FetchType.LAZY,
+//            cascade
+//                    = {
+//                    CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.REFRESH,
+//                    CascadeType.PERSIST
+//            })
+//    @JoinColumn(name = "CAMPAIGN_ID")
+//    private CampaignEntity campaign;
+//
+//    @OneToMany(mappedBy = "userCampaign",
+//            fetch = FetchType.LAZY,
+//            cascade
+//                    = {
+//                    CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.REFRESH,
+//                    CascadeType.PERSIST
+//            })
+//    Set<CommentEntity> comments;
+//
+//    @OneToMany(mappedBy = "userCampaign",
+//            fetch = FetchType.LAZY,
+//            cascade
+//                    = {
+//                    CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.REFRESH,
+//                    CascadeType.PERSIST
+//            })
+//    Set<ComplaintEntity> complaints;
+//
+//    @OneToMany(mappedBy = "userCampaign",
+//            fetch = FetchType.LAZY,
+//            cascade
+//                    = {
+//                    CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.REFRESH,
+//                    CascadeType.PERSIST
+//            })
+//    Set<DonationEntity> donations;
 
 
 }
