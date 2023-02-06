@@ -1,14 +1,15 @@
-package com.jeremias.paddlechampion.auth.service;
+package com.nocountry.c930.auth.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jeremias.paddlechampion.entity.UserEntity;
+import com.nocountry.c930.entity.UserEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsImpl implements UserDetails {
 

@@ -1,11 +1,12 @@
-package com.jeremias.paddlechampion.auth.controller;
+package com.nocountry.c930.auth.controller;
 
-import com.jeremias.paddlechampion.auth.dto.*;
-import com.jeremias.paddlechampion.auth.service.JwtUtils;
-import com.jeremias.paddlechampion.auth.service.UserDetailsCustomService;
 
-import javax.validation.Valid;
-
+import com.nocountry.c930.auth.dto.AuthenticationRequest;
+import com.nocountry.c930.auth.dto.AuthenticationResponse;
+import com.nocountry.c930.auth.dto.ResponseUserDto;
+import com.nocountry.c930.auth.dto.UserRegistrationDto;
+import com.nocountry.c930.auth.service.JwtUtils;
+import com.nocountry.c930.auth.service.UserDetailsCustomService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")

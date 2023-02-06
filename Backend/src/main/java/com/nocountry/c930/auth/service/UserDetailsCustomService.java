@@ -1,21 +1,23 @@
-package com.jeremias.paddlechampion.auth.service;
+package com.nocountry.c930.auth.service;
 
-import com.jeremias.paddlechampion.auth.dto.ResponseUserDto;
-import com.jeremias.paddlechampion.auth.dto.UserRegistrationDto;
-import com.jeremias.paddlechampion.entity.RoleEntity;
-import com.jeremias.paddlechampion.entity.UserEntity;
-import com.jeremias.paddlechampion.enumeration.RoleName;
-import com.jeremias.paddlechampion.mapper.UserMap;
-import com.jeremias.paddlechampion.mapper.exception.RepeatedUsername;
-import com.jeremias.paddlechampion.repository.RoleRepository;
-import com.jeremias.paddlechampion.repository.UserRepository;
-import javax.validation.Valid;
+
+import com.nocountry.c930.auth.dto.ResponseUserDto;
+import com.nocountry.c930.auth.dto.UserRegistrationDto;
+import com.nocountry.c930.entity.RoleEntity;
+import com.nocountry.c930.entity.UserEntity;
+import com.nocountry.c930.enumeration.RoleName;
+import com.nocountry.c930.mapper.UserMap;
+import com.nocountry.c930.mapper.exception.RepeatedUsername;
+import com.nocountry.c930.repository.RoleRepository;
+import com.nocountry.c930.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
 
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
@@ -53,7 +55,7 @@ public class UserDetailsCustomService implements UserDetailsService {
     userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
     userEntity.setFirstName(userDto.getFirstName());
     userEntity.setLastName(userDto.getLastName());
-    userEntity.setCategory(userDto.getCategory());
+
 
     RoleEntity role = roleRepo.findByName(RoleName.ROLE_USER);
     userEntity.setRole(role);
@@ -84,7 +86,6 @@ public class UserDetailsCustomService implements UserDetailsService {
     userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
     userEntity.setFirstName(userDto.getFirstName());
     userEntity.setLastName(userDto.getLastName());
-    userEntity.setCategory(userDto.getCategory());
     userEntity.setRole(roleRepo.findByName(RoleName.ROLE_ADMIN));
 
     UserEntity entitySaved = this.userRepo.save(userEntity);
