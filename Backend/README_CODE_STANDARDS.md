@@ -6,7 +6,6 @@
 3. [Postman](https://www.postman.com/downloads/) for testing endpoints.
 
 ### CODE STANDARDS
-- Keep in mind rules from [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html).
 - Code must be in English.
 - The controllers should finish with suffix "Controller". Example: UserController.
 - The services should finish with suffix "Service". Example: UserService.
