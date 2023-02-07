@@ -8,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.Set;
 
 @Getter
@@ -47,16 +46,16 @@ public class UserEntity implements Serializable {
     private Date updateDate;
 
 
-//    @OneToMany(mappedBy = "user",
-//            fetch = FetchType.LAZY,
-//            cascade
-//                    = {
-//                    CascadeType.DETACH,
-//                    CascadeType.MERGE,
-//                    CascadeType.REFRESH,
-//                    CascadeType.PERSIST
-//            })
-//    Set<CampaignEntity> campaigns;
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    Set<CampaignEntity> campaigns;
 
 
     @ManyToOne
