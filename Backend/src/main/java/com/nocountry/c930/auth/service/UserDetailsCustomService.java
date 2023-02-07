@@ -57,6 +57,21 @@ public class UserDetailsCustomService implements UserDetailsService {
     userEntity.setLastName(userDto.getLastName());
 
 
+    if(!roleRepo.existsByName(RoleName.ROLE_ADMIN)){
+
+      RoleEntity roleAdmin = new RoleEntity();
+      roleAdmin.setName(RoleName.ROLE_ADMIN);
+
+      roleRepo.save(roleAdmin);
+
+      RoleEntity roleUser = new RoleEntity();
+      roleUser.setName(RoleName.ROLE_USER);
+
+      roleRepo.save(roleUser);
+
+
+    }
+
     RoleEntity role = roleRepo.findByName(RoleName.ROLE_USER);
     userEntity.setRole(role);
 
