@@ -15,22 +15,22 @@ public class CampaignMap {
     private UserMap userMap;
 
 
-    public CampaignDto campaignEntity2Dto(CampaignEntity entity) {
+    public CampaignDto campaignEntity2Dto(CampaignEntity original) {
 
-        CampaignDto dto = new CampaignDto();
+        CampaignDto copy = new CampaignDto();
 
-        dto.setCampaignId(entity.getCampaignId());
-        dto.setName(entity.getName());
-        dto.setDescription(entity.getDescription());
-        dto.setCreationDate(entity.getCreationDate());
-        dto.setClosingDate(entity.getClosingDate());
-        dto.setGoalMoney(entity.getGoalMoney());
-        dto.setCurrentMoney(entity.getCurrentMoney());
-        dto.setStatus(entity.getStatus());
+        copy.setCampaignId(original.getCampaignId());
+        copy.setName(original.getName());
+        copy.setDescription(original.getDescription());
+        copy.setCreationDate(original.getCreationDate());
+        copy.setClosingDate(original.getClosingDate());
+        copy.setGoalMoney(original.getGoalMoney());
+        copy.setCurrentMoney(original.getCurrentMoney());
+        copy.setStatus(original.getStatus());
 
-        dto.setCreator(userMap.userEntity2Dto(entity.getCreator()));
+        copy.setCreator(userMap.userEntity2Dto(original.getCreator()));
 
-        return dto;
+        return copy;
 
     }
 
@@ -43,5 +43,24 @@ public class CampaignMap {
         }
 
         return dtos;
+    }
+
+    public CampaignEntity campaignDto2Entity(CampaignDto original) {
+
+        CampaignEntity copy = new CampaignEntity();
+        copy.setCampaignId(original.getCampaignId());
+        copy.setName(original.getName());
+        copy.setDescription(original.getDescription());
+        copy.setCreationDate(original.getCreationDate());
+        copy.setClosingDate(original.getClosingDate());
+        copy.setGoalMoney(original.getGoalMoney());
+        copy.setCurrentMoney(original.getCurrentMoney());
+        copy.setStatus(original.getStatus());
+
+        copy.setCreator(userMap.userDto2Entity(original.getCreator()));
+
+        return copy;
+
+
     }
 }
