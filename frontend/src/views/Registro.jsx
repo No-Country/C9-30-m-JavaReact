@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
+import {createUser, getUsers} from "../petitions"
+import { useNavigate } from "react-router-dom";
+
+
 
 const Registro = () => {
-  const [user, setUser] = useState({
+  const navigate = useNavigate();
+  const [newuser, setNewUser] = useState({
     name: "",
     surname: "",
     email: "",
@@ -10,15 +15,38 @@ const Registro = () => {
     repeatPassword: "",
   });
 
+  const getUserMock = () => {
+    getUsers()
+      .then((res) => {
+        setNewUser(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  
+  useEffect(() => {
+    getUserMock();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
-    console.log(user.repeatPassword !== user.password ? true : false);
-  };
+    createUser(newuser)
+    // console.log(newuser);
+    // console.log(newuser.repeatPassword !== newuser.password ? true : false);
+    createUser(newuser)
+     .then((res) => {
+       if (res.status === 201) {
+          navigate("/");
+       }
+  
+     })
+     .catch((error) => {
+       console.log(error);
+     });
+ }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setNewUser({ ...newuser, [name]: value });
   };
 
   return (
@@ -29,40 +57,45 @@ const Registro = () => {
         <Form.Control
           type="text"
           name="name"
-          value={user.name}
+          value={newuser.name}
           placeholder="Nombre"
           onChange={handleChange}
+          required
         />
         <Form.Control
           type="text"
           name="surname"
-          value={user.surname}
+          value={newuser.surname}
           placeholder="Apellido"
           onChange={handleChange}
+          required
         />
         <Form.Control
           type="email"
           name="email"
-          value={user.email}
+          value={newuser.email}
           placeholder="Email"
           onChange={handleChange}
+          required
         />
         <Form.Control
           type="password"
           name="password"
-          value={user.password}
+          value={newuser.password}
           placeholder="Contraseña"
           onChange={handleChange}
+          required
         />
         <Form.Control
           type="password"
           name="repeatPassword"
-          value={user.repeatPassword}
+          value={newuser.repeatPassword}
           placeholder="Repetir contraseña"
           onChange={handleChange}
+          required
         />
 
-        <Button variant="secondary" type="submit">
+        <Button variant="secondary" type="submit"  onClick={handleSubmit}>
           Crear cuenta
         </Button>
         <br />

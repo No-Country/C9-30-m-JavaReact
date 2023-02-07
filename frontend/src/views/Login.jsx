@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { loginUser } from "../petitions.js";
+import { useNavigate } from "react-router-dom";
+import { useReducer } from "react";
+import "../styles/Home.css";
+
 
 const Login = () => {
+  const navigate = useNavigate();
+  
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -10,7 +17,15 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(user);
-  };
+    
+    loginUser(user)
+      .then((response) => {
+        console.log(response.data.status)
+        if (response.status === 201) {
+          navigate("/");
+        }
+  })
+};
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +33,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="containerLogin">
       <h2>Inicia sesión</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Control
@@ -27,6 +42,7 @@ const Login = () => {
           value={user.email}
           name="email"
           onChange={handleChange}
+          required
         />
         <Form.Control
           type="password"
@@ -34,6 +50,7 @@ const Login = () => {
           value={user.password}
           name="password"
           onChange={handleChange}
+          required
         />
         <Form.Group>
           <Form.Check type="checkbox" label="Recordarme" />
@@ -42,6 +59,7 @@ const Login = () => {
           </Form.Text>
         </Form.Group>
         <br />
+        <p id="errorMessage"></p>
         <Button variant="secondary" type="submit">
           Iniciar sesión
         </Button>
