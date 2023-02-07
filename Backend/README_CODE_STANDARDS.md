@@ -16,8 +16,7 @@
 - Usage of DTOs is a must. Can have DTOs for request and response.
 - Package names are in singular.
 - The names of attributes/fields from Java classes must be written using camel case. Example: firstName.
-- The name of columns in the entities must be written using underscore and uppercase. Example: FIRST_NAME. The name of the tables is always in plural, but the entity name should be in singular.
-- Exceptions should be handled by an implementation of ControllerAdvice.  
+- The name of columns in the entities must be written using underscore and uppercase. Example: FIRST_NAME. The name of the tables is always in plural, but the entity name should be in singular. 
 - If you add a new endpoint, make sure to set the role access for it in the SecurityConfig class.
 
 ### GIT STANDARDS
@@ -30,12 +29,8 @@
 - The pull request has to contain only the changes related to the scope defined in the ticket.
 - Pull request should always be from your current branch to develop.
 
-#### EVIDENCE
-- If you do not write unit test or integration test as part of your code changes, you should add the HTTP request and response as evidence that the code is working as expected.
-- Screenshots from Postman with different scenarios are a good way to show your work.
-
 #### BRANCHES
-In the current repository you will see three diferent branches
+
 - `master` -> this branch is only for productive versions, it has official release history.
 - `develop` -> this branch serves as an integration branch for features. All features must start from this branch and after it's finished it gets merged back into develop.
 
