@@ -5,6 +5,7 @@ import com.nocountry.c930.entity.CampaignEntity;
 import com.nocountry.c930.entity.UserEntity;
 import com.nocountry.c930.enumeration.CampaignStatus;
 import com.nocountry.c930.mapper.CampaignMap;
+import com.nocountry.c930.mapper.exception.ParamNotFound;
 import com.nocountry.c930.repository.CampaignRepository;
 import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICampaignService;
@@ -37,16 +38,32 @@ public class CampaignServiceImpl implements ICampaignService {
 
     @Override
     public CampaignDto getCampaign(Long id) {
-        return null;
+
+        CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist"));
+
+        return campaignMap.campaignEntity2Dto(campaign);
     }
 
     @Override
     public CampaignDto updateCampaign(Long id, CampaignDto dto) {
-        return null;
+
+        if (!campaignRepo.existsById(id)) {
+            throw new ParamNotFound("Campaign doesn't exist");
+        } else {
+            CampaignEntity entity = campaignMap.campaignDto2Entity(dto);
+            entity.setCampaignId(id);
+        }
+
+        return dto;
     }
 
     @Override
     public void deleteCampaign(Long id) {
 
+        CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist"));
+
+        campaignRepo.delete(campaign);
     }
 }
