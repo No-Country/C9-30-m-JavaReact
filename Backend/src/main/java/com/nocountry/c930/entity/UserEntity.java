@@ -46,7 +46,7 @@ public class UserEntity implements Serializable {
     private Date updateDate;
 
 
-    @OneToMany(mappedBy = "user",
+    @OneToMany(mappedBy = "creator",
             fetch = FetchType.LAZY,
             cascade
                     = {

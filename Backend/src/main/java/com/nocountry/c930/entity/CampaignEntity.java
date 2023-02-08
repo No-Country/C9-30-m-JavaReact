@@ -50,6 +50,6 @@ public class CampaignEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity creator;
 
 }
