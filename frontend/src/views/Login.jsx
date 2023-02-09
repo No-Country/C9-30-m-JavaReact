@@ -33,9 +33,11 @@ const Login = () => {
           <Stack gap={3}>
             <Button variant="info">
               <FaGoogle className="d-block mt-1 iconStyle" />
+              <FaGoogle className="d-block mt-1 iconStyle" />
               Registrarse con Google
             </Button>
             <Button variant="info">
+              <FaApple className="d-block mt-1 iconStyle" />
               <FaApple className="d-block mt-1 iconStyle" />
               Registrarse con Facebook
             </Button>

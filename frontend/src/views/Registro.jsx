@@ -56,6 +56,7 @@ const Registro = () => {
               </Button>
               <Button variant="info">
                 <FaApple className="d-block mt-1 iconStyle" />
+                <FaApple className="d-block mt-1 iconStyle" />
                 Registrarse con Facebook
               </Button>
               <Button variant="info">
