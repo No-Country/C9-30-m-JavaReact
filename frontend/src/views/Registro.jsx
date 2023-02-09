@@ -6,7 +6,7 @@ import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 
 const Registro = () => {
   const navigate = useNavigate();
-  const [newuser, setNewUser] = useState({
+  const [newUser, setNewUser] = useState({
     name: "",
     surname: "",
     email: "",
@@ -14,38 +14,27 @@ const Registro = () => {
     repeatPassword: "",
   });
 
-  // const getUserMock = () => {
-  //   getUsers()
-  //     .then((res) => {
-  //       console.log(res);
-  //       setNewUser(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
   // useEffect(() => {
   //   getUserMock();
   // }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createUser(newuser);
-    // console.log(newuser);
-    // console.log(newuser.repeatPassword !== newuser.password ? true : false);
-    createUser(newuser)
-      .then((res) => {
-        if (res.status === 201) {
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (newUser.repeatPassword === newUser.password) {
+      try {
+        await createUser(newUser);
+        navigate("/");
+      } catch (error) {
+        alert(error);
+      }
+    } else {
+      alert("Las contraseñas no coinciden");
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewUser({ ...newuser, [name]: value });
+    setNewUser({ ...newUser, [name]: value });
   };
 
   return (
@@ -59,21 +48,18 @@ const Registro = () => {
               borderRightColor: "#00000042",
             }}
           >
-            <Stack gap={3}>
-              <h2>Registrate con una red social</h2>
+            <h2 className="text-center mb-4">Regístrate con una red social</h2>
+            <Stack gap={3} className="registro-content">
               <Button variant="info">
-                <FaGoogle className="d-block mt-1" style={{ float: "left" }} />
+                <FaGoogle className="d-block mt-1 iconStyle" />
                 Registrarse con Google
               </Button>
               <Button variant="info">
-                <FaApple className="d-block mt-1" style={{ float: "left" }} />
+                <FaApple className="d-block mt-1 iconStyle" />
                 Registrarse con Facebook
               </Button>
               <Button variant="info">
-                <FaFacebookSquare
-                  className="d-block mt-1"
-                  style={{ float: "left" }}
-                />
+                <FaFacebookSquare className="d-block mt-1 iconStyle" />
                 Registrarse con Apple
               </Button>
               <p>
@@ -84,14 +70,14 @@ const Registro = () => {
             </Stack>
           </Col>
           <Col lg={6}>
-            <h2>Registrate con tu email</h2>
+            <h2 className="text-center">Regístrate con tu email</h2>
             <br />
             <Form onSubmit={handleSubmit}>
-              <Stack gap={3}>
+              <Stack gap={3} className="registro-content">
                 <Form.Control
                   type="text"
                   name="name"
-                  value={newuser.name}
+                  value={newUser.name}
                   placeholder="Nombre"
                   onChange={handleChange}
                   required
@@ -99,7 +85,7 @@ const Registro = () => {
                 <Form.Control
                   type="text"
                   name="surname"
-                  value={newuser.surname}
+                  value={newUser.surname}
                   placeholder="Apellido"
                   onChange={handleChange}
                   required
@@ -107,7 +93,7 @@ const Registro = () => {
                 <Form.Control
                   type="email"
                   name="email"
-                  value={newuser.email}
+                  value={newUser.email}
                   placeholder="Email"
                   onChange={handleChange}
                   required
@@ -115,7 +101,7 @@ const Registro = () => {
                 <Form.Control
                   type="password"
                   name="password"
-                  value={newuser.password}
+                  value={newUser.password}
                   placeholder="Contraseña"
                   onChange={handleChange}
                   required
@@ -123,7 +109,7 @@ const Registro = () => {
                 <Form.Control
                   type="password"
                   name="repeatPassword"
-                  value={newuser.repeatPassword}
+                  value={newUser.repeatPassword}
                   placeholder="Repetir contraseña"
                   onChange={handleChange}
                   required
@@ -136,13 +122,12 @@ const Registro = () => {
                 >
                   Crear cuenta
                 </Button>
+                <Form.Text className="text-muted">
+                  *Al registrarte, aceptas nuestras{" "}
+                  <strong>Condiciones de Servicio</strong> y reconoces haber
+                  leído nuestra <strong>Política de Privacidad</strong>
+                </Form.Text>
               </Stack>
-              <br />
-              <Form.Text className="text-muted">
-                *Al registrarte, aceptas nuestras{" "}
-                <strong>Condiciones de Servicio</strong> y reconoces haber leído
-                nuestra <strong>Política de Privacidad</strong>
-              </Form.Text>
             </Form>
           </Col>
         </Row>

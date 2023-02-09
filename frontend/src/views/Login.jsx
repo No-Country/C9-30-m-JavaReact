@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { loginUser } from "../petitions.js";
-
 import { Button, Form, Stack } from "react-bootstrap";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -14,16 +14,10 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
-
-    loginUser(user).then((response) => {
-      console.log(response.data.status);
-      if (response.status === 201) {
-        navigate("/");
-      }
-    });
+    await login(user);
+    navigate("/");
   };
 
   const handleChange = (e) => {
@@ -38,18 +32,15 @@ const Login = () => {
         <div className="login-social-container ">
           <Stack gap={3}>
             <Button variant="info">
-              <FaGoogle className="d-block mt-1" style={{ float: "left" }} />
+              <FaGoogle className="d-block mt-1 iconStyle" />
               Registrarse con Google
             </Button>
             <Button variant="info">
-              <FaApple className="d-block mt-1" style={{ float: "left" }} />
+              <FaApple className="d-block mt-1 iconStyle" />
               Registrarse con Facebook
             </Button>
             <Button variant="info">
-              <FaFacebookSquare
-                className="d-block mt-1"
-                style={{ float: "left" }}
-              />
+              <FaFacebookSquare className="d-block mt-1 iconStyle" />
               Registrarse con Apple
             </Button>
           </Stack>
