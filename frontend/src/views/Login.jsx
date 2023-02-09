@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { loginUser } from "../petitions.js";
 import { useNavigate } from "react-router-dom";
-import { useReducer } from "react";
-import "../styles/Home.css";
 
+import { loginUser } from "../petitions.js";
+
+import { Button, Form, Stack } from "react-bootstrap";
+import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -17,15 +17,14 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(user);
-    
-    loginUser(user)
-      .then((response) => {
-        console.log(response.data.status)
-        if (response.status === 201) {
-          navigate("/");
-        }
-  })
-};
+
+    loginUser(user).then((response) => {
+      console.log(response.data.status);
+      if (response.status === 201) {
+        navigate("/");
+      }
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,41 +32,63 @@ const Login = () => {
   };
 
   return (
-    <div className="containerLogin">
-      <h2>Inicia sesión</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Control
-          type="email"
-          placeholder="Email"
-          value={user.email}
-          name="email"
-          onChange={handleChange}
-          required
-        />
-        <Form.Control
-          type="password"
-          placeholder="Contraseña"
-          value={user.password}
-          name="password"
-          onChange={handleChange}
-          required
-        />
-        <Form.Group>
-          <Form.Check type="checkbox" label="Recordarme" />
-          <Form.Text className="text-muted">
-            <a href="/login">¿Olvido su contraseña?</a>
-          </Form.Text>
-        </Form.Group>
+    <div className="login d-flex">
+      <div className="login-container">
+        <h2>Inicia sesión</h2>
+        <div className="login-social-container ">
+          <Stack gap={3}>
+            <Button variant="info">
+              <FaGoogle className="d-block mt-1" style={{ float: "left" }} />
+              Registrarse con Google
+            </Button>
+            <Button variant="info">
+              <FaApple className="d-block mt-1" style={{ float: "left" }} />
+              Registrarse con Facebook
+            </Button>
+            <Button variant="info">
+              <FaFacebookSquare
+                className="d-block mt-1"
+                style={{ float: "left" }}
+              />
+              Registrarse con Apple
+            </Button>
+          </Stack>
+          <Form onSubmit={handleSubmit}>
+            <Form.Control
+              type="email"
+              placeholder="Email"
+              value={user.email}
+              name="email"
+              onChange={handleChange}
+              required
+              className="mb-2 mt-2"
+            />
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
+              value={user.password}
+              name="password"
+              onChange={handleChange}
+              required
+            />
+            <Form.Group>
+              <Form.Check type="checkbox" label="Recordarme" />
+              <Form.Text className="text-muted">
+                <a href="/login">¿Olvido su contraseña?</a>
+              </Form.Text>
+            </Form.Group>
+            <br />
+            <p id="errorMessage"></p>
+            <Button variant="secondary" type="submit" className="">
+              Iniciar sesión
+            </Button>
+          </Form>
+        </div>
         <br />
-        <p id="errorMessage"></p>
-        <Button variant="secondary" type="submit">
-          Iniciar sesión
-        </Button>
-      </Form>
-      <br />
-      <span>
-        ¿Aún no tenes usuario? <a href="/registro">Regístrate!</a>
-      </span>
+        <span>
+          ¿Aún no tenes usuario? <a href="/registro">Regístrate!</a>
+        </span>
+      </div>
     </div>
   );
 };
