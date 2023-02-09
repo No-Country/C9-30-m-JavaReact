@@ -33,7 +33,7 @@ public class DonationEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "USER_CAMPAIGN_ID")
-    private UserCampaign userCampaign;
+    private UserCampaign userCampaignId;
 
 
 
