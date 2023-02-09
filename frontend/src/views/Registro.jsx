@@ -48,6 +48,7 @@ const Registro = () => {
     setNewUser({ ...newuser, [name]: value });
   };
 
+
   return (
     <div className="registro d-flex">
       <Container className="registro-container">
@@ -62,17 +63,17 @@ const Registro = () => {
             <Stack gap={3}>
               <h2>Registrate con una red social</h2>
               <Button variant="info">
-                <FaGoogle className="d-block mt-1" style={{ float: "left" }} />
+                <FaGoogle className="d-block mt-1 iconStyle"/>
                 Registrarse con Google
               </Button>
               <Button variant="info">
-                <FaApple className="d-block mt-1" style={{ float: "left" }} />
+                <FaApple className="d-block mt-1 iconStyle" />
                 Registrarse con Facebook
               </Button>
               <Button variant="info">
                 <FaFacebookSquare
-                  className="d-block mt-1"
-                  style={{ float: "left" }}
+                  className="d-block mt-1 iconStyle"
+                  
                 />
                 Registrarse con Apple
               </Button>
