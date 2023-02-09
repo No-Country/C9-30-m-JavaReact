@@ -52,4 +52,37 @@ public class CampaignEntity implements Serializable {
     @JoinColumn(name = "user_id")
     private UserEntity creator;
 
+    @OneToMany(mappedBy = "campaign",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<CommentEntity> commentsReceived;
+
+    @OneToMany(mappedBy = "campaign",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<DonationEntity> donationsReceived;
+
+    @OneToMany(mappedBy = "campaign",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<ComplaintEntity> complaintsReceived;
+
 }

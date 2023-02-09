@@ -55,12 +55,44 @@ public class UserEntity implements Serializable {
                     CascadeType.REFRESH,
                     CascadeType.PERSIST
             })
-    Set<CampaignEntity> campaigns;
+    private Set<CampaignEntity> ownedCampaigns;
 
 
     @ManyToOne
     @JoinColumn(name = "ROLE_ID")
     private RoleEntity role;
 
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<CommentEntity> commentsMade;
+
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<DonationEntity> donationsMade;
+
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade
+                    = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    private Set<ComplaintEntity> complaintsMade;
 
 }
