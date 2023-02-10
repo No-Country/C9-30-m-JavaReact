@@ -2,11 +2,17 @@ package com.nocountry.c930.mapper;
 
 import com.nocountry.c930.dto.ComplaintDto;
 import com.nocountry.c930.entity.ComplaintEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComplaintMap {
+
+    @Autowired
+    UserMap userMap;
+    @Autowired
+    CampaignMap campaignMap;
 
     public ComplaintDto complaintEntity2Dto(ComplaintEntity original) {
 
@@ -16,7 +22,8 @@ public class ComplaintMap {
         copy.setDescription(original.getDescription());
         copy.setCreationDate(original.getCreationDate());
 
-        copy.setUserCampaignId(original.getUserCampaignId());
+        copy.setUser(userMap.userEntity2Dto(original.getUser()));
+        copy.setCampaign(campaignMap.campaignEntity2Dto(original.getCampaign()));
 
         return copy;
 
@@ -41,7 +48,8 @@ public class ComplaintMap {
         copy.setDescription(original.getDescription());
         copy.setCreationDate(original.getCreationDate());
 
-        copy.setUserCampaignId(original.getUserCampaignId());
+        copy.setUser(userMap.userDto2Entity(original.getUser()));
+        copy.setCampaign(campaignMap.campaignDto2Entity(original.getCampaign()));
 
         return copy;
 
