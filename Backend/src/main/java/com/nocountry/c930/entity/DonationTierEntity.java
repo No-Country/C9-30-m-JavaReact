@@ -1,9 +1,11 @@
 package com.nocountry.c930.entity;
 
+import com.nocountry.c930.enumeration.TierName;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -16,8 +18,18 @@ public class DonationTierEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long donationTierId;
-    
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIER_NAME", nullable = false)
+    private TierName tierName;
+
+    @Column(name = "PRICE", nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "DESCRIPTION", nullable = false)
+    private String description;
+
     @ManyToOne()
-    @JoinColumn(name = "campaign_id")
+    @JoinColumn(name = "CAMPAIGN_ID")
     private CampaignEntity campaign;
 }

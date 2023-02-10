@@ -28,6 +28,7 @@ public class DonationEntity implements Serializable {
     @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false)
     private PaymentStatus status;
 
