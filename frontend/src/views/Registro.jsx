@@ -1,11 +1,21 @@
-import { useState, useEffect } from "react";
-import { Button, Form, Container, Row, Col, Stack } from "react-bootstrap";
-import { createUser, getUsers } from "../petitions";
+import { useState } from "react";
+import {
+  Button,
+  Form,
+  Container,
+  Row,
+  Col,
+  Stack,
+  Alert,
+} from "react-bootstrap";
+import { createUser } from "../petitions";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 
 const Registro = () => {
+  const { register } = useAuth();
   const navigate = useNavigate();
+
   const [newUser, setNewUser] = useState({
     name: "",
     surname: "",
@@ -13,22 +23,19 @@ const Registro = () => {
     password: "",
     repeatPassword: "",
   });
-
-  // useEffect(() => {
-  //   getUserMock();
-  // }, []);
+  const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newUser.repeatPassword === newUser.password) {
       try {
-        await createUser(newUser);
+        await register(newUser);
         navigate("/");
       } catch (error) {
-        alert(error);
+        console.log(error);
       }
     } else {
-      alert("Las contraseñas no coinciden");
+      setError("Las contraseñas no coinciden!");
     }
   };
 
@@ -39,6 +46,8 @@ const Registro = () => {
 
   return (
     <div className="registro d-flex">
+      {error && <Alert variant="primary">{error} </Alert>}
+
       <Container className="registro-container">
         <Row>
           <Col

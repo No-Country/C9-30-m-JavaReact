@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Form, Stack } from "react-bootstrap";
+import { Alert, Button, Form, Stack } from "react-bootstrap";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
@@ -13,11 +13,16 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(user);
-    navigate("/");
+    try {
+      await login(user);
+      navigate("/");
+    } catch (error) {
+      setError("Usuario o clave incorrecta");
+    }
   };
 
   const handleChange = (e) => {
@@ -28,6 +33,7 @@ const Login = () => {
   return (
     <div className="login d-flex">
       <div className="login-container">
+        {error && <Alert variant="primary">{error} </Alert>}
         <h2>Inicia sesión</h2>
         <div className="login-social-container ">
           <Stack gap={3}>
