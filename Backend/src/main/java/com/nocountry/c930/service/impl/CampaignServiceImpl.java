@@ -2,15 +2,21 @@ package com.nocountry.c930.service.impl;
 
 import com.nocountry.c930.dto.CampaignDto;
 import com.nocountry.c930.entity.CampaignEntity;
+import com.nocountry.c930.entity.RoleEntity;
 import com.nocountry.c930.entity.UserEntity;
 import com.nocountry.c930.enumeration.CampaignStatus;
+import com.nocountry.c930.enumeration.RoleName;
 import com.nocountry.c930.mapper.CampaignMap;
+import com.nocountry.c930.mapper.exception.NotAllowed;
 import com.nocountry.c930.mapper.exception.ParamNotFound;
 import com.nocountry.c930.repository.CampaignRepository;
+import com.nocountry.c930.repository.RoleRepository;
 import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.security.auth.message.AuthException;
 
 public class CampaignServiceImpl implements ICampaignService {
 
@@ -18,6 +24,9 @@ public class CampaignServiceImpl implements ICampaignService {
     UserRepository userRepo;
     @Autowired
     CampaignRepository campaignRepo;
+
+    @Autowired
+    RoleRepository roleRepo;
 
     @Autowired
     CampaignMap campaignMap;
@@ -48,14 +57,24 @@ public class CampaignServiceImpl implements ICampaignService {
     @Override
     public CampaignDto updateCampaign(Long id, CampaignDto dto) {
 
-        if (!campaignRepo.existsById(id)) {
-            throw new ParamNotFound("Campaign doesn't exist");
-        } else {
-            CampaignEntity entity = campaignMap.campaignDto2Entity(dto);
-            entity.setCampaignId(id);
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepo.findByEmail(userEmail);
+
+        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+
+        CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist"));
+
+        if (campaign.getCreator() != user && user.getRole() != admin) {
+            throw new NotAllowed("You don't have permission to do that");
         }
 
-        return dto;
+        campaign.setName(dto.getName());
+        campaign.setDescription(dto.getDescription());
+        campaign.setStatus(dto.getStatus());
+
+        return campaignMap.campaignEntity2Dto(campaignRepo.save(campaign));
+
     }
 
     @Override

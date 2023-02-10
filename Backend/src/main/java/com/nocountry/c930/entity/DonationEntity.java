@@ -33,8 +33,12 @@ public class DonationEntity implements Serializable {
     private PaymentStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "USER_CAMPAIGN_ID")
-    private UserCampaign userCampaignId;
+    @JoinColumn(name = "USER")
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "CAMPAIGN")
+    private CampaignEntity campaign;
 
 
 
