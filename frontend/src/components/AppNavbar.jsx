@@ -11,14 +11,16 @@ const AppNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            <Nav.Link href="/">Home</Nav.Link>
-            {user.email === "" ? (
+            {user.token === "" ? (
               <>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/registro">Registro</Nav.Link>
               </>
             ) : (
-              <Nav.Link href="/perfil">Perfil</Nav.Link>
+              <>
+                <Nav.Link href="/perfil">Perfil</Nav.Link>
+                <Nav.Link href="/perfil">Favoritos</Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
