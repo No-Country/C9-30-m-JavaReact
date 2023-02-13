@@ -52,7 +52,8 @@ public class CampaignServiceImpl implements ICampaignService {
 
     @Autowired
     DonationTierMap tierMap;
-    
+
+    @Autowired
     private IUtilService util;
 
     @Override
@@ -61,23 +62,23 @@ public class CampaignServiceImpl implements ICampaignService {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
 
-        CampaignEntity entity = campaignMap.campaignCreation2Entity(dto);
+        CampaignEntity campaignEntity = campaignMap.campaignCreation2Entity(dto);
         Set<DonationTierEntity> tiers = new HashSet<>();
+        campaignEntity.setCurrentMoney(BigDecimal.ZERO);
+        campaignEntity.setStatus(CampaignStatus.OPEN);
+        campaignEntity.setCreator(user);
 
         for (DonationTierDto donationTierDto : dto.getDonationTiers()) {
             DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(donationTierDto);
             DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
+            donationTierEntity.setCampaign(campaignEntity);
 
             tiers.add(entitySaved);
 
         }
-        entity.setCurrentMoney(BigDecimal.ZERO);
-        entity.setStatus(CampaignStatus.OPEN);
-        entity.setCreator(user);
-        entity.setDonationTiers(tiers);
+        campaignEntity.setDonationTiers(tiers);
 
-
-        return campaignMap.campaignEntity2Dto(campaignRepo.save(entity));
+        return campaignMap.campaignEntity2Dto(campaignRepo.save(campaignEntity));
     }
 
     @Override
@@ -85,7 +86,7 @@ public class CampaignServiceImpl implements ICampaignService {
         PageDto<CampaignBasicDto> pageDto = new PageDto<>();
         Map<String, String> links = new HashMap<>();
         List<CampaignBasicDto> listDto = new ArrayList<>();
-        Page<CampaignEntity> elements = campaignRepo.findAll(page);
+        Page<CampaignEntity> elements = campaignRepo.findAllByStatus(CampaignStatus.OPEN, page);
 
         elements.getContent().forEach(element -> listDto.add(campaignMap.campaignEntity2BasicDto(element)));
         links.put("next", elements.hasNext() ? util.makePaginationLink(request, page.getPageNumber() + 1) : "");

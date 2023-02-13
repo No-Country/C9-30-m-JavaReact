@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CampaignRepository extends JpaRepository<CampaignEntity, Long> {
 
-    CampaignEntity findByStatus(CampaignStatus status);
+    Page<CampaignEntity> findAllByStatus(CampaignStatus status, Pageable page);
 
     Page<CampaignEntity> findAll(Pageable pageable);
 

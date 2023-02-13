@@ -32,6 +32,8 @@ public class CampaignController {
     private ICampaignService campaignService;
 
     @PostMapping()
+    @ApiOperation(value = "Creates a new campaign",
+            notes = "Must be a logged user, you need to add at least 1 donation tier")
     public ResponseEntity<CampaignDto> createCampaign(@RequestBody CampaignCreationDto dto) {
 
         CampaignDto campaign = campaignService.createCampaign(dto);
@@ -54,9 +56,9 @@ public class CampaignController {
 
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @ApiOperation(value = "List All Campaigns",
-            notes = "Gives a paginated list of all the campaigns")
+            notes = "Gives a paginated list of all the campaigns that are OPEN")
     public ResponseEntity<PageDto<CampaignBasicDto>> getAllCampaigns(@PageableDefault(size = 5) Pageable page,
                                                                  HttpServletRequest request) {
 

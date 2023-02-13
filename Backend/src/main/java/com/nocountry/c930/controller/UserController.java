@@ -76,7 +76,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping()
     @ApiOperation(value = "List All Users",
             notes = "Gives you a paginated list of all the users, only administrators can use this endpoint")
     public ResponseEntity<PageDto<UserDto>> getAllUsers(@PageableDefault(size = 5) Pageable page,
