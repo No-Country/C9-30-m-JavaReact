@@ -5,10 +5,12 @@ import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.entity.CommentEntity;
 import com.nocountry.c930.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CommentMap {
 
     @Autowired

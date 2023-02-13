@@ -3,10 +3,12 @@ package com.nocountry.c930.mapper;
 import com.nocountry.c930.dto.ComplaintDto;
 import com.nocountry.c930.entity.ComplaintEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ComplaintMap {
 
     @Autowired
