@@ -61,7 +61,6 @@ public class UserController {
 
     }
 
-
     @PutMapping("/{id}")
     @ApiOperation(value = "Updates your Info",
             notes = "Updates the user information, only can update your own information")
