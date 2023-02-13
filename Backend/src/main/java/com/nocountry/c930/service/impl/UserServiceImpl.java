@@ -70,16 +70,18 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean deleteUser(Long id) {
 
-//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-       UserEntity user = userRepo.findById(id).orElseThrow(
-               ()-> new ParamNotFound("User doesn't exist")
-       );
-//        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
-//
-//
-//        if (user.getUserId() != id && user.getRole() != admin) {
-//            return false;
-//        }
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("User doesn't exist")
+        );
+
+        UserEntity userSession = userRepo.findByEmail(userEmail);
+        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+
+
+        if (userSession.getUserId() != id && user.getRole() != admin) {
+            return false;
+        }
         RoleEntity role = user.getRole();
         role.getUsers().remove(user);
         userRepo.delete(user);
@@ -94,14 +96,14 @@ public class UserServiceImpl implements IUserService {
 
         UserEntity entity = userRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("User ID is invalid"));
-//
-//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-//        UserEntity user = userRepo.findByEmail(userEmail);
-//        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
-//
-//        if (user != entity && user.getRole() != admin) {
-//            throw new RuntimeException("You can only update your own information");
-//        }
+
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepo.findByEmail(userEmail);
+        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+
+        if (user != entity && user.getRole() != admin) {
+            throw new RuntimeException("You can only update your own information");
+        }
 
 
         if (dto.getFirstName() != null) {
