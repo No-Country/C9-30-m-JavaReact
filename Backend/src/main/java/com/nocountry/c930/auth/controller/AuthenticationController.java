@@ -37,7 +37,7 @@ public class AuthenticationController {
 
   @PostMapping("/register")
   @ApiOperation(value = "Register as a user",
-          notes = "Create an account filling the form")
+          notes = "Create an account filling the form, password must be 8 or more characters long")
   public ResponseEntity<ResponseUserDto> signUp(@Valid @RequestBody UserRegistrationDto user) {
     ResponseUserDto userRegister = this.userDetailsServices.save(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
