@@ -1,5 +1,7 @@
 package com.nocountry.c930.mapper;
 
+
+import com.nocountry.c930.dto.CampaignCreationDto;
 import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.CampaignDto;
 import com.nocountry.c930.entity.CampaignEntity;
@@ -14,6 +16,9 @@ public class CampaignMap {
 
     @Autowired
     private UserMap userMap;
+
+    @Autowired
+    private DonationTierMap tierMap;
 
 
     public CampaignDto campaignEntity2Dto(CampaignEntity original) {
@@ -30,6 +35,7 @@ public class CampaignMap {
         copy.setStatus(original.getStatus());
 
         copy.setCreator(userMap.userEntity2Dto(original.getCreator()));
+        copy.setDonationTiers(tierMap.tierEntitySet2Dto(original.getDonationTiers()));
 
         return copy;
 
@@ -80,5 +86,16 @@ public class CampaignMap {
 
         return copy;
 
+    }
+
+    public CampaignEntity campaignCreation2Entity(CampaignCreationDto dto){
+
+        CampaignEntity entity = new CampaignEntity();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setClosingDate(dto.getClosingDate());
+        entity.setGoalMoney(dto.getGoalMoney());
+
+        return entity;
     }
 }

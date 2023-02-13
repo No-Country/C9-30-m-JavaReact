@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ public class UserController {
     @ApiOperation(value = "Get User Info",
             notes = "Gets all the user information, including tournaments that manages and teams that belongs to.")
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "User ID is invalid (must use numbers value only)"),
+            @ApiResponse(code = 400, message = "User ID is invalid (must use numbers value only"),
             @ApiResponse(code = 404, message = "User not found")})
     public ResponseEntity<UserDto> getUser(@PathVariable(name = "id") Long idUser) {
 
