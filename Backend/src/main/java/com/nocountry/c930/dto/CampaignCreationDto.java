@@ -1,19 +1,15 @@
 package com.nocountry.c930.dto;
 
-import com.nocountry.c930.entity.CampaignEntity;
-import com.nocountry.c930.enumeration.CampaignStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
-public class CampaignDto {
-
-    private Long campaignId;
+public class CampaignCreationDto {
 
     private String name;
 
@@ -27,9 +23,5 @@ public class CampaignDto {
 
     private BigDecimal currentMoney;
 
-    private CampaignStatus status;
-
-    private Set<DonationTierDto> donationTiers;
-
-    private UserDto creator;
+    private List<DonationTierDto> donationTiers;
 }

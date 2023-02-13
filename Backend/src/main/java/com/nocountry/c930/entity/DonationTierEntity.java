@@ -19,9 +19,8 @@ public class DonationTierEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long donationTierId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "TIER_NAME", nullable = false)
-    private TierName tierName;
+    private String tierName;
 
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;

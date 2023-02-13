@@ -1,10 +1,11 @@
 package com.nocountry.c930.service;
 
+import com.nocountry.c930.dto.CampaignCreationDto;
 import com.nocountry.c930.dto.CampaignDto;
 
 public interface ICampaignService {
 
-    CampaignDto createCampaign(CampaignDto dto);
+    CampaignDto createCampaign(CampaignCreationDto dto);
 
     CampaignDto getCampaign(Long id);
 

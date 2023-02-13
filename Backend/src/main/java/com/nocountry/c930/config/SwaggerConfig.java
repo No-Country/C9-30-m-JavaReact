@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 ,
                 "1.0",
                 "Terms of service",
-                new Contact("ArgeFounding", "", ""),
+                new Contact("ArgFounding", "", ""),
                 "License of API",
                 "API license URL",
                 Collections.emptyList());
