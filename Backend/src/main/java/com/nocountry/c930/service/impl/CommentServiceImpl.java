@@ -12,7 +12,9 @@ import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentServiceImpl implements ICommentService {
     
     @Autowired

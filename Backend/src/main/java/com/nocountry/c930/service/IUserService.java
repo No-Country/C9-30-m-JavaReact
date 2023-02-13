@@ -1,5 +1,6 @@
 package com.nocountry.c930.service;
 
+import com.nocountry.c930.auth.dto.UserRegistrationDto;
 import com.nocountry.c930.dto.PageDto;
 import com.nocountry.c930.dto.UserDto;
 import org.springframework.data.domain.Pageable;
@@ -11,5 +12,7 @@ public interface IUserService {
 
     UserDto getUser(Long id);
 
-    void deleteUser(Long id);
+    boolean deleteUser(Long id);
+
+    UserDto updateUser(Long id, UserRegistrationDto dto);
 }

@@ -15,9 +15,11 @@ import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import javax.security.auth.message.AuthException;
 
+@Service
 public class CampaignServiceImpl implements ICampaignService {
 
     @Autowired

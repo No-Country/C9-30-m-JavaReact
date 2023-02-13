@@ -1,5 +1,6 @@
 package com.nocountry.c930.service.impl;
 
+import com.nocountry.c930.auth.dto.UserRegistrationDto;
 import com.nocountry.c930.dto.PageDto;
 import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.entity.RoleEntity;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class UserServiceImpl implements IUserService {
 
     @Autowired
@@ -64,18 +68,64 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public boolean deleteUser(Long id) {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
-        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+       UserEntity user = userRepo.findById(id).orElseThrow(
+               ()-> new ParamNotFound("User doesn't exist")
+       );
+//        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+//
+//
+//        if (user.getUserId() != id && user.getRole() != admin) {
+//            return false;
+//        }
+        RoleEntity role = user.getRole();
+        role.getUsers().remove(user);
+        userRepo.delete(user);
+        return true;
+
+    }
+
+    @Override
+    public UserDto updateUser(Long id, UserRegistrationDto dto) {
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        UserEntity entity = userRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("User ID is invalid"));
+//
+//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+//        UserEntity user = userRepo.findByEmail(userEmail);
+//        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+//
+//        if (user != entity && user.getRole() != admin) {
+//            throw new RuntimeException("You can only update your own information");
+//        }
 
 
-        if (user.getUserId() != id && user.getRole() != admin) {
-            throw new NotAllowed("You don't have permission to do that.");
+        if (dto.getFirstName() != null) {
+            entity.setFirstName(dto.getFirstName());
+        }
+        if (dto.getLastName() != null) {
+            entity.setLastName(dto.getLastName());
+        }
+        if (dto.getEmail() != null) {
+            entity.setEmail(dto.getEmail());
         }
 
-        userRepo.delete(user);
+        if (dto.getPassword() != null) {
 
+            if (dto.getPassword().equals(dto.getPasswordConfirm())) {
+                entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+
+            } else throw new ParamNotFound("Passwords must coincide");
+
+        }
+
+
+        UserEntity entitySaved = userRepo.save(entity);
+
+        return userMap.userEntity2Dto(entity);
     }
 }
