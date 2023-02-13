@@ -1,5 +1,6 @@
 package com.nocountry.c930.mapper;
 
+import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.CampaignDto;
 import com.nocountry.c930.entity.CampaignEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,30 @@ public class CampaignMap {
 
     }
 
-    public List<CampaignDto> campaignEntityList2Dto(List<CampaignEntity> entities) {
+    public CampaignBasicDto campaignEntity2BasicDto(CampaignEntity original) {
 
-        List<CampaignDto> dtos = new ArrayList<>();
+        CampaignBasicDto copy = new CampaignBasicDto();
+
+        copy.setCampaignId(original.getCampaignId());
+        copy.setName(original.getName());
+        copy.setCreationDate(original.getCreationDate());
+        copy.setClosingDate(original.getClosingDate());
+        copy.setGoalMoney(original.getGoalMoney());
+        copy.setCurrentMoney(original.getCurrentMoney());
+
+        copy.setCreator(userMap.userEntity2Dto(original.getCreator()).getLastName());
+
+        return copy;
+
+    }
+
+
+    public List<CampaignBasicDto> campaignEntityList2BasicDto(List<CampaignEntity> entities) {
+
+        List<CampaignBasicDto> dtos = new ArrayList<>();
 
         for (CampaignEntity entity : entities) {
-            dtos.add(campaignEntity2Dto(entity));
+            dtos.add(campaignEntity2BasicDto(entity));
         }
 
         return dtos;
