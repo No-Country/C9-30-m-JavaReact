@@ -1,13 +1,8 @@
 package com.nocountry.c930.controller;
 
 
-import com.nocountry.c930.dto.CampaignCreationDto;
-import com.nocountry.c930.dto.CampaignBasicDto;
-import com.nocountry.c930.dto.CampaignDto;
-import com.nocountry.c930.dto.PageDto;
-import com.nocountry.c930.dto.UserDto;
+import com.nocountry.c930.dto.*;
 import com.nocountry.c930.service.ICampaignService;
-import com.nocountry.c930.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -56,11 +50,26 @@ public class CampaignController {
 
     }
 
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Updates a campaign info",
+            notes = "You can only update the name, description and status" + '\n' +
+    "Since Status is an enum you need to put an integer 0 for open and 1 for closed")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Campaign ID is invalid (must use numbers value only)"),
+            @ApiResponse(code = 404, message = "Campaign not found")})
+
+    public ResponseEntity<CampaignDto> updateCampaign(@PathVariable(name ="id") Long idCampaign, @RequestBody UpdateCampaignDto dto){
+
+        CampaignDto campaignUpdated = campaignService.updateCampaign(idCampaign,dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(campaignUpdated);
+    }
+
     @GetMapping()
     @ApiOperation(value = "List All Campaigns",
             notes = "Gives a paginated list of all the campaigns that are OPEN")
     public ResponseEntity<PageDto<CampaignBasicDto>> getAllCampaigns(@PageableDefault(size = 5) Pageable page,
-                                                                 HttpServletRequest request) {
+                                                                     HttpServletRequest request) {
 
 
         PageDto<CampaignBasicDto> result = campaignService.listAllCampaigns(page, request);

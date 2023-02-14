@@ -1,11 +1,6 @@
 package com.nocountry.c930.service.impl;
 
-import com.nocountry.c930.dto.CampaignCreationDto;
-import com.nocountry.c930.dto.DonationTierDto;
-import com.nocountry.c930.dto.CampaignBasicDto;
-import com.nocountry.c930.dto.CampaignDto;
-import com.nocountry.c930.dto.PageDto;
-import com.nocountry.c930.dto.UserDto;
+import com.nocountry.c930.dto.*;
 import com.nocountry.c930.entity.CampaignEntity;
 import com.nocountry.c930.entity.DonationTierEntity;
 import com.nocountry.c930.entity.RoleEntity;
@@ -109,7 +104,7 @@ public class CampaignServiceImpl implements ICampaignService {
     }
 
     @Override
-    public CampaignDto updateCampaign(Long id, CampaignDto dto) {
+    public CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
