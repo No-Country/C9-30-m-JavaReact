@@ -19,7 +19,7 @@ const AppNavbar = () => {
             ) : (
               <>
                 <Nav.Link href="/perfil">Perfil</Nav.Link>
-                <Nav.Link href="/perfil">Favoritos</Nav.Link>
+                <Nav.Link href="/favorites">Favoritos</Nav.Link>
               </>
             )}
           </Nav>

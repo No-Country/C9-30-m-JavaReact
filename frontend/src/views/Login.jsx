@@ -6,7 +6,7 @@ import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const { login } = useAuth();
+   const { login } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({

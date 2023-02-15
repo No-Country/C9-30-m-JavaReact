@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
     token: "",
   });
 
+
   const login = async (userData) => {
     try {
       const userToken = await loginUser(userData);
@@ -36,11 +37,14 @@ function AuthProvider({ children }) {
     }
   };
 
+
   return (
-    <authContext.Provider value={{ login, register, user }}>
+    <authContext.Provider value={{login, register, user}}>
       {children}
     </authContext.Provider>
   );
-}
 
-export default AuthProvider;
+  }
+
+
+export default AuthProvider; 

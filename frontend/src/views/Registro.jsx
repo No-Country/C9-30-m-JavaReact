@@ -11,6 +11,7 @@ import {
 import { createUser } from "../petitions";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const Registro = () => {
   const { register } = useAuth();
