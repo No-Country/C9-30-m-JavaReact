@@ -1,17 +1,39 @@
 package com.nocountry.c930.service.impl;
 
+import com.nocountry.c930.dto.CampaignCreationDto;
+import com.nocountry.c930.dto.DonationTierDto;
+import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.CampaignDto;
+import com.nocountry.c930.dto.PageDto;
+import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.entity.CampaignEntity;
+import com.nocountry.c930.entity.DonationTierEntity;
+import com.nocountry.c930.entity.RoleEntity;
 import com.nocountry.c930.entity.UserEntity;
 import com.nocountry.c930.enumeration.CampaignStatus;
+import com.nocountry.c930.enumeration.RoleName;
 import com.nocountry.c930.mapper.CampaignMap;
+import com.nocountry.c930.mapper.DonationTierMap;
+import com.nocountry.c930.mapper.exception.NotAllowed;
 import com.nocountry.c930.mapper.exception.ParamNotFound;
 import com.nocountry.c930.repository.CampaignRepository;
+import com.nocountry.c930.repository.DonationTierRepository;
+import com.nocountry.c930.repository.RoleRepository;
 import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICampaignService;
+import com.nocountry.c930.service.IUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+import javax.security.auth.message.AuthException;
+import java.math.BigDecimal;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+
+@Service
 public class CampaignServiceImpl implements ICampaignService {
 
     @Autowired
@@ -20,21 +42,62 @@ public class CampaignServiceImpl implements ICampaignService {
     CampaignRepository campaignRepo;
 
     @Autowired
+    RoleRepository roleRepo;
+
+    @Autowired
+    DonationTierRepository tierRepo;
+
+    @Autowired
     CampaignMap campaignMap;
 
+    @Autowired
+    DonationTierMap tierMap;
+
+    @Autowired
+    private IUtilService util;
+
     @Override
-    public CampaignDto createCampaign(CampaignDto dto) {
+    public CampaignDto createCampaign(CampaignCreationDto dto) {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
 
-        CampaignEntity entity = new CampaignEntity();
+        CampaignEntity campaignEntity = campaignMap.campaignCreation2Entity(dto);
+        Set<DonationTierEntity> tiers = new HashSet<>();
+        campaignEntity.setCurrentMoney(BigDecimal.ZERO);
+        campaignEntity.setStatus(CampaignStatus.OPEN);
+        campaignEntity.setCreator(user);
 
-        entity.setStatus(CampaignStatus.OPEN);
-        entity.setCreator(user);
+        for (DonationTierDto donationTierDto : dto.getDonationTiers()) {
+            DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(donationTierDto);
+            DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
+            donationTierEntity.setCampaign(campaignEntity);
 
-        return campaignMap.campaignEntity2Dto(campaignRepo.save(entity));
+            tiers.add(entitySaved);
+
+        }
+        campaignEntity.setDonationTiers(tiers);
+
+        return campaignMap.campaignEntity2Dto(campaignRepo.save(campaignEntity));
     }
+
+    @Override
+    public PageDto<CampaignBasicDto> listAllCampaigns(Pageable page, HttpServletRequest request) {
+        PageDto<CampaignBasicDto> pageDto = new PageDto<>();
+        Map<String, String> links = new HashMap<>();
+        List<CampaignBasicDto> listDto = new ArrayList<>();
+        Page<CampaignEntity> elements = campaignRepo.findAllByStatus(CampaignStatus.OPEN, page);
+
+        elements.getContent().forEach(element -> listDto.add(campaignMap.campaignEntity2BasicDto(element)));
+        links.put("next", elements.hasNext() ? util.makePaginationLink(request, page.getPageNumber() + 1) : "");
+        links.put("previous", elements.hasPrevious() ? util.makePaginationLink(request, page.getPageNumber() - 1) : "");
+
+        pageDto.setContent(listDto);
+        pageDto.setLinks(links);
+
+        return pageDto;
+    }
+
 
     @Override
     public CampaignDto getCampaign(Long id) {
@@ -48,14 +111,24 @@ public class CampaignServiceImpl implements ICampaignService {
     @Override
     public CampaignDto updateCampaign(Long id, CampaignDto dto) {
 
-        if (!campaignRepo.existsById(id)) {
-            throw new ParamNotFound("Campaign doesn't exist");
-        } else {
-            CampaignEntity entity = campaignMap.campaignDto2Entity(dto);
-            entity.setCampaignId(id);
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepo.findByEmail(userEmail);
+
+        RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
+
+        CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist"));
+
+        if (campaign.getCreator() != user && user.getRole() != admin) {
+            throw new NotAllowed("You don't have permission to do that");
         }
 
-        return dto;
+        campaign.setName(dto.getName());
+        campaign.setDescription(dto.getDescription());
+        campaign.setStatus(dto.getStatus());
+
+        return campaignMap.campaignEntity2Dto(campaignRepo.save(campaign));
+
     }
 
     @Override

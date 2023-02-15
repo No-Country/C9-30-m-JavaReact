@@ -27,6 +27,10 @@ public class ComplaintEntity implements Serializable {
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "USER_CAMPAIGN_ID")
-    private UserCampaign userCampaignId;
+    @JoinColumn(name = "USER")
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "CAMPAIGN")
+    private CampaignEntity campaign;
 }

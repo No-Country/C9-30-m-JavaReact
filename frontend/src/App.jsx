@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar";
+import Footer from "./components/Footer";
 import AuthProvider from "./context/AuthContext";
 import Favoritepag from "./context/FavoriteContext";
 import "./styles/App.scss";
@@ -13,8 +14,9 @@ import Registro from "./views/Registro";
 function App() {
   return (
     <div className="App">
-       <Favoritepag>
+     
       <AuthProvider>
+      <Favoritepag>
         <AppNavbar />
         <Container>
           <BrowserRouter>
@@ -27,8 +29,9 @@ function App() {
             </Routes>
           </BrowserRouter>
         </Container>
+        </Favoritepag>
       </AuthProvider>
-      </Favoritepag>
+      <Footer></Footer>
     </div>
   );
 }

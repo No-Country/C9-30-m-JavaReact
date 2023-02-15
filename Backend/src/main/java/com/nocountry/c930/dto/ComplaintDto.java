@@ -1,6 +1,5 @@
 package com.nocountry.c930.dto;
 
-import com.nocountry.c930.entity.UserCampaign;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +15,8 @@ public class ComplaintDto {
 
     private Date creationDate;
 
-    private UserCampaign userCampaignId;
+    private UserDto user;
+
+    private CampaignDto campaign;
 
 }

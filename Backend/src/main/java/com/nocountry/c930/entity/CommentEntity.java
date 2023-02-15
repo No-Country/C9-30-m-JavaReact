@@ -15,6 +15,7 @@ public class CommentEntity implements Serializable {
 
     private static final Long serialVersionUID = 1L;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMENT_ID")
@@ -27,7 +28,11 @@ public class CommentEntity implements Serializable {
     private Date creationDate;
 
     @ManyToOne
-    @JoinColumn(name = "USER_CAMPAIGN_ID")
-    private UserCampaign userCampaignId;
+    @JoinColumn(name = "USER")
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "CAMPAIGN")
+    private CampaignEntity campaign;
 
 }
