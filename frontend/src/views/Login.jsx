@@ -18,6 +18,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
+      localStorage.setItem("token", response.data.accessToken);
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       await login(user);
       navigate("/");
     } catch (error) {

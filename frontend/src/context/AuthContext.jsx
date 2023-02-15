@@ -3,6 +3,7 @@ import { createUser, loginUser } from "../petitions";
 
 export const authContext = createContext();
 
+
 export const useAuth = () => {
   const context = useContext(authContext);
   if (!context) throw new Error("No auth provider");
