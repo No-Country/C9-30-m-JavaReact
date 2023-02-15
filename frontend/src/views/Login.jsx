@@ -13,6 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
@@ -21,6 +22,7 @@ const Login = () => {
       await login(user);
       navigate("/");
     } catch (error) {
+      // console.log(error);
       setError("Usuario o clave incorrecta");
     }
   };

@@ -13,21 +13,19 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    token: "",
   });
 
   const login = async (userData) => {
     try {
       const userToken = await loginUser(userData);
-      setUser({
-        email: userData.email,
-        password: userData.password,
-        token: userToken.jwt,
-      });
+      setUser(userData);
+      localStorage.setItem("token", JSON.stringify(userToken));
+      console.log(userToken);
     } catch (error) {
       throw new Error(error);
     }
   };
+
   const register = async (newUser) => {
     try {
       const userToken = await createUser(newUser);
