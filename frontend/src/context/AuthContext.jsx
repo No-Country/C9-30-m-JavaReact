@@ -3,7 +3,6 @@ import { createUser, loginUser } from "../petitions";
 
 export const authContext = createContext();
 
-
 export const useAuth = () => {
   const context = useContext(authContext);
   if (!context) throw new Error("No auth provider");
@@ -14,22 +13,19 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    token: "",
   });
-
 
   const login = async (userData) => {
     try {
       const userToken = await loginUser(userData);
-      setUser({
-        email: userData.email,
-        password: userData.password,
-        token: userToken.jwt,
-      });
+      setUser(userData);
+      localStorage.setItem("token", JSON.stringify(userToken));
+      console.log(userToken);
     } catch (error) {
       throw new Error(error);
     }
   };
+
   const register = async (newUser) => {
     try {
       const userToken = await createUser(newUser);
@@ -38,14 +34,11 @@ function AuthProvider({ children }) {
     }
   };
 
-
   return (
-    <authContext.Provider value={{login, register, user}}>
+    <authContext.Provider value={{ login, register, user }}>
       {children}
     </authContext.Provider>
   );
+}
 
-  }
-
-
-export default AuthProvider; 
+export default AuthProvider;

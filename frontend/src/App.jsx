@@ -10,13 +10,13 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Perfil from "./views/Perfil";
 import Registro from "./views/Registro";
+import Campaigns from "./views/Campaigns";
 
 function App() {
   return (
     <div className="App">
-     
       <AuthProvider>
-      <Favoritepag>
+        <Favoritepag> 
         <AppNavbar />
         <Container>
           <BrowserRouter>
@@ -26,10 +26,11 @@ function App() {
               <Route path="/registro" element={<Registro />} />
               <Route path="/perfil" element={<Perfil />} />
               <Route path="/favorites" element={<Favorites />} />
+              <Route path="/campañas" element={<Campaigns />} />
             </Routes>
           </BrowserRouter>
         </Container>
-        </Favoritepag>
+        </Favoritepag> 
       </AuthProvider>
       <Footer></Footer>
     </div>

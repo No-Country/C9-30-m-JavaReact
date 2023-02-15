@@ -4,7 +4,7 @@ const urlApi = "https://argfounding-production.up.railway.app/auth";
 
 export const loginUser = async (data) => {
   const response = await axios.post(`${urlApi}/login`, data);
-  return response.data;
+  return response.data.jwt;
 };
 
 const createUser = async (newUser) => {

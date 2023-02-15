@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../context/FavoriteContext";
+import { useFavorite } from "../context/FavoriteContext";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
 function Favorites() {
-  const { favorites } = useAuth();
+  const { favorites } = useFavorite();
   return (
     <>
       <Navbar bg="light" className="d-flex flex-column mb-2 border-0">

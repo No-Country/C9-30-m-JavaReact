@@ -6,26 +6,23 @@ import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-   const { login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
   const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
-      localStorage.setItem("token", response.data.accessToken);
-
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
       await login(user);
       navigate("/");
     } catch (error) {
+      // console.log(error);
       setError("Usuario o clave incorrecta");
     }
   };

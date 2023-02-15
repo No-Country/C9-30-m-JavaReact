@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 export const favoriteContext = createContext();
 
-export const useAuth = () => {
+export const useFavorite = () => {
     const context = useContext(favoriteContext);
     if (!context) throw new Error("No auth provider");
     return context;
