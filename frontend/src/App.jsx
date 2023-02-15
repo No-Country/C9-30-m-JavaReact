@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppNavbar from "./components/AppNavbar";
+import Footer from "./components/Footer";
 import AuthProvider from "./context/AuthContext";
 import "./styles/App.scss";
 import Home from "./views/Home";
@@ -24,6 +25,7 @@ function App() {
           </BrowserRouter>
         </Container>
       </AuthProvider>
+      <Footer />
     </div>
   );
 }
