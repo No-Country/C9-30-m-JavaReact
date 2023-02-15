@@ -16,23 +16,24 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <Favoritepag> 
-        <AppNavbar />
-        <Container>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/registro" element={<Registro />} />
-              <Route path="/perfil" element={<Perfil />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/campañas" element={<Campaigns />} />
-            </Routes>
-          </BrowserRouter>
-        </Container>
-        </Favoritepag> 
+        <Favoritepag>
+          <AppNavbar />
+          <Container>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/registro" element={<Registro />} />
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/campanias" element={<Campaigns />} />
+              </Routes>
+            </BrowserRouter>
+          </Container>
+        </Favoritepag>
       </AuthProvider>
-      <Footer></Footer>
+      <br />
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 import Logo from "../assets/logo.svg";
 
@@ -21,7 +21,24 @@ const AppNavbar = () => {
               </>
             ) : (
               <>
-                <Nav.Link href="/perfil">Perfil</Nav.Link>
+                <NavDropdown title="Perfil" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/campanias">
+                    Campañas creadas
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Mis patrocinios
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.3">
+                    Mensajes
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.4">
+                    Configuraciones
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.5">
+                    Log Out
+                  </NavDropdown.Item>
+                </NavDropdown>
                 <Nav.Link href="/favorites">Favoritos</Nav.Link>
               </>
             )}
