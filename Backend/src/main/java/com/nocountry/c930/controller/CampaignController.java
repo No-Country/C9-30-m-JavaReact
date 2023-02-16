@@ -43,6 +43,25 @@ public class CampaignController {
         return ResponseEntity.status(HttpStatus.OK).body(campaign);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete an campaign",
+            notes = "Deletes an campaign, only admin and campaign's user creator are allowed to delete")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Campaign ID is invalid (User number values only)"),
+            @ApiResponse(code = 401, message = "You can only delete your own campaign"),
+            @ApiResponse(code = 404, message = "Campaign not found")})
+    public ResponseEntity<String> deleteCampaign(@PathVariable(name = "id") Long idCampaign) {
+
+        if (campaignService.getCampaign(idCampaign) != null) {
+            campaignService.deleteCampaign(idCampaign);
+            return ResponseEntity.status(HttpStatus.OK).body("Campaign deleted successfully");
+        } else {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campaign cannot be deleted");
+        }
+
+    }
+
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get Campaign Info",
