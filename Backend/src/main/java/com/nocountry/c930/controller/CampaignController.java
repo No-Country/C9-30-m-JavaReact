@@ -1,12 +1,10 @@
 package com.nocountry.c930.controller;
 
 
-import com.nocountry.c930.dto.CampaignCreationDto;
-import com.nocountry.c930.dto.CampaignBasicDto;
-import com.nocountry.c930.dto.CampaignDto;
-import com.nocountry.c930.dto.PageDto;
-import com.nocountry.c930.dto.UserDto;
+import com.nocountry.c930.dto.*;
+import com.nocountry.c930.entity.DonationEntity;
 import com.nocountry.c930.service.ICampaignService;
+import com.nocountry.c930.service.IDonationService;
 import com.nocountry.c930.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -30,6 +29,9 @@ public class CampaignController {
 
     @Autowired
     private ICampaignService campaignService;
+
+    @Autowired
+    private IDonationService donationService;
 
     @PostMapping()
     @ApiOperation(value = "Creates a new campaign",
@@ -66,6 +68,17 @@ public class CampaignController {
         PageDto<CampaignBasicDto> result = campaignService.listAllCampaigns(page, request);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(value = "/{id}/donations")
+    @ApiOperation(value = "List All Donations",
+            notes = "Gives a list of all donations")
+    public ResponseEntity<?> getAllDonations(@PathVariable(name = "id") Long idCampaign) {
+
+            Set<DonationDto> donations = campaignService.findAllDonations(idCampaign);
+
+                return ResponseEntity.ok(donations);
+
     }
 
 }

@@ -13,4 +13,6 @@ public interface CampaignRepository extends JpaRepository<CampaignEntity, Long> 
 
     Page<CampaignEntity> findAll(Pageable pageable);
 
+
+
 }
