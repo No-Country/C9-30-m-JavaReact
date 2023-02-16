@@ -96,16 +96,15 @@ public class CampaignServiceImpl implements ICampaignService {
     }
 
     @Override
-    public Set<DonationDto> findAllDonations(Long id){
+    public Set<DonationDto> findAllDonations(Long id) {
 
         CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("Campaign doesn't exist"));
 
 
-
-
         return donationMap.donationEntityList2DtoList(campaign.getDonationsReceived());
     }
+
 
 
     @Override
@@ -116,7 +115,6 @@ public class CampaignServiceImpl implements ICampaignService {
 
         return campaignMap.campaignEntity2Dto(campaign);
     }
-
 
 
     @Override

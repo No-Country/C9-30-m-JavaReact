@@ -139,6 +139,7 @@ public class CampaignController {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Comment cannot be deleted");
         }
+    }
 
     @GetMapping(value = "/{id}/donations")
     @ApiOperation(value = "List All Donations",
