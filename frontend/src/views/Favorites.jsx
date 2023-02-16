@@ -47,8 +47,7 @@ function Favorites() {
                 stroke-width="0.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              >
-              </path>
+              ></path>
             </svg>
           </Button>
         </Card.Body>

@@ -1,38 +1,23 @@
 import axios from "axios";
 
-const urlApi = "https://argfounding-production.up.railway.app/auth";
+const urlApi = "https://argfounding-production.up.railway.app";
 
 export const loginUser = async (data) => {
-  const response = await axios.post(`${urlApi}/login`, data);
+  const response = await axios.post(`${urlApi}/auth/login`, data);
   return response.data.jwt;
 };
 
-const createUser = async (newUser) => {
-  const response = await axios.post(`${urlApi}/register`, newUser);
+export const createUser = async (newUser) => {
+  const response = await axios.post(`${urlApi}/auth/register`, newUser);
   return response.data;
 };
 
-// export const validateUser = async (user) => {
-//   let res = false;
-//   const users = await getUsers();
-//   users.map((u) => {
-//     if (u.email === user.email && u.password === user.password) {
-//       res = true;
-//     }
-//   });
-//   return res;
-// };
+export const getCampaigns = async () => {
+  const response = await axios.get(`${urlApi}/campaigns`);
+  return response.data.content;
+};
 
-// const getUsers = async () => {
-//   const response = await axios({
-//     method: "GET",
-//     url: urlApi + "users",
-//     headers: {
-//       "content-type": "application/json",
-//       authorization: `Bearer ${getToken()}`,
-//     },
-//   });
-//   return response.data;
-// };
-
-export { createUser };
+export const getCampaignById = async (id) => {
+  const response = await axios.get(`${urlApi}/campaigns/${id}`);
+  return response.data;
+};

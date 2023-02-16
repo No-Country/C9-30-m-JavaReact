@@ -1,36 +1,40 @@
-import { Container } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import AppNavbar from "./components/AppNavbar";
 import Footer from "./components/Footer";
+
 import AuthProvider from "./context/AuthContext";
-import Favoritepag from "./context/FavoriteContext";
-import "./styles/App.scss";
+import FavoriteProvider from "./context/FavoriteContext";
+
 import Favorites from "./views/Favorites";
 import Home from "./views/Home";
 import Login from "./views/Login";
-import Perfil from "./views/Perfil";
-import Registro from "./views/Registro";
-import Campaigns from "./views/Campaigns";
+import Profile from "./views/Profile";
+import Register from "./views/Register";
+import Campaign from "./views/Campaign";
+
+import { Container } from "react-bootstrap";
+import "./styles/App.scss";
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <Favoritepag>
+        <FavoriteProvider>
           <AppNavbar />
           <Container>
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Registro />} />
-                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/registro" element={<Register />} />
+                <Route path="/perfil" element={<Profile />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/campanias" element={<Campaigns />} />
+                <Route path="/campania/:id" element={<Campaign />} />
               </Routes>
             </BrowserRouter>
           </Container>
-        </Favoritepag>
+        </FavoriteProvider>
       </AuthProvider>
       <br />
       <Footer />
