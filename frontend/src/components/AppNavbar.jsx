@@ -1,24 +1,46 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
-import { useAuth } from "../context/AuthContext";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+
+import Logo from "../assets/logo.svg";
+
+const token = localStorage.getItem("token");
 
 const AppNavbar = () => {
-  const { user } = useAuth();
-
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Logo</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img src={Logo} alt="logo" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            <Nav.Link href="/">Home</Nav.Link>
-            {user.email === "" ? (
+            {token === "" ? (
               <>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/registro">Registro</Nav.Link>
               </>
             ) : (
-              <Nav.Link href="/perfil">Perfil</Nav.Link>
+              <>
+                <NavDropdown title="Perfil" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/campanias">
+                    Campañas creadas
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Mis patrocinios
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.3">
+                    Mensajes
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.4">
+                    Configuraciones
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.5">
+                    Log Out
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link href="/favorites">Favoritos</Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

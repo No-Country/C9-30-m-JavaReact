@@ -1,15 +1,14 @@
 package com.nocountry.c930.service;
 
 
-import com.nocountry.c930.dto.CampaignCreationDto;
-import com.nocountry.c930.dto.CampaignBasicDto;
-import com.nocountry.c930.dto.CampaignDto;
-import com.nocountry.c930.dto.PageDto;
-import com.nocountry.c930.dto.UserDto;
+import com.nocountry.c930.dto.*;
+import com.nocountry.c930.entity.DonationEntity;
 import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.List;
+import java.util.Set;
 
 public interface ICampaignService {
 
@@ -18,6 +17,8 @@ public interface ICampaignService {
     CampaignDto getCampaign(Long id);
 
     PageDto<CampaignBasicDto> listAllCampaigns(Pageable page, HttpServletRequest request);
+
+    Set<DonationDto> findAllDonations(Long id);
 
     CampaignDto updateCampaign(Long id, CampaignDto dto);
 
