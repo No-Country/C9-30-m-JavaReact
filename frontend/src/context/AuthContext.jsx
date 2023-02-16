@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { validateUser } from "../petitions";
+import { createUser, loginUser } from "../petitions";
 
 export const authContext = createContext();
 
@@ -16,12 +16,26 @@ function AuthProvider({ children }) {
   });
 
   const login = async (userData) => {
-    const valid = await validateUser(userData);
-    valid ? setUser(userData) : alert("Usuario/contraseña incorrecta");
+    try {
+      const userToken = await loginUser(userData);
+      setUser(userData);
+      localStorage.setItem("token", JSON.stringify(userToken));
+      console.log(userToken);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const register = async (newUser) => {
+    try {
+      const userToken = await createUser(newUser);
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return (
-    <authContext.Provider value={{ login, user }}>
+    <authContext.Provider value={{ login, register, user }}>
       {children}
     </authContext.Provider>
   );
