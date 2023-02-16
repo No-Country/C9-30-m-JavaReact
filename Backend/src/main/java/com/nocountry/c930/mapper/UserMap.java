@@ -4,7 +4,6 @@ package com.nocountry.c930.mapper;
 import com.nocountry.c930.auth.dto.ResponseUserDto;
 import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.entity.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,6 @@ public class UserMap {
     entity.setFirstName(dto.getFirstName());
     entity.setLastName(dto.getLastName());
     entity.setEmail(dto.getEmail());
-    entity.setPassword(dto.getPassword());
 
     return entity;
   }
