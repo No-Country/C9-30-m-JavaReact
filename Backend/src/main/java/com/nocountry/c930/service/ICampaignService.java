@@ -18,7 +18,9 @@ public interface ICampaignService {
 
     PageDto<CampaignBasicDto> listAllCampaigns(Pageable page, HttpServletRequest request);
 
-    Set<DonationDto> findAllDonations(Long id);
+    CampaignDto updateCampaign(Long id, UpdateCampaignDto dto);
+   
+   Set<DonationDto> findAllDonations(Long id);
 
     CampaignDto updateCampaign(Long id, CampaignDto dto);
 

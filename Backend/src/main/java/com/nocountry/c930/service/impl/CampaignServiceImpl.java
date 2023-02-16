@@ -120,7 +120,7 @@ public class CampaignServiceImpl implements ICampaignService {
 
 
     @Override
-    public CampaignDto updateCampaign(Long id, CampaignDto dto) {
+    public CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);

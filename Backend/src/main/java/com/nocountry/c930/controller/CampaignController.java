@@ -2,8 +2,9 @@ package com.nocountry.c930.controller;
 
 
 import com.nocountry.c930.dto.*;
-import com.nocountry.c930.entity.DonationEntity;
 import com.nocountry.c930.service.ICampaignService;
+import com.nocountry.c930.service.ICommentService;
+import com.nocountry.c930.entity.DonationEntity;
 import com.nocountry.c930.service.IDonationService;
 import com.nocountry.c930.service.IUserService;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,8 @@ public class CampaignController {
 
     @Autowired
     private ICampaignService campaignService;
+    @Autowired
+    private ICommentService commentService;
 
     @Autowired
     private IDonationService donationService;
@@ -77,17 +80,65 @@ public class CampaignController {
 
     }
 
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Updates a campaign info",
+            notes = "You can only update the name, description and status" + '\n' +
+                    "Since Status is an enum you need to put an integer 0 for open and 1 for closed")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Campaign ID is invalid (must use numbers value only)"),
+            @ApiResponse(code = 404, message = "Campaign not found")})
+
+    public ResponseEntity<CampaignDto> updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody UpdateCampaignDto dto) {
+
+        CampaignDto campaignUpdated = campaignService.updateCampaign(idCampaign, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(campaignUpdated);
+    }
+
     @GetMapping()
     @ApiOperation(value = "List All Campaigns",
             notes = "Gives a paginated list of all the campaigns that are OPEN")
     public ResponseEntity<PageDto<CampaignBasicDto>> getAllCampaigns(@PageableDefault(size = 5) Pageable page,
-                                                                 HttpServletRequest request) {
+                                                                     HttpServletRequest request) {
 
 
         PageDto<CampaignBasicDto> result = campaignService.listAllCampaigns(page, request);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PostMapping("/{id}/comments")
+    @ApiOperation(value = "Post a comment in a campaign")
+    public ResponseEntity<CommentDto> createComment(@PathVariable(name = "id") Long idCampaign, @RequestBody PostCommentDto dto) {
+
+        CommentDto comment = commentService.createComment(idCampaign, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(comment);
+    }
+
+    @GetMapping("/{id}/comments")
+    @ApiOperation(value = "Gets a campaigns comments list")
+    public ResponseEntity<Set<CommentDto>> getComments(@PathVariable(name = "id") Long idCampaign) {
+
+        Set<CommentDto> comments = commentService.getCampaignComments(idCampaign);
+
+        return ResponseEntity.status(HttpStatus.OK).body(comments);
+
+
+    }
+
+    @DeleteMapping("/{id}/comments/{idComment}")
+    @ApiOperation(value = "Deletes a comment",
+            notes = "Only the user that created the comment or an Admin can delete it")
+    public ResponseEntity<String> deleteComment(@PathVariable(name = "id") Long idCampaign,
+                                                @PathVariable(name = "idComment") Long idComment) {
+
+        if (commentService.deleteComment(idCampaign, idComment)) {
+            return ResponseEntity.status(HttpStatus.OK).body("Comment deleted successfully");
+        } else {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Comment cannot be deleted");
+        }
 
     @GetMapping(value = "/{id}/donations")
     @ApiOperation(value = "List All Donations",
