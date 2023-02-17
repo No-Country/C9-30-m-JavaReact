@@ -38,8 +38,10 @@ const CampaignSlider = () => {
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </Card.Text>
-                    ${e.currentMoney}/{e.goalMoney}
-                    <br />
+                    <p>
+                      ${e.currentMoney} / {e.goalMoney}
+                    </p>
+
                     <a href={`/campania/${e.campaignId}`}>ver mas</a>
                   </Card.Body>
                 </Card>

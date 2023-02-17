@@ -1,0 +1,49 @@
+.campaign {
+  &-header {
+    background-image: url("https://dummyimage.com/500x200/a3a3a3/fff.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 25rem;
+
+    &-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      height: 18em;
+      margin-left: 2.5rem;
+
+      h2 {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  &-progress {
+    border-radius: 0 !important;
+    height: 0.5em !important;
+  }
+
+  &-money {
+    float: right;
+    margin-right: 2.5rem;
+  }
+
+  &-info-container {
+    display: flex;
+    justify-content: space-evenly;
+
+    .owner-image {
+      border-radius: 15px;
+    }
+  }
+
+  &-subtitle {
+    font-size: small;
+    color: #7c7c7c;
+  }
+
+  &-text {
+    font-size: small;
+    color: #2c74f6;
+  }
+}
