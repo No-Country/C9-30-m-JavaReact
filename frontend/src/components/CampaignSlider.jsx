@@ -12,7 +12,7 @@ const CampaignSlider = () => {
   useEffect(() => {
     async function run() {
       const campaigns = await getCampaigns();
-      console.log(campaigns);
+
       setSlides(campaigns);
     }
     run();
@@ -31,7 +31,7 @@ const CampaignSlider = () => {
                     variant="top"
                     src={`https://dummyimage.com/286x180/a3a3a3/fff.png&text=campaña`}
                   />
-                  <ProgressBar now={90} />
+                  <ProgressBar className="campaign-progress" now={90} />
                   <Card.Body>
                     <Card.Title>{e.name}</Card.Title>
                     <Card.Text>
