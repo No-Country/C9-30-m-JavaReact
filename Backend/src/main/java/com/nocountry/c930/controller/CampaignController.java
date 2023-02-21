@@ -17,9 +17,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -39,9 +41,9 @@ public class CampaignController {
     @PostMapping()
     @ApiOperation(value = "Creates a new campaign",
             notes = "Must be a logged user, you need to add at least 1 donation tier")
-    public ResponseEntity<CampaignDto> createCampaign(@RequestBody CampaignCreationDto dto) {
+    public ResponseEntity<CampaignBasicDto> createCampaign(@ModelAttribute CampaignCreationDto dto) throws IOException {
 
-        CampaignDto campaign = campaignService.createCampaign(dto);
+        CampaignBasicDto campaign = campaignService.createCampaign(dto);
 
         return ResponseEntity.status(HttpStatus.OK).body(campaign);
     }
@@ -146,9 +148,9 @@ public class CampaignController {
             notes = "Gives a list of all donations")
     public ResponseEntity<?> getAllDonations(@PathVariable(name = "id") Long idCampaign) {
 
-            Set<DonationDto> donations = campaignService.findAllDonations(idCampaign);
+        Set<DonationDto> donations = campaignService.findAllDonations(idCampaign);
 
-                return ResponseEntity.ok(donations);
+        return ResponseEntity.ok(donations);
 
     }
 

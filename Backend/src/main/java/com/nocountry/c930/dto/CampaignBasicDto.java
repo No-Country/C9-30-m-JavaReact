@@ -25,4 +25,6 @@ public class CampaignBasicDto {
 
     private String creator;
 
+    private String imgUrl;
+
 }

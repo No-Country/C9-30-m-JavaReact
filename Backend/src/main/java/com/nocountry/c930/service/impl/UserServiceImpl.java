@@ -117,12 +117,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         if (dto.getPassword() != null) {
-
-            if (dto.getPassword().equals(dto.getPasswordConfirm())) {
-                entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
-
-            } else throw new ParamNotFound("Passwords must coincide");
-
+            entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         }
 
 

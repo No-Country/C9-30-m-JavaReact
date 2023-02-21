@@ -8,14 +8,13 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class DonationTierDto {
+public class TierCreationDto {
 
-    private Long tierId;
     private String tierName;
 
     private BigDecimal price;
 
     private String description;
 
-    private String imageUrl;
+    private MultipartFile image;
 }

@@ -1,6 +1,7 @@
 package com.nocountry.c930.mapper;
 
 import com.nocountry.c930.dto.DonationTierDto;
+import com.nocountry.c930.dto.TierCreationDto;
 import com.nocountry.c930.entity.DonationTierEntity;
 import org.springframework.stereotype.Component;
 
@@ -17,29 +18,26 @@ public class DonationTierMap {
         dto.setDescription(entity.getDescription());
         dto.setPrice(entity.getPrice());
         dto.setTierId(entity.getDonationTierId());
+        dto.setImageUrl(entity.getImageUrl());
 
         return dto;
     }
 
-    public DonationTierEntity tierDto2Entity(DonationTierDto dto) {
+    public DonationTierEntity tierDto2Entity(TierCreationDto dto) {
 
         DonationTierEntity entity = new DonationTierEntity();
 
         entity.setTierName(dto.getTierName());
         entity.setPrice(dto.getPrice());
         entity.setDescription(dto.getDescription());
-        if (dto.getTierId() != null) {
-            entity.setDonationTierId(dto.getTierId());
-        }
-
         return entity;
     }
 
-    public Set<DonationTierEntity> tierDtoSet2Entity(Set<DonationTierDto> dtos) {
+    public Set<DonationTierEntity> tierDtoSet2Entity(Set<TierCreationDto> dtos) {
 
         Set<DonationTierEntity> entities = new HashSet<>();
 
-        for (DonationTierDto dto : dtos) {
+        for (TierCreationDto dto : dtos) {
 
             entities.add(tierDto2Entity(dto));
         }

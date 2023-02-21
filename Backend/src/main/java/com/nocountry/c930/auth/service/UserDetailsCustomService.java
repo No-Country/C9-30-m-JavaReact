@@ -10,6 +10,7 @@ import com.nocountry.c930.mapper.UserMap;
 import com.nocountry.c930.mapper.exception.RepeatedUsername;
 import com.nocountry.c930.repository.RoleRepository;
 import com.nocountry.c930.repository.UserRepository;
+import com.nocountry.c930.service.impl.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,100 +19,105 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
 
-  @Autowired
-  private UserRepository userRepo;
-  @Autowired
-  private RoleRepository roleRepo;
-  @Autowired
-  private UserMap userMap;
+    @Autowired
+    private UserRepository userRepo;
+    @Autowired
+    private RoleRepository roleRepo;
 
-  @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    UserEntity userEntity = userRepo.findByEmail(email);
-    if (userEntity == null) {
-      throw new UsernameNotFoundException("username or password not found");
-    }
-    return UserDetailsImpl.build(userEntity);
-  }
+    @Autowired
+    private StorageService storageService;
+    @Autowired
+    private UserMap userMap;
 
-  public ResponseUserDto save(@Valid UserRegistrationDto userDto) throws RepeatedUsername {
-
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-    if (userRepo.findByEmail(userDto.getEmail()) != null) {
-      throw new RepeatedUsername("email already exist");
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepo.findByEmail(email);
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("username or password not found");
+        }
+        return UserDetailsImpl.build(userEntity);
     }
 
-    if (!userDto.getPassword().equals(userDto.getPasswordConfirm()) ){
+    public ResponseUserDto save(@Valid UserRegistrationDto userDto) throws RepeatedUsername {
 
-      throw new RuntimeException("Passwords dont coincide");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        if (userRepo.findByEmail(userDto.getEmail()) != null) {
+            throw new RepeatedUsername("email already exist");
+        }
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        if (userDto.getImage() != null) {
+
+            try {
+                userEntity.setImageUrl(storageService.uploadImage(userDto.getImage()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        if (!roleRepo.existsByName(RoleName.ROLE_ADMIN)) {
+
+            RoleEntity roleAdmin = new RoleEntity();
+            roleAdmin.setName(RoleName.ROLE_ADMIN);
+
+            roleRepo.save(roleAdmin);
+
+            RoleEntity roleUser = new RoleEntity();
+            roleUser.setName(RoleName.ROLE_USER);
+
+            roleRepo.save(roleUser);
+
+
+        }
+
+        RoleEntity role = roleRepo.findByName(RoleName.ROLE_USER);
+        userEntity.setRole(role);
+
+        UserEntity entitySaved = this.userRepo.save(userEntity);
+
+
+        ResponseUserDto responseUserDto = userMap.userAuthEntity2Dto(entitySaved);
+
+
+        return responseUserDto;
+
+
     }
-    UserEntity userEntity = new UserEntity();
-    userEntity.setEmail(userDto.getEmail());
-    userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-    userEntity.setFirstName(userDto.getFirstName());
-    userEntity.setLastName(userDto.getLastName());
+
+    public ResponseUserDto saveAdmin(@Valid UserRegistrationDto userDto) throws RepeatedUsername {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        if (userRepo.findByEmail(userDto.getEmail()) != null) {
+            throw new RepeatedUsername("email already exist");
+        }
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        userEntity.setRole(roleRepo.findByName(RoleName.ROLE_ADMIN));
+
+        UserEntity entitySaved = this.userRepo.save(userEntity);
 
 
-    if(!roleRepo.existsByName(RoleName.ROLE_ADMIN)){
+        ResponseUserDto responseUserDto = userMap.userAuthEntity2Dto(entitySaved);
 
-      RoleEntity roleAdmin = new RoleEntity();
-      roleAdmin.setName(RoleName.ROLE_ADMIN);
 
-      roleRepo.save(roleAdmin);
-
-      RoleEntity roleUser = new RoleEntity();
-      roleUser.setName(RoleName.ROLE_USER);
-
-      roleRepo.save(roleUser);
-
+        return responseUserDto;
 
     }
-
-    RoleEntity role = roleRepo.findByName(RoleName.ROLE_USER);
-    userEntity.setRole(role);
-
-    UserEntity entitySaved = this.userRepo.save(userEntity);
-
-
-    ResponseUserDto responseUserDto = userMap.userAuthEntity2Dto(entitySaved);
-
-
-    return responseUserDto;
-
-
-  }
-
-  public ResponseUserDto saveAdmin(@Valid UserRegistrationDto userDto) throws RepeatedUsername {
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-    if (userRepo.findByEmail(userDto.getEmail()) != null) {
-      throw new RepeatedUsername("email already exist");
-    }
-    if (!userDto.getPassword().equals(userDto.getPasswordConfirm())){
-
-      throw new RuntimeException("Passwords dont coincide");
-    }
-    UserEntity userEntity = new UserEntity();
-    userEntity.setEmail(userDto.getEmail());
-    userEntity.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-    userEntity.setFirstName(userDto.getFirstName());
-    userEntity.setLastName(userDto.getLastName());
-    userEntity.setRole(roleRepo.findByName(RoleName.ROLE_ADMIN));
-
-    UserEntity entitySaved = this.userRepo.save(userEntity);
-
-
-    ResponseUserDto responseUserDto = userMap.userAuthEntity2Dto(entitySaved);
-
-
-    return responseUserDto;
-
-  }
 
 
 }

@@ -3,6 +3,7 @@ package com.nocountry.c930.auth.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -23,7 +24,6 @@ public class UserRegistrationDto {
     @Size(min = 8)
     private String password;
 
-    @NotEmpty
-    private String passwordConfirm;
+    private MultipartFile image;
 
 }

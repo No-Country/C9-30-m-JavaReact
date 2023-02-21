@@ -84,6 +84,7 @@ public class UserMap {
     dto.setUpdateDate(entitySaved.getUpdateDate());
     dto.setCreationDate(entitySaved.getCreationDate());
     dto.setPassword("[PROTECTED]");
+    dto.setImgUrl(entitySaved.getImageUrl());
 
 
     return dto;
