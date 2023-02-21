@@ -77,7 +77,9 @@ const AppNavbar = () => {
                     Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Button variant="secondary">Cargar proyecto</Button>
+                <Button variant="primary" style={{ borderRadius: "20px" }}>
+                  Cargar proyecto
+                </Button>
               </>
             )}
           </Nav>

@@ -29,7 +29,9 @@ const CampaignSlider = () => {
                 <Card style={{ width: "18rem" }}>
                   <Card.Img
                     variant="top"
-                    src={`https://dummyimage.com/286x180/a3a3a3/fff.png&text=campaña`}
+                    src={e.imgUrl}
+                    width={286}
+                    height={162}
                   />
                   <ProgressBar className="campaign-progress" now={90} />
                   <Card.Body>
