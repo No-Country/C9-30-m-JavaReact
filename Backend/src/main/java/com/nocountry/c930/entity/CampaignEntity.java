@@ -88,4 +88,5 @@ public class CampaignEntity implements Serializable {
             })
     private Set<ComplaintEntity> complaintsReceived;
 
+
 }

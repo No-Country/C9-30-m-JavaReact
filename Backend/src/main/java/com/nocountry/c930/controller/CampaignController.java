@@ -154,4 +154,14 @@ public class CampaignController {
 
     }
 
+    @PostMapping(value = "/{id}/donations")
+    @ApiOperation(value = "Makes a donation")
+    public ResponseEntity<?> makeADonation(@PathVariable(name = "id") Long idCampaign,
+                                           @RequestParam(name = "idDonationTier") Long idDonationTier) {
+
+        DonationDto dto = donationService.createDonation(idCampaign, idDonationTier);
+
+        return ResponseEntity.ok(dto);
+    }
+
 }

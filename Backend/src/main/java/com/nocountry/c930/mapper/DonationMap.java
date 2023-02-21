@@ -29,6 +29,7 @@ public class DonationMap {
         copy.setAmount(original.getAmount());
         copy.setStatus(original.getStatus());
         copy.setUserDto(userMap.userEntity2Dto(original.getUser()));
+        copy.setTierName(original.getTierName());
 
         return copy;
     }
@@ -55,6 +56,7 @@ public class DonationMap {
         copy.setStatus(original.getStatus());
         copy.setStatus(original.getStatus());
         copy.setUserDto(userMap.userEntity2Dto(original.getUser()));
+        copy.setTierName(original.getTierName());
 
         return copy;
     }
