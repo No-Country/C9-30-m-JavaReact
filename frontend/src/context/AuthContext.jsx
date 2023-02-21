@@ -20,7 +20,6 @@ function AuthProvider({ children }) {
       const userToken = await loginUser(userData);
       setUser(userData);
       localStorage.setItem("token", JSON.stringify(userToken));
-      console.log(userToken);
     } catch (error) {
       throw new Error(error);
     }
@@ -34,8 +33,12 @@ function AuthProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    localStorage.clear();
+  };
+
   return (
-    <authContext.Provider value={{ login, register, user }}>
+    <authContext.Provider value={{ login, register, user, logout }}>
       {children}
     </authContext.Provider>
   );

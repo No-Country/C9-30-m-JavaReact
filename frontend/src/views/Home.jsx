@@ -1,47 +1,43 @@
+import { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import CampaignSlider from "../components/CampaignSlider";
+import { getCampaigns } from "../petitions";
 
 const Home = () => {
+  const [sliderData, setSliderData] = useState([]);
+
+  useEffect(() => {
+    async function run() {
+      const homeCampaigns = await getCampaigns();
+      const slider = homeCampaigns.slice(1);
+      setSliderData(slider);
+    }
+
+    run();
+  }, []);
+
   return (
     <>
-      <Carousel controls={false} indicators={false}>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://dummyimage.com/500x200/a3a3a3/fff.png&text=image1"
-            alt="Imagen 1"
-          />
-          <Carousel.Caption>
-            <h3>Campaña 1</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://dummyimage.com/500x200/a3a3a3/fff.png&text=image2"
-            alt="Second slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Campaña 2</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://dummyimage.com/500x200/a3a3a3/fff.png&text=image3"
-            alt="Third slide"
-          />
-
-          <Carousel.Caption>
-            <h3>Campaña 3</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
+      <Carousel controls={true} indicators={false}>
+        {sliderData.map((sl, idx) => {
+          return (
+            <Carousel.Item key={idx}>
+              <img
+                className="d-block w-100"
+                src={sl.imgUrl}
+                alt="Imagen 1"
+                width={800}
+                height={400}
+              />
+              <Carousel.Caption>
+                <h3>{sl.name}</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          );
+        })}
       </Carousel>
       <hr />
       <h3>Mas recientes</h3>

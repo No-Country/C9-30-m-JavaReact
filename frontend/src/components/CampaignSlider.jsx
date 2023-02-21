@@ -1,55 +1,55 @@
 import useEmblaCarousel from "embla-carousel-react";
+import { useEffect, useState } from "react";
+import { Button, Card, ProgressBar } from "react-bootstrap";
+
+import { getCampaigns } from "../petitions";
 
 const options = { dragFree: true, containScroll: "trimSnaps" };
 
-const slides = [
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a1",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a2",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a3",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a4",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a5",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a6",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a7",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a8",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a9",
-  },
-  {
-    image: "https://dummyimage.com/300x200/a3a3a3/fff.png&text=campa%C3%B1a10",
-  },
-];
-
 const CampaignSlider = () => {
+  const [slides, setSlides] = useState([]);
+
+  useEffect(() => {
+    async function run() {
+      const campaigns = await getCampaigns();
+
+      setSlides(campaigns);
+    }
+    run();
+  }, []);
+
   const [emblaRef] = useEmblaCarousel(options);
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((e, index) => (
-            <div className="embla__slide" key={index}>
-              <img
-                className="embla__slide__img"
-                src={e.image}
-                alt="Your alt text"
-              />
-            </div>
-          ))}
+          {slides.map((e, idx) => {
+            return (
+              <div className="embla__slide" key={idx}>
+                <Card style={{ width: "18rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src={e.imgUrl}
+                    width={286}
+                    height={162}
+                  />
+                  <ProgressBar className="campaign-progress" now={90} />
+                  <Card.Body>
+                    <Card.Title>{e.name}</Card.Title>
+                    <Card.Text>
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
+                    </Card.Text>
+                    <p>
+                      ${e.currentMoney} / {e.goalMoney}
+                    </p>
+
+                    <a href={`/campania/${e.campaignId}`}>ver mas</a>
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

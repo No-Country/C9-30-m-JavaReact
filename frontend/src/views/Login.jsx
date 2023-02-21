@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Alert, Button, Form, Stack } from "react-bootstrap";
+import { Alert, Button, Form, Spinner, Stack } from "react-bootstrap";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
@@ -18,11 +18,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const loadingBtn = document.getElementById("loadingBtn");
+    const loginBtn = document.getElementById("loginBtn");
+
     try {
+      loadingBtn.style = "display: initial";
+      loginBtn.style = "display: none";
       await login(user);
-      navigate("/");
+      setTimeout(() => {
+        loadingBtn.style = "display: none";
+        loginBtn.style = "display: initial";
+        navigate("/");
+        window.location.reload();
+      }, 3000);
     } catch (error) {
-      // console.log(error);
       setError("Usuario o clave incorrecta");
     }
   };
@@ -77,8 +86,23 @@ const Login = () => {
               </Form.Text>
             </Form.Group>
             <br />
-            <p id="errorMessage"></p>
-            <Button variant="secondary" type="submit" className="">
+            <Button
+              id="loadingBtn"
+              variant="secondary"
+              disabled
+              style={{ display: "none" }}
+            >
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />{" "}
+              Iniciar sesión
+              <span className="visually-hidden">Loading...</span>
+            </Button>
+            <Button id="loginBtn" variant="secondary" type="submit">
               Iniciar sesión
             </Button>
           </Form>
