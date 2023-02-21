@@ -9,10 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.no-country</groupId>
+
     <artifactId>ArgFounding</artifactId>
     <version>1</version>
     <name>ArgFounding</name>
     <description>ArgFounding demo</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>
