@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface IDonationService {
 
-    DonationDto createDonation(DonationDto dto);
+    DonationDto createDonation(Long idCampaign, Long idDonationTier);
 
     DonationDto getDonation(Long id);
 

@@ -23,5 +23,7 @@ public class DonationDto {
 
     private UserDto userDto;
 
+    private String tierName;
+
 
 }

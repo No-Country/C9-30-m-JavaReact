@@ -22,5 +22,7 @@ public interface ICampaignService {
 
     Set<DonationDto> findAllDonations(Long id);
 
+    void updateCampaignMoney(Long idCampaign);
+
     void deleteCampaign(Long id);
 }

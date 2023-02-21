@@ -69,7 +69,7 @@ public class CampaignServiceImpl implements ICampaignService {
         campaignEntity.setMainImageUrl(storageService.uploadImage(dto.getImage()));
         campaignRepo.save(campaignEntity);
 
-        
+
         for (TierCreationDto tierDto : dto.getDonationTiers()) {
             DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(tierDto);
             DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
@@ -152,5 +152,23 @@ public class CampaignServiceImpl implements ICampaignService {
                 () -> new ParamNotFound("Campaign doesn't exist"));
 
         campaignRepo.delete(campaign);
+    }
+
+    @Override
+    public void updateCampaignMoney(Long idCampaign) {
+
+        CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
+                ()-> new ParamNotFound("Campaign doesn't existe")
+        );
+
+        BigDecimal currentMoney = new BigDecimal(0);
+
+        for (DonationEntity donation : campaign.getDonationsReceived()){
+            currentMoney = currentMoney.add(donation.getAmount());
+        }
+
+        campaign.setCurrentMoney(currentMoney);
+        campaignRepo.save(campaign);
+
     }
 }
