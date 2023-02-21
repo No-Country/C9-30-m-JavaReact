@@ -31,6 +31,12 @@ public class UserEntity implements Serializable {
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "PROFILE_IMG_URL")
+    private String imageUrl;
+
     @Column(name = "EMAIL", nullable = false)
     private String email;
 

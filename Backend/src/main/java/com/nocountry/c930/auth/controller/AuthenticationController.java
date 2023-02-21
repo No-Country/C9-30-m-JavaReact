@@ -17,10 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,7 +35,7 @@ public class AuthenticationController {
   @PostMapping("/register")
   @ApiOperation(value = "Register as a user",
           notes = "Create an account filling the form, password must be 8 or more characters long")
-  public ResponseEntity<ResponseUserDto> signUp(@Valid @RequestBody UserRegistrationDto user) {
+  public ResponseEntity<ResponseUserDto> signUp(@Valid @ModelAttribute UserRegistrationDto user) {
     ResponseUserDto userRegister = this.userDetailsServices.save(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
   }
@@ -47,7 +44,7 @@ public class AuthenticationController {
   @PostMapping("/registerAdmin")
   @ApiOperation(value = "Register as an Admin",
           notes = "Create an account filling the form, the role will be Admin in this case")
-  public ResponseEntity<ResponseUserDto> signUpAdmin(@Valid @RequestBody UserRegistrationDto user) {
+  public ResponseEntity<ResponseUserDto> signUpAdmin(@Valid @ModelAttribute UserRegistrationDto user) {
 
     ResponseUserDto userRegister = this.userDetailsServices.saveAdmin(user);
    return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);

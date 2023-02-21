@@ -3,14 +3,16 @@ package com.nocountry.c930.service;
 
 import com.nocountry.c930.dto.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
 import java.util.Set;
 
 public interface ICampaignService {
 
-    CampaignDto createCampaign(CampaignCreationDto dto);
+    CampaignBasicDto createCampaign(CampaignCreationDto dto) throws IOException;
 
     CampaignDto getCampaign(Long id);
 

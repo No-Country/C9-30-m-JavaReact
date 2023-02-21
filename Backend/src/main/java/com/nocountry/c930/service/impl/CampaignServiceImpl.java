@@ -17,8 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.security.auth.message.AuthException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -33,7 +35,7 @@ public class CampaignServiceImpl implements ICampaignService {
     CampaignRepository campaignRepo;
 
     @Autowired
-    DonationRepository donationRepository;
+    StorageService storageService;
 
     @Autowired
     DonationMap donationMap;
@@ -54,7 +56,7 @@ public class CampaignServiceImpl implements ICampaignService {
     private IUtilService util;
 
     @Override
-    public CampaignDto createCampaign(CampaignCreationDto dto) {
+    public CampaignBasicDto createCampaign(CampaignCreationDto dto) throws IOException {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
@@ -64,10 +66,14 @@ public class CampaignServiceImpl implements ICampaignService {
         campaignEntity.setCurrentMoney(BigDecimal.ZERO);
         campaignEntity.setStatus(CampaignStatus.OPEN);
         campaignEntity.setCreator(user);
+        campaignEntity.setMainImageUrl(storageService.uploadImage(dto.getImage()));
+        campaignRepo.save(campaignEntity);
 
-        for (DonationTierDto donationTierDto : dto.getDonationTiers()) {
-            DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(donationTierDto);
+        
+        for (TierCreationDto tierDto : dto.getDonationTiers()) {
+            DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(tierDto);
             DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
+            donationTierEntity.setImageUrl(storageService.uploadImage(tierDto.getImage()));
             donationTierEntity.setCampaign(campaignEntity);
 
             tiers.add(entitySaved);
@@ -75,7 +81,7 @@ public class CampaignServiceImpl implements ICampaignService {
         }
         campaignEntity.setDonationTiers(tiers);
 
-        return campaignMap.campaignEntity2Dto(campaignRepo.save(campaignEntity));
+        return campaignMap.campaignEntity2BasicDto(campaignRepo.save(campaignEntity));
     }
 
     @Override
@@ -104,7 +110,6 @@ public class CampaignServiceImpl implements ICampaignService {
 
         return donationMap.donationEntityList2DtoList(campaign.getDonationsReceived());
     }
-
 
 
     @Override
