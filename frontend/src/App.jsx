@@ -11,6 +11,7 @@ import Login from "./views/Login";
 import Perfil from "./views/Perfil";
 import Registro from "./views/Registro";
 import Campaigns from "./views/Campaigns";
+import Searchs from "./views/Searchs";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/perfil" element={<Perfil />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campanias" element={<Campaigns />} />
+                <Route path="/buscarcampañas" element={< Searchs />} />
               </Routes>
             </BrowserRouter>
           </Container>
