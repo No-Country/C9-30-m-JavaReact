@@ -22,6 +22,9 @@ public class DonationTierEntity {
     @Column(name = "TIER_NAME", nullable = false)
     private String tierName;
 
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
+
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 

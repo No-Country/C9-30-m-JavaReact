@@ -2,4 +2,4 @@
 
 # API Documentation in:
 
-### http://localhost:8080/swagger-ui/index.html *Use the port that you configured*
+### http://167.99.235.152:8080/swagger-ui/index.html

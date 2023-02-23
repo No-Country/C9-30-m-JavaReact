@@ -22,6 +22,7 @@ public class ResponseUserDto {
   private String firstName;
   @NotEmpty
   private String lastName;
+  private String imgUrl;
   @NotEmpty
   @Email(message = "the email must be real email")
   private String email;

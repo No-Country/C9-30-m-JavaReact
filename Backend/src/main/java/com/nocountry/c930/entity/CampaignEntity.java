@@ -26,6 +26,9 @@ public class CampaignEntity implements Serializable {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "MAIN_IMAGE_URL")
+    private String mainImageUrl;
+
     @Column(name = "DESCRIPTION")
     private String description;
 
@@ -84,5 +87,6 @@ public class CampaignEntity implements Serializable {
                     CascadeType.PERSIST
             })
     private Set<ComplaintEntity> complaintsReceived;
+
 
 }

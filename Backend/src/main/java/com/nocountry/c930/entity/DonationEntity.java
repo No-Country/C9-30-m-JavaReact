@@ -3,11 +3,12 @@ package com.nocountry.c930.entity;
 import com.nocountry.c930.enumeration.PaymentStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -23,10 +24,14 @@ public class DonationEntity implements Serializable {
     private Long donationId;
 
     @Column(name = "CREATION_DATE", nullable = false)
+    @CreationTimestamp
     private Date creationDate;
 
     @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
+
+    @Column(name = "TIER_NAME")
+    private String tierName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false)

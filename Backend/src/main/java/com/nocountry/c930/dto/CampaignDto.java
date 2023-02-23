@@ -17,6 +17,8 @@ public class CampaignDto {
 
     private String name;
 
+    private String imageUrl;
+
     private String description;
 
     private Date creationDate;

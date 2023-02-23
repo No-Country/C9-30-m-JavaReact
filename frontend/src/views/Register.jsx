@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
-const Registro = () => {
+const Register = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -146,4 +146,4 @@ const Registro = () => {
   );
 };
 
-export default Registro;
+export default Register;

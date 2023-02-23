@@ -1,14 +1,14 @@
 package com.nocountry.c930.mapper;
 
 import com.nocountry.c930.dto.CommentDto;
-import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.entity.CommentEntity;
-import com.nocountry.c930.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class CommentMap {
@@ -26,14 +26,13 @@ public class CommentMap {
         copy.setDescription(original.getDescription());
         copy.setCreationDate(original.getCreationDate());
         copy.setUser(userMap.userEntity2Dto(original.getUser()));
-        copy.setCampaign(campaignMap.campaignEntity2Dto(original.getCampaign()));
 
         return copy;
     }
 
-    public List<CommentDto> commentEntityList2DtoList(List<CommentEntity> entities) {
+    public Set<CommentDto> commentEntityList2DtoList(Set<CommentEntity> entities) {
 
-        List<CommentDto> dtos = new ArrayList<>();
+        Set<CommentDto> dtos = new HashSet<>();
 
         for (CommentEntity entity : entities) {
             dtos.add(commentEntity2Dto(entity));
@@ -51,7 +50,6 @@ public class CommentMap {
         copy.setDescription(original.getDescription());
         copy.setCreationDate(original.getCreationDate());
         copy.setUser(userMap.userDto2Entity(original.getUser()));
-        copy.setCampaign(campaignMap.campaignDto2Entity(original.getCampaign()));
 
         return copy;
     }
