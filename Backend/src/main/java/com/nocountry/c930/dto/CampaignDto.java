@@ -17,9 +17,13 @@ public class CampaignDto {
 
     private String name;
 
-    private String imageUrl;
+    private String bannerUrl;
 
-    private String description;
+    private String logoUrl;
+
+    private String shortDescription;
+
+    private String longDescription;
 
     private Date creationDate;
 

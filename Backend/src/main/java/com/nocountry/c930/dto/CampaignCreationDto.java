@@ -14,8 +14,9 @@ public class CampaignCreationDto {
 
     private String name;
 
-    private String description;
+    private String shortDescription;
 
+    private String longDescription;
     private Date closingDate;
 
     private BigDecimal goalMoney;
