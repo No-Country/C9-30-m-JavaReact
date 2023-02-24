@@ -1,8 +1,8 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
-import { Button, Card, ProgressBar } from "react-bootstrap";
+import { Card, ProgressBar } from "react-bootstrap";
 
-import { getCampaigns } from "../petitions";
+import { getCampaigns } from "../js/campaign";
 
 const options = { dragFree: true, containScroll: "trimSnaps" };
 
@@ -33,13 +33,13 @@ const CampaignSlider = () => {
                     width={286}
                     height={162}
                   />
-                  <ProgressBar className="campaign-progress" now={90} />
+                  <ProgressBar
+                    className="campaign-progress"
+                    now={(e.currentMoney * 100) / e.goalMoney}
+                  />
                   <Card.Body>
                     <Card.Title>{e.name}</Card.Title>
-                    <Card.Text>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
+                    <Card.Text>{e.shortDescription}</Card.Text>
                     <p>
                       ${e.currentMoney} / {e.goalMoney}
                     </p>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import CampaignSlider from "../components/CampaignSlider";
-import { getCampaigns } from "../petitions";
+import { getCampaigns } from "../js/campaign";
 
 const Home = () => {
   const [sliderData, setSliderData] = useState([]);
@@ -24,16 +24,14 @@ const Home = () => {
             <Carousel.Item key={idx}>
               <img
                 className="d-block w-100"
-                src={sl.imgUrl}
-                alt="Imagen 1"
+                src={sl.bannerUrl}
+                alt={`imagen-${idx}`}
                 width={800}
                 height={400}
               />
               <Carousel.Caption>
                 <h3>{sl.name}</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <p>{sl.shortDescription}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );
