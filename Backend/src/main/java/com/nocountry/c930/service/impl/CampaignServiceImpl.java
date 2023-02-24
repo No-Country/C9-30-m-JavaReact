@@ -2,6 +2,7 @@ package com.nocountry.c930.service.impl;
 
 import com.nocountry.c930.dto.*;
 import com.nocountry.c930.entity.*;
+import com.nocountry.c930.enumeration.CampaignCategory;
 import com.nocountry.c930.enumeration.CampaignStatus;
 import com.nocountry.c930.enumeration.RoleName;
 import com.nocountry.c930.mapper.CampaignMap;
@@ -17,9 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.security.auth.message.AuthException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +65,12 @@ public class CampaignServiceImpl implements ICampaignService {
         campaignEntity.setCurrentMoney(BigDecimal.ZERO);
         campaignEntity.setStatus(CampaignStatus.OPEN);
         campaignEntity.setCreator(user);
-        campaignEntity.setMainImageUrl(storageService.uploadImage(dto.getImage()));
+        campaignEntity.setBannerUrl(storageService.uploadImage(dto.getImage()));
+
+        if (user.getImageUrl() != null) {
+            campaignEntity.setLogoUrl(user.getImageUrl());
+        }
+
         campaignRepo.save(campaignEntity);
 
 
@@ -138,7 +142,7 @@ public class CampaignServiceImpl implements ICampaignService {
         }
 
         campaign.setName(dto.getName());
-        campaign.setDescription(dto.getDescription());
+        campaign.setLongDescription(dto.getDescription());
         campaign.setStatus(dto.getStatus());
 
         return campaignMap.campaignEntity2Dto(campaignRepo.save(campaign));
@@ -158,12 +162,12 @@ public class CampaignServiceImpl implements ICampaignService {
     public void updateCampaignMoney(Long idCampaign) {
 
         CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
-                ()-> new ParamNotFound("Campaign doesn't existe")
+                () -> new ParamNotFound("Campaign doesn't existe")
         );
 
         BigDecimal currentMoney = new BigDecimal(0);
 
-        for (DonationEntity donation : campaign.getDonationsReceived()){
+        for (DonationEntity donation : campaign.getDonationsReceived()) {
             currentMoney = currentMoney.add(donation.getAmount());
         }
 
@@ -171,4 +175,55 @@ public class CampaignServiceImpl implements ICampaignService {
         campaignRepo.save(campaign);
 
     }
+
+    @Override
+    public List<CampaignBasicDto> listCampaignsNearGoal() {
+
+        return campaignMap.campaignEntityList2BasicDto(campaignRepo.findCampaignsNearGoal());
+
+    }
+
+    @Override
+    public List<CampaignBasicDto> listCampaignsByDate(String order) {
+
+        if (order.equals("ASC")) {
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findAllByOrderByCreationDateAsc());
+        } else if (order.equals("DESC")) {
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findAllByOrderByCreationDateDesc());
+        } else {
+
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findAll());
+        }
+
+    }
+
+    @Override
+    public List<CampaignBasicDto> searchCampaignsByKeyword(String keyword) {
+
+        return campaignMap.campaignEntityList2BasicDto(campaignRepo.findAllByKeyword(keyword));
+
+
+    }
+
+    @Override
+    public List<CampaignBasicDto> searchCampaignByCategoryAndKeyword(String keyword, CampaignCategory category) {
+
+        if (category == null) {
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findAllByKeyword(keyword));
+        }
+
+        if (category == CampaignCategory.SERVICE) {
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findServicesByKeyword(keyword, CampaignCategory.SERVICE));
+        } else {
+            return campaignMap.campaignEntityList2BasicDto(campaignRepo.findServicesByKeyword(keyword, CampaignCategory.PRODUCT));
+
+        }
+    }
+
+    @Override
+    public List<CampaignBasicDto> listCampaignsByMostPopular(String keyword) {
+
+        return campaignMap.campaignEntityList2BasicDto(campaignRepo.findALLByMostPopular(keyword));
+    }
+
 }

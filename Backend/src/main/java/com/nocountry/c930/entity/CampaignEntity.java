@@ -1,5 +1,6 @@
 package com.nocountry.c930.entity;
 
+import com.nocountry.c930.enumeration.CampaignCategory;
 import com.nocountry.c930.enumeration.CampaignStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +27,19 @@ public class CampaignEntity implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "MAIN_IMAGE_URL")
-    private String mainImageUrl;
+    @Column(name = "BANNER")
+    private String bannerUrl;
 
-    @Column(name = "DESCRIPTION")
-    private String description;
+    @Column(name = "LOGO")
+    private String logoUrl;
+    @Column(name = "SHORT_DESCRIPTION")
+    private String shortDescription;
+
+    @Column(name = "LONG_DESCRIPTION")
+    private String longDescription;
+
+    @Column(name = "CATEGORY")
+    private CampaignCategory category;
 
     @Column(name = "CREATION_DATE")
     @CreationTimestamp

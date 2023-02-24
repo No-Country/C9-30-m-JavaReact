@@ -24,53 +24,53 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AuthenticationController {
 
-  private final UserDetailsCustomService userDetailsServices;
-  private final AuthenticationManager authenticationManager;
-  private final JwtUtils jwtTokenUtils;
+    private final UserDetailsCustomService userDetailsServices;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtTokenUtils;
 
 
+    @PostMapping("/register")
+    @ApiOperation(value = "Register as a user",
+            notes = "Create an account filling the form, password must be 8 or more characters long")
+    public ResponseEntity<ResponseUserDto> signUp(@Valid @ModelAttribute UserRegistrationDto user) {
+        ResponseUserDto userRegister = this.userDetailsServices.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
+    }
 
-  @PostMapping("/register")
-  @ApiOperation(value = "Register as a user",
-          notes = "Create an account filling the form, password must be 8 or more characters long")
-  public ResponseEntity<ResponseUserDto> signUp(@Valid @ModelAttribute UserRegistrationDto user) {
-    ResponseUserDto userRegister = this.userDetailsServices.save(user);
-    return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
-  }
 
+    @PostMapping("/registerAdmin")
+    @ApiOperation(value = "Register as an Admin",
+            notes = "Create an account filling the form, the role will be Admin in this case")
+    public ResponseEntity<ResponseUserDto> signUpAdmin(@Valid @ModelAttribute UserRegistrationDto user) {
 
-  @PostMapping("/registerAdmin")
-  @ApiOperation(value = "Register as an Admin",
-          notes = "Create an account filling the form, the role will be Admin in this case")
-  public ResponseEntity<ResponseUserDto> signUpAdmin(@Valid @ModelAttribute UserRegistrationDto user) {
+        ResponseUserDto userRegister = this.userDetailsServices.saveAdmin(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
+    }
 
-    ResponseUserDto userRegister = this.userDetailsServices.saveAdmin(user);
-   return ResponseEntity.status(HttpStatus.CREATED).body(userRegister);
-  }
+    @PostMapping("/login")
+    @ApiOperation(value = "Login using your email and password",
+            notes = "This will retrieve a Json Web Token, granting you access to the endpoints, you need to copy and paste" +
+                    " the JWT in the authorization section above the controllers, prepending the word Bearer before the token")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Invalid credentials"),
+            @ApiResponse(code = 404, message = "User not found")})
+    public ResponseEntity<AuthenticationResponse> signIn(
+            @RequestBody AuthenticationRequest authenticationRequest) {
 
-  @PostMapping("/login")
-  @ApiOperation(value = "Login using your email and password",
-          notes = "This will retrieve a Json Web Token, granting you access to the endpoints, you need to copy and paste" +
-                  " the JWT in the authorization section above the controllers, prepending the word Bearer before the token")
-  @ApiResponses(value = {
-          @ApiResponse(code = 400, message = "Invalid credentials"),
-          @ApiResponse(code = 404, message = "User not found")})
-  public ResponseEntity<AuthenticationResponse> signIn(
-      @RequestBody AuthenticationRequest authenticationRequest) {
+        UserDetails userDetails;
 
-    UserDetails userDetails;
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+                        authenticationRequest.getPassword())
+        );
+        userDetails = (UserDetails) auth.getPrincipal();
 
-    Authentication auth = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
-            authenticationRequest.getPassword())
-    );
-    userDetails = (UserDetails) auth.getPrincipal();
-
-    final String jwt = jwtTokenUtils.generateToken(userDetails);
-    return ResponseEntity.ok(new AuthenticationResponse(jwt));
-  }
+        final String jwt = jwtTokenUtils.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
 
 
 }

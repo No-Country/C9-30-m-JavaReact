@@ -2,6 +2,7 @@ package com.nocountry.c930.controller;
 
 
 import com.nocountry.c930.dto.*;
+import com.nocountry.c930.repository.CampaignRepository;
 import com.nocountry.c930.service.ICampaignService;
 import com.nocountry.c930.service.ICommentService;
 import com.nocountry.c930.entity.DonationEntity;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,8 @@ public class CampaignController {
 
     @Autowired
     private IDonationService donationService;
+    @Autowired
+    private CampaignRepository campaignRepository;
 
     @PostMapping()
     @ApiOperation(value = "Creates a new campaign",
@@ -97,10 +101,11 @@ public class CampaignController {
         return ResponseEntity.status(HttpStatus.OK).body(campaignUpdated);
     }
 
+
     @GetMapping()
     @ApiOperation(value = "List All Campaigns",
             notes = "Gives a paginated list of all the campaigns that are OPEN")
-    public ResponseEntity<PageDto<CampaignBasicDto>> getAllCampaigns(@PageableDefault(size = 5) Pageable page,
+    public ResponseEntity<PageDto<CampaignBasicDto>> getAllCampaigns(@PageableDefault(size = 10) Pageable page,
                                                                      HttpServletRequest request) {
 
 
@@ -111,6 +116,7 @@ public class CampaignController {
 
     @PostMapping("/{id}/comments")
     @ApiOperation(value = "Post a comment in a campaign")
+
     public ResponseEntity<CommentDto> createComment(@PathVariable(name = "id") Long idCampaign, @RequestBody PostCommentDto dto) {
 
         CommentDto comment = commentService.createComment(idCampaign, dto);
