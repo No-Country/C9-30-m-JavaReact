@@ -67,7 +67,7 @@ const Campaign = () => {
                     className="owner-image"
                     src="https://dummyimage.com/25x25/a3a3a3/fff.png"
                     alt="profile-picture"
-                  />{" "}
+                  />
                   <p
                     className="campaign-subtitle "
                     style={{ float: "right", marginLeft: "0.5rem" }}
@@ -86,7 +86,7 @@ const Campaign = () => {
                 </div>
                 <div className="campaign-followers">
                   <p className="campaign-text">
-                    100{" "}
+                    100
                     <span className="campaign-subtitle">
                       Patrocinadores <br />
                       en el proyecto

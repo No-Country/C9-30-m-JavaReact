@@ -16,6 +16,11 @@ import Campaign from "./views/Campaign";
 import { Container } from "react-bootstrap";
 import "./styles/App.scss";
 import Search from "./views/Search";
+import SearchNewst from "./components/Searchs/SearchNewst";
+import SearchPopulars from "./components/Searchs/SearchPopular";
+import SearchProducts from "./components/Searchs/SearchProduct";
+import SearchService from "./components/Searchs/SearchService";
+import SearchnearGoal from "./components/Searchs/SearchAleatorio";
 
 function App() {
   return (
@@ -33,6 +38,11 @@ function App() {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
                 <Route path="/buscar" element={<Search />} />
+                <Route path="/buscar/recientes" element={<SearchNewst />} />
+                <Route path="/buscar/populares" element={<SearchPopulars />} />
+                <Route path="/buscar/productos" element={<SearchProducts />} />
+                <Route path="/buscar/servicios" element={<SearchService />} />
+                <Route path="/buscar/aleatorios" element={<SearchnearGoal/>} />
               </Routes>
             </BrowserRouter>
           </Container>

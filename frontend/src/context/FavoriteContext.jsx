@@ -11,18 +11,21 @@ export const useFavorite = () => {
 function FavoriteProvider({ children }) {
   const [favorites, setFavorites] = useState(
     {
+      id:"1",
       proyectname: "Donation",
       pymesname: "Nicolás Gómez",
       containertext: "Catchy Caption for people :P",
       money: "$****** / $2000",
     },
     {
+      id:"2", 
       proyectname: "Donation",
       pymesname: "Nicolás Gómez",
       containertext: "Catchy Caption for people :P",
       money: "$****** / $2000",
     },
     {
+      id: "3", 
       proyectname: "Donation",
       pymesname: "Nicolás Gómez",
       containertext: "Catchy Caption for people :P",
