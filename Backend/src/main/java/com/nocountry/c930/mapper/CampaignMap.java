@@ -5,6 +5,7 @@ import com.nocountry.c930.dto.CampaignCreationDto;
 import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.CampaignDto;
 import com.nocountry.c930.entity.CampaignEntity;
+import com.nocountry.c930.service.IUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class CampaignMap {
     @Autowired
     private DonationTierMap tierMap;
 
+    @Autowired
+    private IUtilService util;
+
 
     public CampaignDto campaignEntity2Dto(CampaignEntity original) {
 
@@ -27,13 +31,19 @@ public class CampaignMap {
 
         copy.setCampaignId(original.getCampaignId());
         copy.setName(original.getName());
-        copy.setDescription(original.getLongDescription());
-        copy.setImageUrl(original.getBannerUrl());
+        copy.setLongDescription(original.getLongDescription());
+        copy.setDescriptionImages(original.getDescriptionImages());
+        copy.setShortDescription(original.getShortDescription());
+        copy.setBannerUrl(original.getBannerUrl());
+        copy.setLogoUrl(original.getLogoUrl());
+
         copy.setCreationDate(original.getCreationDate());
         copy.setClosingDate(original.getClosingDate());
         copy.setGoalMoney(original.getGoalMoney());
         copy.setCurrentMoney(original.getCurrentMoney());
         copy.setStatus(original.getStatus());
+        copy.setDaysLeft(util.calculateDaysLeft(original.getClosingDate()));
+
 
         copy.setCreator(userMap.userEntity2Dto(original.getCreator()));
         copy.setDonationTiers(tierMap.tierEntitySet2Dto(original.getDonationTiers()));
@@ -52,7 +62,10 @@ public class CampaignMap {
         copy.setClosingDate(original.getClosingDate());
         copy.setGoalMoney(original.getGoalMoney());
         copy.setCurrentMoney(original.getCurrentMoney());
-        copy.setImgUrl(original.getBannerUrl());
+        copy.setBannerUrl(original.getBannerUrl());
+        copy.setShortDescription(original.getShortDescription());
+        copy.setLogoUrl(original.getLogoUrl());
+
 
         copy.setCreator(original.getCreator().getFirstName() + " " + original.getCreator().getLastName());
 
@@ -77,7 +90,9 @@ public class CampaignMap {
         CampaignEntity copy = new CampaignEntity();
         copy.setCampaignId(original.getCampaignId());
         copy.setName(original.getName());
-        copy.setLongDescription(original.getDescription());
+        copy.setLongDescription(original.getLongDescription());
+        copy.setShortDescription(original.getLongDescription());
+
         copy.setCreationDate(original.getCreationDate());
         copy.setClosingDate(original.getClosingDate());
         copy.setGoalMoney(original.getGoalMoney());
@@ -94,7 +109,9 @@ public class CampaignMap {
 
         CampaignEntity entity = new CampaignEntity();
         entity.setName(dto.getName());
-        entity.setLongDescription(dto.getDescription());
+
+        entity.setShortDescription(dto.getShortDescription());
+        entity.setLongDescription(dto.getLongDescription());
         entity.setClosingDate(dto.getClosingDate());
         entity.setGoalMoney(dto.getGoalMoney());
 

@@ -63,6 +63,8 @@ public class UserDetailsCustomService implements UserDetailsService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }else {
+            userEntity.setImageUrl("https://argfoundingimages.nyc3.cdn.digitaloceanspaces.com/User_Placeholder.png");
         }
 
 

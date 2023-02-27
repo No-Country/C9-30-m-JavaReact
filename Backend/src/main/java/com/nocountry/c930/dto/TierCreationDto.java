@@ -17,4 +17,8 @@ public class TierCreationDto {
     private String description;
 
     private MultipartFile image;
+
+    private boolean isLimited;
+
+    private int stockLimit;
 }

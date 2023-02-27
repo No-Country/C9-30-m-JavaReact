@@ -15,6 +15,8 @@ public class CampaignBasicDto {
 
     private String name;
 
+    private String shortDescription;
+
     private Date creationDate;
 
     private Date closingDate;
@@ -25,6 +27,8 @@ public class CampaignBasicDto {
 
     private String creator;
 
-    private String imgUrl;
+    private String bannerUrl;
+
+    private String logoUrl;
 
 }

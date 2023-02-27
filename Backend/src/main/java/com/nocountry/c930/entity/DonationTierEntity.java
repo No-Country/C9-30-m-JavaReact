@@ -1,6 +1,5 @@
 package com.nocountry.c930.entity;
 
-import com.nocountry.c930.enumeration.TierName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +29,14 @@ public class DonationTierEntity {
 
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
+
+    @Column(name = "AMOUNTS_BOUGHT")
+    private int amountsBought = 0;
+
+    private boolean isLimited;
+
+    @Column(name = "LIMIT_NUMBER")
+    private int stockLimit = 0;
 
     @ManyToOne()
     @JoinColumn(name = "CAMPAIGN_ID")

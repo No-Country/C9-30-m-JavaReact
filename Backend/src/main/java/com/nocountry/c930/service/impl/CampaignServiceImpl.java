@@ -61,24 +61,43 @@ public class CampaignServiceImpl implements ICampaignService {
         UserEntity user = userRepo.findByEmail(userEmail);
 
         CampaignEntity campaignEntity = campaignMap.campaignCreation2Entity(dto);
-        Set<DonationTierEntity> tiers = new HashSet<>();
         campaignEntity.setCurrentMoney(BigDecimal.ZERO);
         campaignEntity.setStatus(CampaignStatus.OPEN);
         campaignEntity.setCreator(user);
-        campaignEntity.setBannerUrl(storageService.uploadImage(dto.getImage()));
+
+        if (dto.getImage() != null) {
+            campaignEntity.setBannerUrl(storageService.uploadImage(dto.getImage()));
+        }
 
         if (user.getImageUrl() != null) {
             campaignEntity.setLogoUrl(user.getImageUrl());
         }
 
+        if (dto.getDescriptionImages() != null) {
+
+            for (MultipartFile image : dto.getDescriptionImages()) {
+
+                campaignEntity.addImagesToDescription(storageService.uploadImage(image));
+            }
+        }
+
+        if (dto.getCategory().equalsIgnoreCase("servicio")) {
+            campaignEntity.setCategory(CampaignCategory.SERVICE);
+        } else {
+            campaignEntity.setCategory(CampaignCategory.PRODUCT);
+        }
+
         campaignRepo.save(campaignEntity);
 
+
+        Set<DonationTierEntity> tiers = new HashSet<>();
 
         for (TierCreationDto tierDto : dto.getDonationTiers()) {
             DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(tierDto);
             DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
             donationTierEntity.setImageUrl(storageService.uploadImage(tierDto.getImage()));
             donationTierEntity.setCampaign(campaignEntity);
+
 
             tiers.add(entitySaved);
 
@@ -127,7 +146,7 @@ public class CampaignServiceImpl implements ICampaignService {
 
 
     @Override
-    public CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) {
+    public CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) throws IOException {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
@@ -142,8 +161,21 @@ public class CampaignServiceImpl implements ICampaignService {
         }
 
         campaign.setName(dto.getName());
-        campaign.setLongDescription(dto.getDescription());
-        campaign.setStatus(dto.getStatus());
+
+        campaign.setLongDescription(dto.getLongDescription());
+        campaign.setShortDescription(dto.getShortDescription());
+
+        if (dto.getImage() != null) {
+            campaign.setBannerUrl(storageService.uploadImage(dto.getImage()));
+        }
+
+        if (dto.getDescriptionImages() != null) {
+            for (MultipartFile image : dto.getDescriptionImages()) {
+                campaign.getDescriptionImages().add(storageService.uploadImage(image));
+            }
+
+        }
+
 
         return campaignMap.campaignEntity2Dto(campaignRepo.save(campaign));
 
