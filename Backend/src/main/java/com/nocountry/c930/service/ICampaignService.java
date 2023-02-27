@@ -30,7 +30,7 @@ public interface ICampaignService {
 
     List<CampaignBasicDto> listCampaignsByMostPopular(String keyword);
 
-    CampaignDto updateCampaign(Long id, UpdateCampaignDto dto);
+    CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) throws IOException;
 
     Set<DonationDto> findAllDonations(Long id);
 

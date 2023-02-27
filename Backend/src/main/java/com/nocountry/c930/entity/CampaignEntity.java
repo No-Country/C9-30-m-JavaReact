@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,8 +37,11 @@ public class CampaignEntity implements Serializable {
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
 
-    @Column(name = "LONG_DESCRIPTION")
+    @Column(name = "LONG_DESCRIPTION", length = 3000)
     private String longDescription;
+
+    @Column(name = "DESCRIPTION_IMAGES")
+    private ArrayList<String> descriptionImages = new ArrayList<>();
 
     @Column(name = "CATEGORY")
     private CampaignCategory category;
@@ -96,6 +101,11 @@ public class CampaignEntity implements Serializable {
                     CascadeType.PERSIST
             })
     private Set<ComplaintEntity> complaintsReceived;
+
+    public void addImagesToDescription(String imageUrl) {
+
+        this.descriptionImages.add(imageUrl);
+    }
 
 
 }

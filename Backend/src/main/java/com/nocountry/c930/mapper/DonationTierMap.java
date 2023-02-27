@@ -30,6 +30,12 @@ public class DonationTierMap {
         entity.setTierName(dto.getTierName());
         entity.setPrice(dto.getPrice());
         entity.setDescription(dto.getDescription());
+        entity.setLimited(dto.isLimited());
+
+        if (dto.isLimited()){
+            entity.setStockLimit(dto.getStockLimit());
+        }
+
         return entity;
     }
 

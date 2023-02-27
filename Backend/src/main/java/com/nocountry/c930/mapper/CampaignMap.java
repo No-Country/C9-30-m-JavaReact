@@ -5,6 +5,7 @@ import com.nocountry.c930.dto.CampaignCreationDto;
 import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.CampaignDto;
 import com.nocountry.c930.entity.CampaignEntity;
+import com.nocountry.c930.service.IUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class CampaignMap {
     @Autowired
     private DonationTierMap tierMap;
 
+    @Autowired
+    private IUtilService util;
+
 
     public CampaignDto campaignEntity2Dto(CampaignEntity original) {
 
@@ -28,6 +32,7 @@ public class CampaignMap {
         copy.setCampaignId(original.getCampaignId());
         copy.setName(original.getName());
         copy.setLongDescription(original.getLongDescription());
+        copy.setDescriptionImages(original.getDescriptionImages());
         copy.setShortDescription(original.getShortDescription());
         copy.setBannerUrl(original.getBannerUrl());
         copy.setLogoUrl(original.getLogoUrl());
@@ -36,6 +41,7 @@ public class CampaignMap {
         copy.setGoalMoney(original.getGoalMoney());
         copy.setCurrentMoney(original.getCurrentMoney());
         copy.setStatus(original.getStatus());
+        copy.setDaysLeft(util.calculateDaysLeft(original.getClosingDate()));
 
 
         copy.setCreator(userMap.userEntity2Dto(original.getCreator()));
@@ -57,6 +63,7 @@ public class CampaignMap {
         copy.setCurrentMoney(original.getCurrentMoney());
         copy.setBannerUrl(original.getBannerUrl());
         copy.setShortDescription(original.getShortDescription());
+        copy.setLogoUrl(original.getLogoUrl());
 
         copy.setCreator(original.getCreator().getFirstName() + " " + original.getCreator().getLastName());
 

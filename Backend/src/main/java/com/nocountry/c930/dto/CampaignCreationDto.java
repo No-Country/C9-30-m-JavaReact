@@ -1,5 +1,6 @@
 package com.nocountry.c930.dto;
 
+import com.nocountry.c930.enumeration.CampaignCategory;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,11 @@ public class CampaignCreationDto {
 
     private MultipartFile image;
 
+    private String category;
+
+    private MultipartFile[] descriptionImages;
+
     private List<TierCreationDto> donationTiers;
+
 
 }

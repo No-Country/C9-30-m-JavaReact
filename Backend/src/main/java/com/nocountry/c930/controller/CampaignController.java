@@ -96,7 +96,12 @@ public class CampaignController {
 
     public ResponseEntity<CampaignDto> updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody UpdateCampaignDto dto) {
 
-        CampaignDto campaignUpdated = campaignService.updateCampaign(idCampaign, dto);
+        CampaignDto campaignUpdated = null;
+        try {
+            campaignUpdated = campaignService.updateCampaign(idCampaign, dto);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(campaignUpdated);
     }

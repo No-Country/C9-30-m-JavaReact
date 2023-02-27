@@ -78,6 +78,8 @@ public class DonationServiceImpl implements IDonationService {
         donation.setCampaign(campaign);
         donationRepo.save(donation);
 
+        donationTier.setAmountsBought(donationTier.getAmountsBought() + 1);
+        donationTierRepo.save(donationTier);
         campaignService.updateCampaignMoney(idCampaign);
 
         return donationMap.donationEntity2Dto(donationRepo.save(donation));

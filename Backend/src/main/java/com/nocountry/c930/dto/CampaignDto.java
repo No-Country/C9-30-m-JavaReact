@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -25,6 +26,8 @@ public class CampaignDto {
 
     private String longDescription;
 
+    private List<String> descriptionImages;
+
     private Date creationDate;
 
     private Date closingDate;
@@ -36,6 +39,8 @@ public class CampaignDto {
     private CampaignStatus status;
 
     private Set<DonationTierDto> donationTiers;
+
+    private int daysLeft;
 
     private UserDto creator;
 }
