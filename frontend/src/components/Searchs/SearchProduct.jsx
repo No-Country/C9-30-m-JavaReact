@@ -1,8 +1,9 @@
-import { getCampaignsSearch } from "../js/search";
-import { useEffect, useState, useRef } from "react";
-import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { useEffect, useState, useRef } from "react";
 import { Card, ProgressBar, Nav } from "react-bootstrap";
+
+import { getCampaignProducts} from "../../js/search";
+
 
 export function useSearch() {
   const [search, setSearch] = useState("");
@@ -32,9 +33,10 @@ export function useSearch() {
 
   return { search, setSearch, error };
 }
+
 const options = { dragFree: true, containScroll: "trimSnaps" };
 
-function Searchs() {
+function SearchProducts() {
   const [campanas, setCampanas] = useState([]);
   const { search, setSearch, error } = useSearch();
 
@@ -50,14 +52,15 @@ function Searchs() {
 
   const resultsFilter = !search
     ? campanas
-    : campanas.filter((dato) =>
-        dato.name.toLowerCase().includes(search.toLocaleLowerCase())
+    : campanas.filter((date) =>
+        date.name.toLowerCase().includes(search.toLocaleLowerCase())
       );
+
 
   useEffect(() => {
     async function run() {
-      const campaignsSearch = await getCampaignsSearch();
-      setCampanas(campaignsSearch);
+      const campaignsProducts = await getCampaignProducts();
+      setCampanas(campaignsProducts);
     }
     run();
   }, []);
@@ -68,9 +71,9 @@ function Searchs() {
       <div className="containerSearch">
         <h1>Descubre nuevos proyectos</h1>
         <h2>o explora por categoria</h2>
-        <div className="containerButton d-flex justify-content-center mb-4 mt-5 gap-3">
+        <div className="containerButton d-flex justify-content-center mb-4 mt-5 gap-3" >
           <Nav.Link href="/buscar/productos">Productos</Nav.Link>
-          <Nav.Link href="/buscar/servicios">Servicio</Nav.Link>
+          <Nav.Link href="/buscar/servicios">Servicios</Nav.Link>
           <Nav.Link href="/buscar/recientes">Recientes</Nav.Link>
           <Nav.Link href="/buscar/populares">Popularidad</Nav.Link>
           <Nav.Link href="/buscar/aleatorios">Aleatorio</Nav.Link>
@@ -120,41 +123,38 @@ function Searchs() {
         {error && (
           <p className="d-flex justify-content-center color:red ">{error}</p>
         )}
+        <h4 className="mt-4 mb-5">Productos</h4>
 
-        <div>
-          <h4 className="mt-4 mb-5"> Quizas te interese... </h4>
+        <div className="embla">
+          <div className="embla__viewport" ref={emblaRef}>
+            <div className="embla__container">
+              {resultsFilter.map((e, idx) => {
+                return (
+                  <div className="embla__slide" key={idx}>
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Img
+                        variant="top"
+                        src={e.logoUrl}
+                        width={286}
+                        height={162}
+                      />
+                      <ProgressBar
+                        className="campaign-progress"
+                        now={(e.currentMoney * 100) / e.goalMoney}
+                      />
+                      <Card.Body>
+                        <Card.Title>{e.name}</Card.Title>
+                        <Card.Text>{e.shortDescription}</Card.Text>
+                        <p>
+                          ${e.currentMoney} / {e.goalMoney}
+                        </p>
 
-          <div className="embla">
-            <div className="embla__viewport" ref={emblaRef}>
-              <div className="embla__container">
-                {resultsFilter.map((e, idx) => {
-                  return (
-                    <div className="embla__slide" key={idx}>
-                      <Card style={{ width: "18rem" }}>
-                        <Card.Img
-                          variant="top"
-                          src={e.logoUrl}
-                          width={286}
-                          height={162}
-                        />
-                        <ProgressBar
-                          className="campaign-progress"
-                          now={(e.currentMoney * 100) / e.goalMoney}
-                        />
-                        <Card.Body>
-                          <Card.Title>{e.name}</Card.Title>
-                          <Card.Text>{e.shortDescription}</Card.Text>
-                          <p>
-                            ${e.currentMoney} / {e.goalMoney}
-                          </p>
-
-                          <a href={`/campania/${e.campaignId}`}>ver mas</a>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  );
-                })}
-              </div>
+                        <a href={`/campania/${e.campaignId}`}>ver mas</a>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -163,4 +163,4 @@ function Searchs() {
   );
 }
 
-export default Searchs;
+export default SearchProducts;

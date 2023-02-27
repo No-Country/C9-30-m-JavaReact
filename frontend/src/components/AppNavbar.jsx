@@ -33,6 +33,17 @@ const AppNavbar = () => {
               </>
             ) : (
               <>
+                <div>
+                  <form className="d-flex" style={{ fontSize: "smaller", width:"80%"}} role="search">
+                    <input
+                      className="form-control me-2"
+                      type="search"
+                      placeholder="buscador"
+                    />
+                    <Nav.Link href="/buscar">
+                    </Nav.Link>
+                  </form>
+                </div>
                 <Nav.Link style={{ fontSize: "smaller" }} href="/favorites">
                   Favoritos
                 </Nav.Link>

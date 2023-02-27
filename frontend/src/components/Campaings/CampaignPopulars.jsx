@@ -1,19 +1,19 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
 import { Card, ProgressBar } from "react-bootstrap";
-
-import { getCampaigns } from "../js/campaign";
+import { getCampaignPopulars } from "../../js/search";
 
 const options = { dragFree: true, containScroll: "trimSnaps" };
 
-const CampaignSlider = () => {
-  const [slides, setSlides] = useState([]);
+const CampaignPopulars = () => {
+  const [slidesPopulars, setSlidesPopulars] = useState([]);
+
 
   useEffect(() => {
     async function run() {
-      const campaigns = await getCampaigns();
+      const campaignsPopulars = await getCampaignPopulars();
 
-      setSlides(campaigns);
+      setSlidesPopulars(campaignsPopulars);
     }
     run();
   }, []);
@@ -23,13 +23,13 @@ const CampaignSlider = () => {
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((e, idx) => {
+          {slidesPopulars.map((e, idx) => {
             return (
               <div className="embla__slide" key={idx}>
                 <Card style={{ width: "18rem" }}>
                   <Card.Img
                     variant="top"
-                    src={e.imgUrl}
+                    src={e.logoUrl}
                     width={286}
                     height={162}
                   />
@@ -56,4 +56,4 @@ const CampaignSlider = () => {
   );
 };
 
-export default CampaignSlider;
+export default CampaignPopulars;

@@ -13,6 +13,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+  console.log(user)
+  console.log(setUser)
 
   const [error, setError] = useState();
 
@@ -98,7 +100,7 @@ const Login = () => {
                 size="sm"
                 role="status"
                 aria-hidden="true"
-              />{" "}
+              />
               Iniciar sesión
               <span className="visually-hidden">Loading...</span>
             </Button>

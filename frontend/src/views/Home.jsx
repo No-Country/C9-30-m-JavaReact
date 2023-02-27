@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
-import CampaignSlider from "../components/CampaignSlider";
 import { getCampaigns } from "../js/campaign";
+import CampaignPopulars from "../components/Campaings/CampaignPopulars";
+import CampaignsNewest from "../components/Campaings/Campaignewst";
 
 const Home = () => {
   const [sliderData, setSliderData] = useState([]);
@@ -39,10 +40,10 @@ const Home = () => {
       </Carousel>
       <hr />
       <h3>Mas recientes</h3>
-      <CampaignSlider />
+      <CampaignsNewest/>
       <br />
       <h3>Mas Populares</h3>
-      <CampaignSlider />
+      <CampaignPopulars/>
       <br />
     </>
   );

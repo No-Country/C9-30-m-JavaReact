@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 function Favorites() {
   const { favorites } = useFavorite();
+  console.log(favorites);
 
   return (
     <>
@@ -27,31 +28,27 @@ function Favorites() {
           alt="Imagen 1"
         />
         <Card.Body>
-                <Card.Title>{favorites.proyectname} </Card.Title>
-                <Card.Subtitle> {favorites.pymesname} </Card.Subtitle>
-                <Card.Text>
-                  {favorites.containertext} {favorites.money}
-                </Card.Text>
-                <Button variant="secondary">
-                  <svg
-                    width="20px"
-                    height="20px"
-                    viewBox="0 0 24 24"
-                    stroke-width="0.5"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    color="#000000"
-                  >
-                    <path
-                      d="M20 9l-1.995 11.346A2 2 0 0116.035 22h-8.07a2 2 0 01-1.97-1.654L4 9M21 6h-5.625M3 6h5.625m0 0V4a2 2 0 012-2h2.75a2 2 0 012 2v2m-6.75 0h6.75"
-                      stroke="#000000"
-                      stroke-width="0.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </svg>
-                </Button>
-          
+          <Card.Title>{favorites.proyectname} </Card.Title>
+          <Card.Subtitle> {favorites.pymesname} </Card.Subtitle>
+          <Card.Text>
+            {favorites.containertext} {favorites.money}
+          </Card.Text>
+          <Button variant="secondary">
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              stroke-width="0.5"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              color="#000000"
+            >
+              <path
+                d="M20 9l-1.995 11.346A2 2 0 0116.035 22h-8.07a2 2 0 01-1.97-1.654L4 9M21 6h-5.625M3 6h5.625m0 0V4a2 2 0 012-2h2.75a2 2 0 012 2v2m-6.75 0h6.75"
+                stroke="#000000"
+              ></path>
+            </svg>
+          </Button>
         </Card.Body>
       </Card>
     </>
