@@ -36,6 +36,7 @@ public class CampaignMap {
         copy.setShortDescription(original.getShortDescription());
         copy.setBannerUrl(original.getBannerUrl());
         copy.setLogoUrl(original.getLogoUrl());
+
         copy.setCreationDate(original.getCreationDate());
         copy.setClosingDate(original.getClosingDate());
         copy.setGoalMoney(original.getGoalMoney());
@@ -65,6 +66,7 @@ public class CampaignMap {
         copy.setShortDescription(original.getShortDescription());
         copy.setLogoUrl(original.getLogoUrl());
 
+
         copy.setCreator(original.getCreator().getFirstName() + " " + original.getCreator().getLastName());
 
         return copy;
@@ -90,6 +92,7 @@ public class CampaignMap {
         copy.setName(original.getName());
         copy.setLongDescription(original.getLongDescription());
         copy.setShortDescription(original.getLongDescription());
+
         copy.setCreationDate(original.getCreationDate());
         copy.setClosingDate(original.getClosingDate());
         copy.setGoalMoney(original.getGoalMoney());
@@ -106,6 +109,7 @@ public class CampaignMap {
 
         CampaignEntity entity = new CampaignEntity();
         entity.setName(dto.getName());
+
         entity.setShortDescription(dto.getShortDescription());
         entity.setLongDescription(dto.getLongDescription());
         entity.setClosingDate(dto.getClosingDate());

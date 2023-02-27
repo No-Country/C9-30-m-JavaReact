@@ -15,6 +15,7 @@ import Campaign from "./views/Campaign";
 
 import { Container } from "react-bootstrap";
 import "./styles/App.scss";
+import Searchs from "./views/Searchs";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
+                <Route path="/buscarcampañas" element={< Searchs />} />
               </Routes>
             </BrowserRouter>
           </Container>
