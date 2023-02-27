@@ -1,4 +1,4 @@
-import { getCampaignsSearch } from "../js/search";
+import { searchCampaigns } from "../js/search";
 import { useEffect, useState, useRef } from "react";
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -56,7 +56,7 @@ function Searchs() {
 
   useEffect(() => {
     async function run() {
-      const campaignsSearch = await getCampaignsSearch();
+      const campaignsSearch = await searchCampaigns();
       setCampanas(campaignsSearch);
     }
     run();
@@ -89,6 +89,7 @@ function Searchs() {
               placeholder="Buscar proyecto"
               aria-label="Search"
             />
+
             <button type="submit">
               <svg
                 width="24"

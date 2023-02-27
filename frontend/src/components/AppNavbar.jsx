@@ -34,14 +34,17 @@ const AppNavbar = () => {
             ) : (
               <>
                 <div>
-                  <form className="d-flex" style={{ fontSize: "smaller", width:"80%"}} role="search">
+                  <form
+                    className="d-flex"
+                    style={{ fontSize: "smaller", width: "80%" }}
+                    role="search"
+                  >
                     <input
                       className="form-control me-2"
                       type="search"
                       placeholder="buscador"
                     />
-                    <Nav.Link href="/buscar">
-                    </Nav.Link>
+                    <Nav.Link href="/buscar"></Nav.Link>
                   </form>
                 </div>
                 <Nav.Link style={{ fontSize: "smaller" }} href="/favorites">
@@ -88,9 +91,11 @@ const AppNavbar = () => {
                     Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Button variant="primary" style={{ borderRadius: "20px" }}>
-                  Cargar proyecto
-                </Button>
+                <a href="/add">
+                  <Button variant="primary" style={{ borderRadius: "20px" }}>
+                    Cargar proyecto
+                  </Button>
+                </a>
               </>
             )}
           </Nav>

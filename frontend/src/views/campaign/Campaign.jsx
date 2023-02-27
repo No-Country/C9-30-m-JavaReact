@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, ProgressBar, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { getCampaignById, getCampaignComments } from "../js/campaign";
+import { getCampaignById, getCampaignComments } from "../../js/campaign";
 import { FaUserAlt } from "react-icons/fa";
-import Comments from "../components/Comments";
+import Comments from "../../components/Comments";
 
 const Campaign = () => {
   const [camData, setCamData] = useState([]);
@@ -65,7 +65,7 @@ const Campaign = () => {
                 <div className="owner-data">
                   <img
                     className="owner-image"
-                    src="https://dummyimage.com/25x25/a3a3a3/fff.png"
+                    src={camData.logoUrl}
                     alt="profile-picture"
                   />
                   <p
@@ -94,7 +94,7 @@ const Campaign = () => {
                   </p>
                 </div>
                 <div className="campaign-time text-center">
-                  <span className="campaign-text">3</span>
+                  <span className="campaign-text">{camData.daysLeft}</span>
                   <br />
                   <span className="campaign-subtitle">Dias</span>
                 </div>

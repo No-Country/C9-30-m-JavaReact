@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Alert, Button, Form, Spinner, Stack } from "react-bootstrap";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const { login } = useAuth();
@@ -13,8 +13,8 @@ const Login = () => {
     email: "",
     password: "",
   });
-  console.log(user)
-  console.log(setUser)
+  console.log(user);
+  console.log(setUser);
 
   const [error, setError] = useState();
 

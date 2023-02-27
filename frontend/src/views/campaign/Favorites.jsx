@@ -1,5 +1,5 @@
 import React from "react";
-import { useFavorite } from "../context/FavoriteContext";
+import { useFavorite } from "../../context/FavoriteContext";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";

@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-bootstrap";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
   const { register } = useAuth();
