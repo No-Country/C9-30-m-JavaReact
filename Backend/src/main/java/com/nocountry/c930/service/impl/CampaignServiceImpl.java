@@ -82,11 +82,7 @@ public class CampaignServiceImpl implements ICampaignService {
             }
         }
 
-        if (dto.getCategory().equalsIgnoreCase("servicio")) {
-            campaignEntity.setCategory(CampaignCategory.SERVICE);
-        } else {
-            campaignEntity.setCategory(CampaignCategory.PRODUCT);
-        }
+        campaignEntity.setCategory(CampaignCategory.PRODUCT);
 
         campaignRepo.save(campaignEntity);
 
@@ -96,6 +92,10 @@ public class CampaignServiceImpl implements ICampaignService {
         for (TierCreationDto tierDto : dto.getDonationTiers()) {
             DonationTierEntity donationTierEntity = tierMap.tierDto2Entity(tierDto);
             DonationTierEntity entitySaved = tierRepo.save(donationTierEntity);
+
+            if (donationTierEntity.getImageUrl() == null) {
+                donationTierEntity.setImageUrl("https://argfoundingimages.nyc3.cdn.digitaloceanspaces.com/donation_tier_placeholder.png");
+            }
             donationTierEntity.setImageUrl(storageService.uploadImage(tierDto.getImage()));
             donationTierEntity.setCampaign(campaignEntity);
 
@@ -147,7 +147,7 @@ public class CampaignServiceImpl implements ICampaignService {
 
 
     @Override
-    public CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) throws IOException {
+    public CampaignDto updateCampaign(Long id, CampaignCreationDto dto) throws IOException {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findByEmail(userEmail);
@@ -165,6 +165,7 @@ public class CampaignServiceImpl implements ICampaignService {
 
         campaign.setLongDescription(dto.getLongDescription());
         campaign.setShortDescription(dto.getShortDescription());
+        campaign.setGoalMoney(dto.getGoalMoney());
 
         if (dto.getImage() != null) {
             campaign.setBannerUrl(storageService.uploadImage(dto.getImage()));
@@ -257,6 +258,69 @@ public class CampaignServiceImpl implements ICampaignService {
     public List<CampaignBasicDto> listCampaignsByMostPopular(String keyword) {
 
         return campaignMap.campaignEntityList2BasicDto(campaignRepo.findALLByMostPopular(keyword));
+    }
+
+    @Override
+    public List<CampaignBasicDto> listCampaignByUser(Long idUser) {
+
+        UserEntity user = userRepo.findById(idUser).orElseThrow(
+                () -> new ParamNotFound("User doesn't exist"));
+
+
+        return campaignMap.campaignEntityList2BasicDto(user.getOwnedCampaigns().stream().toList());
+    }
+
+    @Override
+    public void replaceDescriptionImages(Long idCampaign, UpdateImagesDto images) throws IOException {
+
+        CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist")
+        );
+
+        campaign.getDescriptionImages().removeAll(campaign.getDescriptionImages());
+
+        if (images != null) {
+            for (MultipartFile image : images.getDescriptionImages()) {
+                campaign.getDescriptionImages().add(storageService.uploadImage(image));
+                campaign.setBannerUrl(storageService.uploadImage(images.getBanner()));
+                campaign.setLogoUrl(storageService.uploadImage(images.getLogo()));
+            }
+
+            campaignRepo.save(campaign);
+
+        }
+
+    }
+
+    @Override
+    public void replaceTierImages(Long idCampaign, UpdateTierImagesDto images) throws IOException {
+
+        CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
+                () -> new ParamNotFound("Campaign doesn't exist")
+        );
+
+
+        if (images != null) {
+            int i = 0;
+            List<DonationTierEntity> donationTiers = new ArrayList<>(campaign.getDonationTiers().stream().toList());
+
+            Comparator<DonationTierEntity> compareById = (DonationTierEntity o1, DonationTierEntity o2) ->
+                    o1.getDonationTierId().compareTo(o2.getDonationTierId());
+
+            donationTiers.sort(compareById);
+
+            for (MultipartFile image : images.getTierImages()) {
+
+                DonationTierEntity tier = donationTiers.get(i);
+                tier.setImageUrl(storageService.uploadImage(image));
+                tierRepo.save(tier);
+
+                i++;
+            }
+            campaignRepo.save(campaign);
+
+        }
+
     }
 
 }

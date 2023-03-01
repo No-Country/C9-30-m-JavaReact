@@ -94,7 +94,7 @@ public class CampaignController {
             @ApiResponse(code = 400, message = "Campaign ID is invalid (must use numbers value only)"),
             @ApiResponse(code = 404, message = "Campaign not found")})
 
-    public ResponseEntity<CampaignDto> updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody UpdateCampaignDto dto) {
+    public ResponseEntity<CampaignDto> updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody CampaignCreationDto dto) {
 
         CampaignDto campaignUpdated = null;
         try {
@@ -173,6 +173,22 @@ public class CampaignController {
         DonationDto dto = donationService.createDonation(idCampaign, idDonationTier);
 
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping(value = "/{id}/updateImages")
+    public ResponseEntity<?> updateDescriptionImages(@PathVariable(name ="id") Long idCampaign,
+                                                     @ModelAttribute UpdateImagesDto images,
+                                                     @ModelAttribute UpdateTierImagesDto tierImages)
+            throws IOException {
+
+        if (images.getDescriptionImages() != null) {
+            campaignService.replaceDescriptionImages(idCampaign, images);
+        } else {
+
+            campaignService.replaceTierImages(idCampaign,tierImages);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("Images updated correctly");
     }
 
 }

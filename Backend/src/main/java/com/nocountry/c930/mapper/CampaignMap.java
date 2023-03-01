@@ -31,7 +31,12 @@ public class CampaignMap {
 
         copy.setCampaignId(original.getCampaignId());
         copy.setName(original.getName());
-        copy.setLongDescription(original.getLongDescription());
+
+        if(original.getLongDescription() == null){
+            copy.setLongDescription(" ");
+        }else {
+            copy.setLongDescription(original.getLongDescription());
+        }
         copy.setDescriptionImages(original.getDescriptionImages());
         copy.setShortDescription(original.getShortDescription());
         copy.setBannerUrl(original.getBannerUrl());

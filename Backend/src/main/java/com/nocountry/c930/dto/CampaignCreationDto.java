@@ -24,8 +24,6 @@ public class CampaignCreationDto {
 
     private MultipartFile image;
 
-    private String category;
-
     private MultipartFile[] descriptionImages;
 
     private List<TierCreationDto> donationTiers;

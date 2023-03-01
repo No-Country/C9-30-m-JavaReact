@@ -30,11 +30,17 @@ public interface ICampaignService {
 
     List<CampaignBasicDto> listCampaignsByMostPopular(String keyword);
 
-    CampaignDto updateCampaign(Long id, UpdateCampaignDto dto) throws IOException;
+    List<CampaignBasicDto> listCampaignByUser(Long idUser);
+
+    void replaceDescriptionImages(Long idCampaign, UpdateImagesDto images) throws IOException;
+
+    CampaignDto updateCampaign(Long id, CampaignCreationDto dto) throws IOException;
 
     Set<DonationDto> findAllDonations(Long id);
 
     void updateCampaignMoney(Long idCampaign);
 
     void deleteCampaign(Long id);
+
+    void replaceTierImages(Long idCampaign, UpdateTierImagesDto images) throws IOException;
 }

@@ -1,9 +1,11 @@
 package com.nocountry.c930.controller;
 
 import com.nocountry.c930.auth.dto.UserRegistrationDto;
+import com.nocountry.c930.dto.CampaignBasicDto;
 import com.nocountry.c930.dto.PageDto;
 import com.nocountry.c930.dto.UserDto;
 import com.nocountry.c930.repository.UserRepository;
+import com.nocountry.c930.service.ICampaignService;
 import com.nocountry.c930.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ICampaignService campaignService;
 
 
     @GetMapping("/{id}")
@@ -72,6 +78,17 @@ public class UserController {
         UserDto responseUserDto = userService.updateUser(idUser, dto);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
+
+    }
+
+    @GetMapping("/{id}/campaigns")
+    @ApiOperation(value = "Gets all the campaigns made by an user")
+    public ResponseEntity<List<CampaignBasicDto>> getCampaignByUser(@PathVariable(name = "id") Long idUser) {
+
+        List<CampaignBasicDto> result = campaignService.listCampaignByUser(idUser);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
 
     }
 
