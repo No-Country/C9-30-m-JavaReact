@@ -60,7 +60,7 @@ const AppNavbar = () => {
                 >
                   <NavDropdown.Item
                     style={{ fontSize: "smaller" }}
-                    href="#action/3.1"
+                    href="/perfil"
                   >
                     Campañas creadas
                   </NavDropdown.Item>

@@ -13,8 +13,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  console.log(user);
-  console.log(setUser);
 
   const [error, setError] = useState();
 

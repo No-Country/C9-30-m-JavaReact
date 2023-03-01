@@ -17,6 +17,7 @@ import Search from "./views/Search";
 
 import { Container } from "react-bootstrap";
 import "./styles/App.scss";
+import "react-quill/dist/quill.snow.css";
 
 function App() {
   return (
