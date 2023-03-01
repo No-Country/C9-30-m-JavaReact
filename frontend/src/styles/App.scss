@@ -1,3 +1,6 @@
+//Navbar y Footer
+@import "Partials.scss";
+
 //Login y registro
 @import "Auth.scss";
 
@@ -6,8 +9,7 @@
 
 @import "Campaign.scss";
 
-//Navbar y Footer
-@import "Partials.scss";
-
-//Search
 @import "Search.scss";
+
+//CRUD Views
+@import "AddCampaign.scss";

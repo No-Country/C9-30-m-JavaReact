@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, ProgressBar, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { getCampaignById, getCampaignComments } from "../petitions";
+import { getCampaignById, getCampaignComments } from "../../js/campaign";
 import { FaUserAlt } from "react-icons/fa";
-import Comments from "../components/Comments";
+import Comments from "../../components/Comments";
 
 const Campaign = () => {
   const [camData, setCamData] = useState([]);
@@ -15,42 +15,11 @@ const Campaign = () => {
   const location = useLocation();
   const id = location.pathname.slice(10);
 
-  // const printComments = (comments) => {
-  //   comments.map((c) => {
-  //     return (
-
-  //     );
-  //   });
-  // };
-
   useEffect(() => {
     async function run() {
       const campaignDetails = await getCampaignById(id);
-      // const campaignComments = await getCampaignComments(id);
-      const campaignComments = [
-        {
-          commentId: 0,
-          creationDate: "2023-02-21",
-          description: "string",
-          user: {
-            email: "string",
-            firstName: "string",
-            id: 0,
-            lastName: "string",
-          },
-        },
-        {
-          commentId: 1,
-          creationDate: "2023-02-21",
-          description: "string",
-          user: {
-            email: "string",
-            firstName: "string",
-            id: 1,
-            lastName: "string",
-          },
-        },
-      ];
+      const campaignComments = await getCampaignComments(id);
+
       setCamData(campaignDetails);
       setComments(campaignComments);
 
@@ -76,7 +45,7 @@ const Campaign = () => {
         <>
           <div
             className="campaign-header d-block"
-            style={{ backgroundImage: `url('${camData.imageUrl}')` }}
+            style={{ backgroundImage: `url('${camData.bannerUrl}')` }}
           >
             <br />
             <br />
@@ -86,7 +55,7 @@ const Campaign = () => {
             </h5>
             <div className="campaign-header-title ">
               <h2 className="text-light">{camData.name}</h2>
-              <p className="text-light">{camData.description}</p>
+              <p className="text-light">{camData.shortDescription}</p>
             </div>
           </div>
 
@@ -96,9 +65,9 @@ const Campaign = () => {
                 <div className="owner-data">
                   <img
                     className="owner-image"
-                    src="https://dummyimage.com/25x25/a3a3a3/fff.png"
+                    src={camData.logoUrl}
                     alt="profile-picture"
-                  />{" "}
+                  />
                   <p
                     className="campaign-subtitle "
                     style={{ float: "right", marginLeft: "0.5rem" }}
@@ -117,7 +86,7 @@ const Campaign = () => {
                 </div>
                 <div className="campaign-followers">
                   <p className="campaign-text">
-                    100{" "}
+                    100
                     <span className="campaign-subtitle">
                       Patrocinadores <br />
                       en el proyecto
@@ -125,7 +94,7 @@ const Campaign = () => {
                   </p>
                 </div>
                 <div className="campaign-time text-center">
-                  <span className="campaign-text">3</span>
+                  <span className="campaign-text">{camData.daysLeft}</span>
                   <br />
                   <span className="campaign-subtitle">Dias</span>
                 </div>
@@ -140,7 +109,7 @@ const Campaign = () => {
                     Sobre nuestro proyecto
                   </h3>
                   <p className="mb-4 campaign-details-text">
-                    {camData.description}
+                    {camData.longDescription}
                   </p>
                   {camData.donationTiers.map((e) => {
                     return (

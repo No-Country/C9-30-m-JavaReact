@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
+import { getCampaigns } from "../js/campaign";
+// import CampaignPopulars from "../components/Campaings/CampaignPopulars";
+// import CampaignsNewest from "../components/Campaings/Campaignewst";
 import CampaignSlider from "../components/CampaignSlider";
-import { getCampaigns } from "../petitions";
 
 const Home = () => {
   const [sliderData, setSliderData] = useState([]);
@@ -24,16 +26,14 @@ const Home = () => {
             <Carousel.Item key={idx}>
               <img
                 className="d-block w-100"
-                src={sl.imgUrl}
-                alt="Imagen 1"
-                width={800}
-                height={400}
+                src={sl.bannerUrl}
+                alt={`imagen-${idx}`}
+                // width={800}
+                // height={400}
               />
               <Carousel.Caption>
                 <h3>{sl.name}</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <p>{sl.shortDescription}</p>
               </Carousel.Caption>
             </Carousel.Item>
           );
@@ -41,10 +41,11 @@ const Home = () => {
       </Carousel>
       <hr />
       <h3>Mas recientes</h3>
-      <CampaignSlider />
+      <CampaignSlider data={"newest"} />
       <br />
       <h3>Mas Populares</h3>
-      <CampaignSlider />
+      <CampaignSlider data={"mostPopular"} />
+
       <br />
     </>
   );

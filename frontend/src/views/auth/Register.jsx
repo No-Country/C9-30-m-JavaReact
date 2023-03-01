@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
@@ -8,10 +9,8 @@ import {
   Stack,
   Alert,
 } from "react-bootstrap";
-import { createUser } from "../petitions";
-import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
   const { register } = useAuth();

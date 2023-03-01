@@ -6,16 +6,18 @@ import Footer from "./components/Footer";
 import AuthProvider from "./context/AuthContext";
 import FavoriteProvider from "./context/FavoriteContext";
 
-import Favorites from "./views/Favorites";
 import Home from "./views/Home";
-import Login from "./views/Login";
-import Profile from "./views/Profile";
-import Register from "./views/Register";
-import Campaign from "./views/Campaign";
+import Login from "./views/auth/Login";
+import Register from "./views/auth/Register";
+import Profile from "./views/auth/Profile";
+import Campaign from "./views/campaign/Campaign";
+import Favorites from "./views/campaign/Favorites";
+import AddCampaign from "./views/campaign/AddCampaign";
+import Search from "./views/Search";
 
 import { Container } from "react-bootstrap";
 import "./styles/App.scss";
-import Searchs from "./views/Searchs";
+import "react-quill/dist/quill.snow.css";
 
 function App() {
   return (
@@ -32,7 +34,8 @@ function App() {
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
-                <Route path="/buscarcampañas" element={< Searchs />} />
+                <Route path="/buscar" element={<Search />} />
+                <Route path="/add" element={<AddCampaign />} />
               </Routes>
             </BrowserRouter>
           </Container>

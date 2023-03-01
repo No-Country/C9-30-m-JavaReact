@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createUser, loginUser } from "../petitions";
+import { createUser, loginUser } from "../js/auth";
 
 export const authContext = createContext();
 
