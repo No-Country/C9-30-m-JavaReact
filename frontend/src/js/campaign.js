@@ -3,7 +3,6 @@ import axios from "axios";
 const urlApi = "http://167.99.235.152:8080/campaigns";
 
 const token = localStorage.getItem("token");
-// const jwt = token.replace(/"/g, "");
 
 let current_fs, next_fs, previous_fs;
 let opacity, scale;
@@ -16,17 +15,18 @@ export const addCampaigns = async (campaign) => {
   for (const key in campaign) {
     data.append(key, campaign[key]);
   }
+
   const config = {
     method: "post",
     url: urlApi,
     headers: {
-      "Content-Type": "application/json;",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${jwt}`,
     },
     data: data,
   };
 
-  // const response = await axios(config);
+  const response = await axios(config);
   console.log(data);
 };
 

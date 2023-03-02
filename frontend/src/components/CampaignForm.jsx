@@ -6,12 +6,14 @@ import { addCampaigns } from "../js/campaign";
 const CampaignForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    image: "",
+    // image: "",
     category: "",
-    goalMoney: "",
-    closingDate: "",
+    goalMoney: 0,
     shortDescription: "",
     longDescription: "",
+    tierName: "",
+    price: 0,
+    description: "",
   });
   const [check, setCheck] = useState("");
 
@@ -26,6 +28,15 @@ const CampaignForm = () => {
     setCheck(e.target.labels[0].textContent);
   };
 
+  const handleNumbers = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: Number(value) });
+  };
+
+  const handleDate = (e) => {
+    const dateValue = new Date(e.target.value).toLocaleString().split(",");
+    setFormData({ ...formData, closingDate: dateValue[0] });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormData({ ...formData, category: check });
@@ -88,13 +99,9 @@ const CampaignForm = () => {
         </Form.Group> */}
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Fecha Limite</Form.Label>
-          <Form.Control
-            type="date"
-            name="closingDate"
-            onChange={handleChange}
-          />
+          <Form.Control type="date" name="closingDate" onChange={handleDate} />
           <Form.Label>Monto a recaudar</Form.Label>
-          <Form.Control type="text" name="goalMoney" onChange={handleChange} />
+          <Form.Control type="text" name="goalMoney" onChange={handleNumbers} />
         </Form.Group>
 
         <Button type="button" name="next" className="next action-button">
@@ -145,7 +152,7 @@ const CampaignForm = () => {
             type="text"
             name="price"
             placeholder="Valor"
-            onChange={handleChange}
+            onChange={handleNumbers}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
