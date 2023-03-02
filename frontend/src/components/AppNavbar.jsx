@@ -1,5 +1,5 @@
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import Logo from "../assets/logo.svg";
+// import Logo from "../assets/logo.svg";
 import { useAuth } from "../context/AuthContext";
 
 import { useState } from "react";
@@ -23,7 +23,8 @@ const AppNavbar = () => {
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="/">
-          <img src={Logo} alt="logo" />
+          <h2>ArgFounding</h2>
+          {/* <img src={Logo} alt="logo" /> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
