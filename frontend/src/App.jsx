@@ -35,7 +35,11 @@ function App() {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
                 <Route path="/buscar" element={<Search />} />
-                <Route path="/add" element={<AddCampaign />} />
+                <Route path="/add" element={<AddCampaign editar={false} />} />
+                <Route
+                  path="/edit/:id"
+                  element={<AddCampaign editar={true} />}
+                />
               </Routes>
             </BrowserRouter>
           </Container>

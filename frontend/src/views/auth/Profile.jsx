@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Accordion, Button, Modal } from "react-bootstrap";
-import { deleteCampaign, getCampaigns } from "../../js/campaign";
+import { deleteCampaign, getCampaignsByUser } from "../../js/campaign";
 
 const Profile = () => {
   const [userCampaigns, setUserCampaigns] = useState([]);
@@ -8,6 +8,7 @@ const Profile = () => {
   const [cmpId, setCmpId] = useState("");
 
   const handleClose = () => setShow(false);
+
   const handleShow = (id) => {
     setShow(true);
     setCmpId(id);
@@ -23,9 +24,8 @@ const Profile = () => {
 
   useEffect(() => {
     async function run() {
-      const cmp = await getCampaigns();
-      const campaigns = cmp.slice(1);
-      setUserCampaigns(campaigns);
+      const cmp = await getCampaignsByUser();
+      setUserCampaigns(cmp);
     }
 
     run();
@@ -39,14 +39,22 @@ const Profile = () => {
               <Accordion.Header>{c.name}</Accordion.Header>
               <Accordion.Body>
                 {c.shortDescription}
-                <br />
-                <Button variant="warning">Editar</Button>
-                <Button
-                  variant="danger"
-                  onClick={() => handleShow(c.campaignId)}
-                >
-                  Eliminar
-                </Button>
+                <div className="d-flex w-100 justify-content-end">
+                  <a href={`/campania/${c.campaignId}`}>
+                    <Button variant="info">Ver</Button>
+                  </a>
+                  &nbsp; &nbsp;
+                  <a href={`/edit/${c.campaignId}`}>
+                    <Button variant="warning">Editar</Button>
+                  </a>
+                  &nbsp; &nbsp;
+                  <Button
+                    variant="danger"
+                    onClick={() => handleShow(c.campaignId)}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
               </Accordion.Body>
             </Accordion.Item>
           );
