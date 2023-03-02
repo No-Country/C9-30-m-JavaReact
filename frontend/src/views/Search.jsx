@@ -3,7 +3,7 @@ import { useState } from "react";
 import React from "react";
 
 import { Card, ProgressBar, Button } from "react-bootstrap";
-import { BsSearch } from "react-icons/Bs";
+
 import { useLocation } from "react-router-dom";
 
 const Searchs = () => {
@@ -61,7 +61,20 @@ const Searchs = () => {
               aria-label="Search"
             />
             <Button variant="info" type="submit" className="d-block iconStyle">
-              <BsSearch />
+              <svg
+                className="svg-icon search-icon"
+                aria-labelledby="title desc"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 19.9 19.7"
+              >
+                <title id="title">Search Icon</title>
+                <desc id="desc">A magnifying glass icon.</desc>
+                <g className="search-path" fill="none" stroke="#848F91">
+                  <path strokeLinecap="square" d="M18.5 18.3l-5.4-5.4" />
+                  <circle cx="8" cy="8" r="7" />
+                </g>
+              </svg>
             </Button>
           </form>
         </div>
@@ -74,30 +87,27 @@ const Searchs = () => {
             <div className="d-flex justify-content-between flex-wrap">
               {campanas.map((e, idx) => {
                 return (
-                  
-                    <Card style={{ width: "18rem" }} className="mb-4">
-                      <Card.Img
-                        variant="top"
-                        src={e.logoUrl}
-                        width={286}
-                        height={162}
-                      />
-                      <ProgressBar
-                        className="campaign-progress"
-                        now={(e.currentMoney * 100) / e.goalMoney}
-                      />
-                      <Card.Body>
-                        <Card.Title>{e.name}</Card.Title>
-                        <Card.Text>{e.shortDescription}</Card.Text>
-                        <p>
-                          ${e.currentMoney} / {e.goalMoney}
-                        </p>
+                  <Card style={{ width: "18rem" }} className="mb-4">
+                    <Card.Img
+                      variant="top"
+                      src={e.logoUrl}
+                      width={286}
+                      height={162}
+                    />
+                    <ProgressBar
+                      className="campaign-progress"
+                      now={(e.currentMoney * 100) / e.goalMoney}
+                    />
+                    <Card.Body>
+                      <Card.Title>{e.name}</Card.Title>
+                      <Card.Text>{e.shortDescription}</Card.Text>
+                      <p>
+                        ${e.currentMoney} / {e.goalMoney}
+                      </p>
 
-                        <a href={`/campania/${e.campaignId}`}>ver mas</a>
-                      </Card.Body>
-                    </Card>
-                    
-                  
+                      <a href={`/campania/${e.campaignId}`}>ver mas</a>
+                    </Card.Body>
+                  </Card>
                 );
               })}
             </div>

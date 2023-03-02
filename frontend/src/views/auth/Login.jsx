@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Alert, Button, Form, Spinner, Stack } from "react-bootstrap";
-import { FaGoogle, FaFacebookSquare, FaApple } from "react-icons/fa";
+
 import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
@@ -48,18 +48,9 @@ const Login = () => {
         <h2>Inicia sesión</h2>
         <div className="login-social-container ">
           <Stack gap={3}>
-            <Button variant="info">
-              <FaGoogle className="d-block mt-1 iconStyle" />
-              Registrarse con Google
-            </Button>
-            <Button variant="info">
-              <FaApple className="d-block mt-1 iconStyle" />
-              Registrarse con Facebook
-            </Button>
-            <Button variant="info">
-              <FaFacebookSquare className="d-block mt-1 iconStyle" />
-              Registrarse con Apple
-            </Button>
+            <Button variant="info">Registrarse con Google</Button>
+            <Button variant="info">Registrarse con Facebook</Button>
+            <Button variant="info">Registrarse con Apple</Button>
           </Stack>
           <Form onSubmit={handleSubmit}>
             <Form.Control

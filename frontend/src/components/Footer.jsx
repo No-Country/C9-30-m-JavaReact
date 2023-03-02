@@ -1,4 +1,3 @@
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Logo from "../assets/logo.svg";
 
 const footerLinks = [
@@ -17,9 +16,9 @@ const Footer = () => {
       <div className="d-flex justify-content-center align-items-center">
         <div className="divider" style={{ marginRight: "3rem" }}></div>
         <div className="footer-social">
-          <FaFacebook color="black" size={iconSize} />
+          {/* <FaFacebook color="black" size={iconSize} />
           <FaInstagram color="black" size={iconSize} />
-          <FaTwitter color="black" size={iconSize} />
+          <FaTwitter color="black" size={iconSize} /> */}
         </div>
 
         <div className="divider" style={{ marginLeft: "3rem" }}></div>

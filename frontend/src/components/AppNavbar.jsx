@@ -1,22 +1,14 @@
-import {
-  Button,
-  Container,
-  Nav,
-  Navbar,
-  NavDropdown,
- 
-} from "react-bootstrap";
+import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Logo from "../assets/logo.svg";
 import { useAuth } from "../context/AuthContext";
-import { BsSearch } from "react-icons/Bs";
+
 import { useState } from "react";
 
 const token = localStorage.getItem("token");
 
-const AppNavbar = ()=> {
+const AppNavbar = () => {
   const { logout } = useAuth();
   const [search, setSearch] = useState("");
- 
 
   const handleLogout = () => {
     logout();
@@ -24,9 +16,8 @@ const AppNavbar = ()=> {
   };
 
   const handleChange = (event) => {
-     setSearch(event.target.value)
-  }
-
+    setSearch(event.target.value);
+  };
 
   return (
     <Navbar bg="light" expand="lg">
@@ -55,17 +46,47 @@ const AppNavbar = ()=> {
                       borderRadius: "20px",
                       width: "100%",
                       height: "95%",
+                      position: "relative", // Añadimos posición relativa al contenedor
                     }}
-                    role="search" 
+                    role="search"
                   >
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      }}
+                    ></div>
                     <input
                       className="inputOne form-control text-center mt-1"
                       type="search"
                       placeholder="Buscador"
                       onChange={handleChange}
+                      style={{ paddingLeft: "30px" }} // Añadimos padding para que el texto no se solape con el icono
                     />
-                    <Nav.Link href={`/buscar?q=${search}`}className="buttonSearch d-inline">
-                      <BsSearch />
+                    <Nav.Link
+                      href={`/buscar?q=${search}`}
+                      className="buttonSearch d-inline"
+                      style={{ display: "none" }} // Escondemos el link que no necesitamos
+                    >
+                      <svg
+                        className="svg-icon search-icon"
+                        aria-labelledby="title desc"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 19.9 19.7"
+                        style={{ width: "20px", height: "20px" }} // Añadimos tamaño al icono
+                      >
+                        <title id="title">Search Icon</title>
+                        <desc id="desc">A magnifying glass icon.</desc>
+                        <g className="search-path" fill="none" stroke="#848F91">
+                          <path
+                            strokeLinecap="square"
+                            d="M18.5 18.3l-5.4-5.4"
+                          />
+                          <circle cx="8" cy="8" r="7" />
+                        </g>
+                      </svg>
                     </Nav.Link>
                   </form>
                 </div>

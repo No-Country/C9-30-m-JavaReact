@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, ProgressBar, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { getCampaignById, getCampaignComments } from "../../js/campaign";
-import { FaUserAlt } from "react-icons/fa";
+
 import Comments from "../../components/Comments";
 
 const Campaign = () => {
@@ -165,7 +165,6 @@ const Campaign = () => {
                             10
                             {/* {e.followers} */}
                             &nbsp;
-                            <FaUserAlt />
                           </span>
                         </div>
                       </div>
