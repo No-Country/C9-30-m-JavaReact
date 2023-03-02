@@ -33,7 +33,7 @@ function App() {
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
-                <Route path="/buscar" element={<Search />} />
+                <Route path="/buscar"  element={<Search />} />
                 <Route path="/add" element={<AddCampaign />} />
               </Routes>
             </BrowserRouter>

@@ -6,22 +6,26 @@ import {
   NavDropdown,
  
 } from "react-bootstrap";
-import { useState} from "react";
 import Logo from "../assets/logo.svg";
 import { useAuth } from "../context/AuthContext";
 import { BsSearch } from "react-icons/Bs";
+import { useState } from "react";
 
 const token = localStorage.getItem("token");
 
-const AppNavbar = () => {
+const AppNavbar = ()=> {
   const { logout } = useAuth();
-  const [searchResults, setSearchResults] = useState([]);
+  const [search, setSearch] = useState("");
+ 
 
   const handleLogout = () => {
     logout();
     window.location.reload();
   };
 
+  const handleChange = (event) => {
+     setSearch(event.target.value)
+  }
 
 
   return (
@@ -52,22 +56,16 @@ const AppNavbar = () => {
                       width: "100%",
                       height: "95%",
                     }}
-                    role="search"
-                     
+                    role="search" 
                   >
                     <input
                       className="inputOne form-control text-center mt-1"
                       type="search"
                       placeholder="Buscador"
-                 
+                      onChange={handleChange}
                     />
-                    <Nav.Link href="/buscar" className="buttonSearch d-inline">
+                    <Nav.Link href={`/buscar?q=${search}`}className="buttonSearch d-inline">
                       <BsSearch />
-                      <div>
-                        {searchResults.map((result) => (
-                          <li key={result.id}>{result.shortDescription}</li>
-                        ))}
-                      </div>
                     </Nav.Link>
                   </form>
                 </div>
