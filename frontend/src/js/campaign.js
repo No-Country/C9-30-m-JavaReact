@@ -3,7 +3,7 @@ import axios from "axios";
 const urlApi = "http://167.99.235.152:8080/campaigns";
 
 const token = localStorage.getItem("token");
-const jwt = token.replace(/"/g, "");
+// const jwt = token.replace(/"/g, "");
 
 let current_fs, next_fs, previous_fs;
 let opacity, scale;
@@ -11,6 +11,7 @@ let animating;
 
 export const addCampaigns = async (campaign) => {
   const data = new FormData();
+  const jwt = token.replace(/"/g, "");
 
   for (const key in campaign) {
     data.append(key, campaign[key]);
@@ -24,8 +25,9 @@ export const addCampaigns = async (campaign) => {
     },
     data: data,
   };
-  const response = await axios(config);
-  console.log(response.data);
+
+  // const response = await axios(config);
+  console.log(data);
 };
 
 export const getCampaigns = async () => {

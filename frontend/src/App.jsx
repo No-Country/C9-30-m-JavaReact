@@ -18,6 +18,7 @@ import Search from "./views/Search";
 import { Container } from "react-bootstrap";
 import "./styles/App.scss";
 import "react-quill/dist/quill.snow.css";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 function App() {
   return (
@@ -31,14 +32,32 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Register />} />
-                <Route path="/perfil" element={<Profile />} />
+                <Route
+                  path="/perfil"
+                  element={
+                    <ProtectedRoutes>
+                      <Profile />
+                    </ProtectedRoutes>
+                  }
+                />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/campania/:id" element={<Campaign />} />
                 <Route path="/buscar" element={<Search />} />
-                <Route path="/add" element={<AddCampaign editar={false} />} />
+                <Route
+                  path="/add"
+                  element={
+                    <ProtectedRoutes>
+                      <AddCampaign editar={false} />
+                    </ProtectedRoutes>
+                  }
+                />
                 <Route
                   path="/edit/:id"
-                  element={<AddCampaign editar={true} />}
+                  element={
+                    <ProtectedRoutes>
+                      <AddCampaign editar={true} />
+                    </ProtectedRoutes>
+                  }
                 />
               </Routes>
             </BrowserRouter>
