@@ -19,7 +19,7 @@ function AuthProvider({ children }) {
     try {
       const userToken = await loginUser(userData);
       setUser(userData);
-      localStorage.setItem("token", JSON.stringify(userToken));
+      localStorage.setItem("token", userToken);
     } catch (error) {
       throw new Error(error);
     }

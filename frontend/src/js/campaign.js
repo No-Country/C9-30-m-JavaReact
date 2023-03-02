@@ -1,13 +1,31 @@
 import axios from "axios";
 
 const urlApi = "http://167.99.235.152:8080/campaigns";
+
+const token = localStorage.getItem("token");
+const jwt = token.replace(/"/g, "");
+
 let current_fs, next_fs, previous_fs;
 let opacity, scale;
 let animating;
 
 export const addCampaigns = async (campaign) => {
-  const response = await axios.post(`${urlApi}`, campaign);
-  // return response.data.content;
+  const data = new FormData();
+
+  for (const key in campaign) {
+    data.append(key, campaign[key]);
+  }
+  const config = {
+    method: "post",
+    url: urlApi,
+    headers: {
+      "Content-Type": "application/json;",
+      Authorization: `Bearer ${jwt}`,
+    },
+    data: data,
+  };
+  const response = await axios(config);
+  console.log(response.data);
 };
 
 export const getCampaigns = async () => {
@@ -19,6 +37,21 @@ export const getCampaignById = async (id) => {
   const response = await axios.get(`${urlApi}/${id}`);
   return response.data;
 };
+export const getCampaignsByUser = async () => {
+  const jwt = token.replace(/"/g, "");
+  const config = {
+    method: "get",
+
+    url: "http://167.99.235.152:8080/profile/campaigns",
+    headers: {
+      "Content-Type": "application/json;",
+      Authorization: `Bearer ${jwt}`,
+    },
+  };
+  const response = await axios(config);
+  console.log(response.data);
+  return response.data;
+};
 
 export const getCampaignComments = async (campaignId) => {
   const response = await axios.get(`${urlApi}/${campaignId}/comments`);
@@ -27,7 +60,6 @@ export const getCampaignComments = async (campaignId) => {
 
 export const deleteCampaign = async (campaignId) => {
   const response = await axios.delete(`${urlApi}/${campaignId}`);
-  console.log(response.data);
 };
 
 export const nextLayout = () => {
