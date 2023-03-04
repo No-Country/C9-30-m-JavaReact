@@ -20,11 +20,17 @@ import java.io.IOException;
 public class StorageService {
 
     private final AmazonS3 space;
+    
+    @Value("${aws.accesKey}")
+    private String accesKey;
+    
+    @Value("${aws.secretKey}")
+    private String secretKey;
 
     public StorageService() {
 
         AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(
-                new BasicAWSCredentials("DO00W8BV2EEYVUMQZ4XR", "a+DiJQQ/6GqSBArijcVy0cTPcjdrINT7SVngc8imjLw")
+                new BasicAWSCredentials("accesKey", "secretKey")
         );
 
         space = AmazonS3ClientBuilder.standard()
