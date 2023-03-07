@@ -22,9 +22,10 @@ Crea tu campaña y fija tu objetivo monetario! Podés ofrecer distintos tier de 
 
 <ul>
 <li>HTML</li>
-<li>CSS</li>
+<li>CSS/SASS</li>
 <li>ReactJS</li>
 <li>Bootstrap</li>
+<li>Axios</li>
 <li>Vite</li>
 <li>Postman</li>
 </ul>
