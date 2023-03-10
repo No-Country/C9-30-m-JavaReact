@@ -16,7 +16,6 @@ import com.nocountry.c930.service.IUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,8 +57,7 @@ public class CampaignServiceImpl implements ICampaignService {
     @Override
     public CampaignBasicDto createCampaign(CampaignCreationDto dto) throws IOException {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
+        UserEntity user = util.getLoggedUser();
 
         CampaignEntity campaignEntity = campaignMap.campaignCreation2Entity(dto);
         campaignEntity.setCurrentMoney(BigDecimal.ZERO);
@@ -149,8 +147,7 @@ public class CampaignServiceImpl implements ICampaignService {
     @Override
     public CampaignDto updateCampaign(Long id, CampaignCreationDto dto) throws IOException {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
+        UserEntity user = util.getLoggedUser();
 
         RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
 
@@ -215,6 +212,14 @@ public class CampaignServiceImpl implements ICampaignService {
 
         return campaignMap.campaignEntityList2BasicDto(campaignRepo.findCampaignsNearGoal());
 
+    }
+
+    @Override
+    public List<CampaignBasicDto> getMyCampaigns() {
+
+        UserEntity user = util.getLoggedUser();
+
+        return listCampaignByUser(user.getUserId());
     }
 
     @Override

@@ -70,16 +70,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean deleteUser(Long id) {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity user = userRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("User doesn't exist")
         );
 
-        UserEntity userSession = userRepo.findByEmail(userEmail);
+        UserEntity loggedUser = util.getLoggedUser();
         RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
 
 
-        if (userSession.getUserId() != id && user.getRole() != admin) {
+        if (loggedUser.getUserId() != id && user.getRole() != admin) {
             return false;
         }
         RoleEntity role = user.getRole();
@@ -97,11 +96,11 @@ public class UserServiceImpl implements IUserService {
         UserEntity entity = userRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("User ID is invalid"));
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
+
+        UserEntity loggedUser = util.getLoggedUser();
         RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
 
-        if (user != entity && user.getRole() != admin) {
+        if (loggedUser != entity && loggedUser.getRole() != admin) {
             throw new RuntimeException("You can only update your own information");
         }
 
@@ -123,6 +122,6 @@ public class UserServiceImpl implements IUserService {
 
         UserEntity entitySaved = userRepo.save(entity);
 
-        return userMap.userEntity2Dto(entity);
+        return userMap.userEntity2Dto(entitySaved);
     }
 }

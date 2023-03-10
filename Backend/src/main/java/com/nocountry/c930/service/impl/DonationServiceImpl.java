@@ -58,8 +58,7 @@ public class DonationServiceImpl implements IDonationService {
     @Override
     public DonationDto createDonation(Long idCampaign, Long idDonationTier) {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
+        UserEntity user = util.getLoggedUser();
 
         CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
                 () -> new ParamNotFound("Campaign doesn't exist.")

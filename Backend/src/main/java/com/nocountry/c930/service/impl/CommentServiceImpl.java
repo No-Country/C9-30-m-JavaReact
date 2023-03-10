@@ -14,17 +14,14 @@ import com.nocountry.c930.repository.CommentRepository;
 import com.nocountry.c930.repository.RoleRepository;
 import com.nocountry.c930.repository.UserRepository;
 import com.nocountry.c930.service.ICommentService;
+import com.nocountry.c930.service.IUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
 public class CommentServiceImpl implements ICommentService {
-
-    @Autowired
-    UserRepository userRepo;
 
     @Autowired
     CommentRepository commentRepo;
@@ -38,12 +35,14 @@ public class CommentServiceImpl implements ICommentService {
     @Autowired
     CommentMap commentMap;
 
+    @Autowired
+    IUtilService util;
+
 
     @Override
     public CommentDto createComment(Long id, PostCommentDto dto) {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepo.findByEmail(userEmail);
+        UserEntity user = util.getLoggedUser();
 
         CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("Campaign doesn't exist"));
@@ -82,8 +81,7 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public boolean deleteComment(Long idCampaign, Long idComment) {
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity userSession = userRepo.findByEmail(userEmail);
+        UserEntity userSession = util.getLoggedUser();
         RoleEntity admin = roleRepo.findByName(RoleName.ROLE_ADMIN);
 
         CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(

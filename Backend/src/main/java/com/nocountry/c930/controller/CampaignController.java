@@ -5,26 +5,22 @@ import com.nocountry.c930.dto.*;
 import com.nocountry.c930.repository.CampaignRepository;
 import com.nocountry.c930.service.ICampaignService;
 import com.nocountry.c930.service.ICommentService;
-import com.nocountry.c930.entity.DonationEntity;
 import com.nocountry.c930.service.IDonationService;
-import com.nocountry.c930.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -43,6 +39,7 @@ public class CampaignController {
     private CampaignRepository campaignRepository;
 
     @PostMapping()
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Creates a new campaign",
             notes = "Must be a logged user, you need to add at least 1 donation tier")
     public ResponseEntity<CampaignBasicDto> createCampaign(@ModelAttribute CampaignCreationDto dto) throws IOException {
@@ -53,6 +50,7 @@ public class CampaignController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Delete an campaign",
             notes = "Deletes an campaign, only admin and campaign's user creator are allowed to delete")
     @ApiResponses(value = {
@@ -87,6 +85,7 @@ public class CampaignController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Updates a campaign info",
             notes = "You can only update the name, description and status" + '\n' +
                     "Since Status is an enum you need to put an integer 0 for open and 1 for closed")
@@ -120,6 +119,7 @@ public class CampaignController {
     }
 
     @PostMapping("/{id}/comments")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Post a comment in a campaign")
 
     public ResponseEntity<CommentDto> createComment(@PathVariable(name = "id") Long idCampaign, @RequestBody PostCommentDto dto) {
@@ -141,6 +141,7 @@ public class CampaignController {
     }
 
     @DeleteMapping("/{id}/comments/{idComment}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Deletes a comment",
             notes = "Only the user that created the comment or an Admin can delete it")
     public ResponseEntity<String> deleteComment(@PathVariable(name = "id") Long idCampaign,
@@ -166,6 +167,7 @@ public class CampaignController {
     }
 
     @PostMapping(value = "/{id}/donations")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Makes a donation")
     public ResponseEntity<?> makeADonation(@PathVariable(name = "id") Long idCampaign,
                                            @RequestParam(name = "idDonationTier") Long idDonationTier) {
@@ -176,6 +178,7 @@ public class CampaignController {
     }
 
     @PostMapping(value = "/{id}/updateImages")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> updateDescriptionImages(@PathVariable(name ="id") Long idCampaign,
                                                      @ModelAttribute UpdateImagesDto images,
                                                      @ModelAttribute UpdateTierImagesDto tierImages)

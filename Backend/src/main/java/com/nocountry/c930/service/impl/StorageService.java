@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,17 +21,12 @@ import java.io.IOException;
 public class StorageService {
 
     private final AmazonS3 space;
-    
-    @Value("${aws.accesKey}")
-    private String accesKey;
-    
-    @Value("${aws.secretKey}")
-    private String secretKey;
 
-    public StorageService() {
+    @Autowired
+    public StorageService(@Value("${aws.accesskey}") String accessKey, @Value("${aws.secretkey}") String secretKey) {
 
         AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(
-                new BasicAWSCredentials("accesKey", "secretKey")
+                new BasicAWSCredentials(accessKey, secretKey)
         );
 
         space = AmazonS3ClientBuilder.standard()

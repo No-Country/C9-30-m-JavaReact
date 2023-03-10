@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,7 @@ public class UserController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Delete an user",
             notes = "Deletes an user, you can only delete your own user unless you are an Admin")
     @ApiResponses(value = {
@@ -67,6 +69,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Updates your Info",
             notes = "Updates the user information, only can update your own information")
     @ApiResponses(value = {

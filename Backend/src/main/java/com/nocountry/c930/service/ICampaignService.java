@@ -22,6 +22,8 @@ public interface ICampaignService {
 
     List<CampaignBasicDto> listCampaignsNearGoal();
 
+    List<CampaignBasicDto> getMyCampaigns();
+
     List<CampaignBasicDto> listCampaignsByDate(String order);
 
     List<CampaignBasicDto> searchCampaignsByKeyword(String keyword);
