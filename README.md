@@ -1,41 +1,32 @@
+
 # ArgFounding
 
-Crowdfunding platform con sistemas de recompensas para los donantes, principalmente enfocada a PyMes Argentinas.
+Crowdfunding platform where you can create your campaigns and add different donation tiers, put reward based on the prize of the donation, just like KickStarter. 
 
-Crea tu campaña y fija tu objetivo monetario! Podés ofrecer distintos tier de recompensas para tus donantes basados en el monto de la donacion
+Donate to other campaigns or leave a comment in them to show your support! 
+Want to find an specific campaign? With the custom search filters you can do so.
 
-## Stacks tecnológicos 
 
-### Backend:
+## Tech Stack
 
-<ul>
-<li>JAVA</li>
-<li>Spring Framework</li>
-<li>MySQL-JPA</li>
-<li>JWT</li>
-<li>AWS</li>
-<li>Swagger</li>
-<li>Postman</li>
-</ul>
 
-### Frontend:
+**Server:** Java, Spring, JPA, JWT, AWS, Linux, Postman.
 
-<ul>
-<li>HTML</li>
-<li>CSS/SASS</li>
-<li>JavaScript</li>
-<li>ReactJS</li>
-<li>Bootstrap</li>
-<li>Axios</li>
-<li>Vite</li>
-<li>Postman</li>
-</ul>
 
-## Roles
+## API Reference
 
-<ul>
-<li>Frontend: Ignacio Garcia, Luisacny Baudin</li>
-<li>Backend: Matias Quiñones, Jeremias Oviedo</li>
-<li>Diseño UX/UI: Celeste Diaz, Yamila Elizondo</li>
-</ul>
+Heres the link to swagger documentation, please follow the instructions listed at the API description.
+
+Swagger has a bug, you cannot upload images so please do not try to put images when you do a post request, the endpoint wont excecute.
+
+If you want to test uploading images you can test it with postman tho, im working on a postman collection that will be available soon.
+
+Swagger documentation: [Link](http://167.99.235.152:8080/swagger-ui/index.html)
+
+
+
+## Authors
+
+- [@JeremiasOviedo](https://www.github.com/JeremiasOviedo) (me!)
+- [@Matiaseq86](https://github.com/Matiaseq84)
 
