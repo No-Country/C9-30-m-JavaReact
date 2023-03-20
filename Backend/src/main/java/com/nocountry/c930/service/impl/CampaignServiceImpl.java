@@ -193,7 +193,7 @@ public class CampaignServiceImpl implements ICampaignService {
     public void updateCampaignMoney(Long idCampaign) {
 
         CampaignEntity campaign = campaignRepo.findById(idCampaign).orElseThrow(
-                () -> new ParamNotFound("Campaign doesn't existe")
+                () -> new ParamNotFound("Campaign doesn't exist")
         );
 
         BigDecimal currentMoney = new BigDecimal(0);
