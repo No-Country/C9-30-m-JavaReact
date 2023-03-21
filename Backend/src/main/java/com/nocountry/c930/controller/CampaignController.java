@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class CampaignController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Creates a new campaign",
             notes = "Must be a logged user, you need to add at least 1 donation tier")
-    public CampaignBasicDto createCampaign(@ModelAttribute CampaignCreationDto dto) throws IOException {
+    public CampaignBasicDto createCampaign(@ModelAttribute @Valid CampaignCreationDto dto) throws IOException {
 
         return campaignService.createCampaign(dto);
     }
@@ -90,7 +91,7 @@ public class CampaignController {
             @ApiResponse(code = 400, message = "Campaign ID is invalid (must use numbers value only)"),
             @ApiResponse(code = 404, message = "Campaign not found")})
 
-    public CampaignDto updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody CampaignCreationDto dto) {
+    public CampaignDto updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody @Valid CampaignCreationDto dto) {
 
         CampaignDto campaignUpdated = null;
         try {
@@ -115,7 +116,7 @@ public class CampaignController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ApiOperation(value = "Post a comment in a campaign")
 
-    public CommentDto createComment(@PathVariable(name = "id") Long idCampaign, @RequestBody PostCommentDto dto) {
+    public CommentDto createComment(@PathVariable(name = "id") Long idCampaign, @RequestBody @Valid PostCommentDto dto) {
 
         return commentService.createComment(idCampaign, dto);
     }
