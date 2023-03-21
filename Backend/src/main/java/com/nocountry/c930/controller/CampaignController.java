@@ -91,14 +91,9 @@ public class CampaignController {
             @ApiResponse(code = 400, message = "Campaign ID is invalid (must use numbers value only)"),
             @ApiResponse(code = 404, message = "Campaign not found")})
 
-    public CampaignDto updateCampaign(@PathVariable(name = "id") Long idCampaign, @RequestBody @Valid CampaignCreationDto dto) {
+    public CampaignDto updateCampaign(@PathVariable(name = "id") Long idCampaign, @ModelAttribute @Valid CampaignCreationDto dto) throws IOException {
 
-        CampaignDto campaignUpdated = null;
-        try {
-            return campaignUpdated = campaignService.updateCampaign(idCampaign, dto);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            return campaignService.updateCampaign(idCampaign, dto);
     }
 
 

@@ -186,6 +186,7 @@ public class CampaignServiceImpl implements ICampaignService {
         CampaignEntity campaign = campaignRepo.findById(id).orElseThrow(
                 () -> new ParamNotFound("Campaign doesn't exist"));
 
+
         campaignRepo.delete(campaign);
     }
 

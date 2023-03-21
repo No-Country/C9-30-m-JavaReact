@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public class CampaignCreationDto {
 
     private String longDescription;
 
-    @NotBlank(message = "Campaigns closing date must not be blank")
+    @NotNull(message = "Campaigns closing date must not be blank")
     private Date closingDate;
 
     @NotNull(message = "Campaigns goal money cannot be null")
@@ -34,7 +35,7 @@ public class CampaignCreationDto {
     private MultipartFile[] descriptionImages;
 
    @NotEmpty(message = "Must contain at least one donation tier")
-    private List<TierCreationDto> donationTiers;
+    private List<@Valid TierCreationDto> donationTiers;
 
 
 }
